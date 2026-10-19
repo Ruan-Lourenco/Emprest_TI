@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { DemoProvider } from "@/features/demo/demo-provider";
+import { AppProviders } from "@/components/app-providers";
 
 export const metadata: Metadata = {
   title: { default: "EmpresTI", template: "%s · EmpresTI" },
@@ -11,7 +11,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="pt-BR">
       <body>
-        <DemoProvider>{children}</DemoProvider>
+        <AppProviders>{children}</AppProviders>
       </body>
     </html>
   );

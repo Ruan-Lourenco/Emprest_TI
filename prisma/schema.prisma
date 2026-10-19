@@ -1,0 +1,80 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url      = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model Tenant {
+  id          String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  slug        String       @unique
+  memberships Membership[]
+  equipment   Equipment[]
+  auditLogs   AuditLog[]
+
+  @@map("tenants")
+}
+
+model Membership {
+  tenantId    String  @map("tenant_id") @db.Uuid
+  userId      String  @map("user_id") @db.Uuid
+  role        String
+  displayName String? @map("display_name")
+  department  String?
+  tenant      Tenant  @relation(fields: [tenantId], references: [id])
+  loans       Loan[]
+
+  @@id([tenantId, userId])
+  @@map("memberships")
+}
+
+model Equipment {
+  id           String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  tenantId     String    @map("tenant_id") @db.Uuid
+  name         String
+  category     String
+  patrimony    String
+  serial       String
+  location     String
+  status       String
+  description  String    @default("")
+  lastReturnAt DateTime? @map("last_return_at") @db.Timestamptz(6)
+  tenant       Tenant    @relation(fields: [tenantId], references: [id])
+  loans        Loan[]
+
+  @@unique([tenantId, patrimony])
+  @@unique([id, tenantId])
+  @@map("equipment")
+}
+
+model Loan {
+  id          String      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  tenantId    String      @map("tenant_id") @db.Uuid
+  equipmentId String      @map("equipment_id") @db.Uuid
+  userId      String      @map("user_id") @db.Uuid
+  borrowedAt  DateTime    @map("borrowed_at") @db.Timestamptz(6)
+  dueAt       DateTime    @map("due_at") @db.Timestamptz(6)
+  returnedAt  DateTime?   @map("returned_at") @db.Timestamptz(6)
+  equipment   Equipment   @relation(fields: [equipmentId, tenantId], references: [id, tenantId])
+  borrower    Membership  @relation(fields: [tenantId, userId], references: [tenantId, userId])
+
+  @@index([tenantId, userId, returnedAt])
+  @@map("loans")
+}
+
+model AuditLog {
+  id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  tenantId    String   @map("tenant_id") @db.Uuid
+  actorUserId String   @map("actor_user_id") @db.Uuid
+  action      String
+  resourceType String  @map("resource_type")
+  resourceId  String   @map("resource_id") @db.Uuid
+  createdAt   DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  tenant      Tenant   @relation(fields: [tenantId], references: [id])
+
+  @@index([tenantId, createdAt])
+  @@map("audit_logs")
+}

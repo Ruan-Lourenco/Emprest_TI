@@ -1,0 +1,38 @@
+name: Bootstrap operations access
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirmation:
+        description: Type APPLY to bind the pre-created Supabase Auth user to Operations.
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  bootstrap:
+    if: inputs.confirmation == 'APPLY'
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Generate Prisma Client
+        run: npx prisma generate
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          DIRECT_URL: ${{ secrets.DIRECT_URL }}
+      - name: Bind operations user
+        run: |
+          test -n "$BOOTSTRAP_OPERATIONS_USER_ID" || { echo "Bootstrap user is not configured." >&2; exit 1; }
+          npm run db:seed -- "$BOOTSTRAP_OPERATIONS_USER_ID" operations
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          DIRECT_URL: ${{ secrets.DIRECT_URL }}
+          BOOTSTRAP_OPERATIONS_USER_ID: ${{ secrets.BOOTSTRAP_OPERATIONS_USER_ID }}

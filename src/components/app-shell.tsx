@@ -11,7 +11,9 @@ import {
   PlusSquare,
   SquaresFour
 } from "@phosphor-icons/react";
-import { useDemo } from "@/features/demo/demo-provider";
+import { useAppData } from "@/features/data/app-data-provider";
+import { trpc } from "@/lib/trpc";
+import { useRouter } from "next/navigation";
 
 const nav = [
   { group: "Colaborador", href: "/catalogo", label: "Catálogo", icon: SquaresFour },
@@ -22,7 +24,7 @@ const nav = [
 
 function Sidebar() {
   const pathname = usePathname();
-  const { currentUserLoans } = useDemo();
+  const { currentUserLoans, user } = useAppData();
 
   return (
     <aside className="sidebar" aria-label="Navegação principal">
@@ -31,7 +33,7 @@ function Sidebar() {
         <span>EmpresTI</span>
       </Link>
       <nav className="nav-group">
-        {["Colaborador", "Operações"].map((group) => (
+        {(user?.role === "operations" ? ["Colaborador", "Operações"] : ["Colaborador"]).map((group) => (
           <span key={group} style={{ display: "contents" }}>
             <span className="nav-label">{group}</span>
             {nav.filter((item) => item.group === group).map((item) => {
@@ -49,8 +51,8 @@ function Sidebar() {
         ))}
       </nav>
       <div className="profile">
-        <span className="avatar">MA</span>
-        <span><strong>Marina Alves</strong><span>Design · demonstração</span></span>
+        <span className="avatar">{(user?.name ?? user?.email ?? "U").slice(0, 2).toUpperCase()}</span>
+        <span><strong>{user?.name ?? user?.email ?? "Usuário"}</strong><span>{user?.department ?? (user?.role === "operations" ? "Operações" : "Colaborador")}</span></span>
       </div>
     </aside>
   );
@@ -58,19 +60,22 @@ function Sidebar() {
 
 export function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const { currentUserLoans } = useDemo();
+  const router = useRouter();
+  const logout = trpc.auth.logout.useMutation();
+  const utils = trpc.useUtils();
+  const { currentUserLoans, loading, error } = useAppData();
   const title = pathname.startsWith("/operacoes") ? "Operações" : pathname.startsWith("/meus") ? "Meus empréstimos" : "Catálogo";
 
   return (
     <div className="app-frame">
       <Sidebar />
       <div className="main-shell">
-        <div className="demo-bar" role="status">
-          <Info size={14} /> Modo demonstrativo — alterações não são salvas e nenhum dado real é acessado.
-        </div>
+        {loading && <div className="demo-bar" role="status"><Info size={14} /> Carregando dados...</div>}
+        {error && <div className="demo-bar" role="alert"><Info size={14} /> Não foi possível carregar os dados. Atualize a página.</div>}
         <header className="topbar">
           <div className="topbar-title"><strong>{title}</strong></div>
           <div className="loan-counter">{currentUserLoans.length} de 3 itens com você &nbsp; <BellSimple size={17} aria-hidden="true" /></div>
+          <button className="button ghost small" type="button" onClick={async () => { await logout.mutateAsync(); await utils.invalidate(); router.replace("/login"); router.refresh(); }}>Sair</button>
         </header>
         <main>{children}</main>
       </div>

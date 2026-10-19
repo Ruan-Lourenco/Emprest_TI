@@ -2,8 +2,8 @@
 
 import { ArrowUDownLeft } from "@phosphor-icons/react";
 import { EquipmentIcon } from "@/components/equipment-ui";
-import { formatDate, isOverdue } from "@/features/demo/data";
-import type { Equipment, Loan } from "@/features/demo/types";
+import { formatDate, isOverdue } from "@/features/data/dates";
+import type { Equipment, Loan } from "@/features/data/types";
 
 export function LoanList({
   loans,
