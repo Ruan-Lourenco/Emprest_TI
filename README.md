@@ -2,9 +2,9 @@
 
 Sistema interno para controlar o empréstimo de equipamentos de TI — como notebooks, monitores, cabos e câmeras — substituindo a planilha operacional por um fluxo auditável.
 
-> **Estado do projeto:** frontend navegável de demonstração concluído. As seis
-> telas funcionam com dados locais e deixam explícito que não há autenticação,
-> persistência, banco ou integração real.
+> **Estado do projeto:** autenticação e persistência implementadas no código.
+> A ativação remota depende da migration protegida, do primeiro usuário no
+> Supabase Auth, do vínculo de Operações e das variáveis na Vercel.
 
 ## Produto
 
@@ -32,10 +32,9 @@ O racional, as restrições e as consequências estão no [ADR-001](docs/adr/001
 O processo do projeto é SDD repo-native: `SPEC → PLAN → TASKS → CODE`. Portanto, qualquer funcionalidade começa em uma pasta própria com `spec.md`, `plan.md` e `tasks.md`, e só é implementada após a especificação aprovada.
 
 1. A primeira feature está registrada em `docs/specs/frontend-mvp/`.
-2. O frontend demonstrativo está implementado e validado.
-3. O próximo incremento deve especificar autenticação e acesso a dados antes de
-   substituir os fixtures locais.
-4. Toda integração futura deve validar autorização e isolamento entre tenants.
+2. O frontend demonstrativo foi substituído por consultas e mutações persistentes.
+3. A spec da integração está em `docs/specs/persistencia-auth/`.
+4. Antes do uso remoto, execute o fluxo de migration e bootstrap em `docs/DEVOPS.md`.
 
 ## Executar o frontend
 
@@ -51,7 +50,10 @@ typecheck`, `npm run lint`, `npm test`, `npm run test:e2e` e `npm run build`.
 
 ## Ambientes e configuração
 
-Copie `.env.example` para `.env` apenas na máquina local e preencha os valores fornecidos pelos provedores. Nunca versione `.env`, tokens, chaves de serviço ou URLs com senhas.
+Copie `.env.example` para `.env` apenas na máquina local e preencha os valores
+fornecidos pelos provedores. Nunca versione `.env`, tokens, chaves de serviço ou
+URLs com senhas. `DATABASE_URL` e `DIRECT_URL` são necessários para o servidor;
+o primeiro deve usar o pooler transacional e o segundo a conexão de migration.
 
 As variáveis `NEXT_PUBLIC_*` podem chegar ao navegador; as demais são exclusivas do servidor. `DATABASE_URL` usa o pooler de runtime e `DIRECT_URL` a conexão direta para migrations, conforme o ADR.
 

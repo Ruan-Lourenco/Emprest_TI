@@ -1,6 +1,6 @@
-import type { Equipment, Loan } from "./types";
+import type { Equipment, Loan } from "@/features/data/types";
 
-export const DEMO_TODAY = "2026-09-28";
+export const DEMO_TODAY = new Date().toLocaleDateString("en-CA", { timeZone: "America/Sao_Paulo" });
 
 export const initialEquipment: Equipment[] = [
   {

@@ -15,6 +15,7 @@ export type Equipment = {
 export type Loan = {
   id: string;
   equipmentId: string;
+  userId?: string;
   borrower: string;
   department: string;
   borrowedAt: string;
@@ -22,4 +23,4 @@ export type Loan = {
   returnedAt?: string;
 };
 
-export type NewEquipment = Omit<Equipment, "id" | "lastReturn">;
+export type NewEquipment = Omit<Equipment, "id" | "lastReturn" | "status"> & { status: "available" | "maintenance" | "retired" };

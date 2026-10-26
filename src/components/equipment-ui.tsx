@@ -7,7 +7,7 @@ import {
   Usb
 } from "@phosphor-icons/react";
 import Link from "next/link";
-import type { Equipment, EquipmentStatus } from "@/features/demo/types";
+import type { Equipment, EquipmentStatus } from "@/features/data/types";
 
 const statusLabels: Record<EquipmentStatus, string> = {
   available: "Disponível",

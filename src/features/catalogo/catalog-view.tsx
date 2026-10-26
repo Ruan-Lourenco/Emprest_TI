@@ -3,12 +3,12 @@
 import { Info, MagnifyingGlass, Package } from "@phosphor-icons/react";
 import { useMemo, useState } from "react";
 import { EquipmentCard } from "@/components/equipment-ui";
-import { useDemo } from "@/features/demo/demo-provider";
+import { useAppData } from "@/features/data/app-data-provider";
 
 const categories = ["Todos", "Notebook", "Monitor", "Câmera", "Acessório", "Projetor"] as const;
 
 export function CatalogView() {
-  const { equipment } = useDemo();
+  const { equipment } = useAppData();
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState<(typeof categories)[number]>("Todos");
   const [availableOnly, setAvailableOnly] = useState(false);
