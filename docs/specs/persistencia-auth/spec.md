@@ -3,6 +3,9 @@
 Status: APROVADO em 2026-10-19, após aprovação do DDL e das decisões de
 migration e provisionamento pelo responsável.
 
+Implementação: código local presente; ativação remota, login real e verificação
+integral dos critérios permanecem pendentes conforme `tasks.md`.
+
 ## Objetivo
 
 Substituir a demonstração local por dados persistidos no PostgreSQL do Supabase e
@@ -36,7 +39,7 @@ login real por e-mail e senha, mantendo os fluxos e as regras aprovadas no PRD.
 ## Decisões
 
 - Prisma Migrate é o único dono do schema, conforme ADR-001 e decisão do
-  responsável. A regra conflitante de migration será alinhada.
+  responsável. `rules/migration.md` está alinhada a essa decisão.
 - O primeiro usuário é criado no Supabase Auth e vinculado ao tenant
   `suporte_ti` com papel `operations` pelo seed idempotente aprovado no ADR.
 - Nome e departamento são opcionais no vínculo. Na falta deles, a interface
@@ -46,17 +49,17 @@ login real por e-mail e senha, mantendo os fluxos e as regras aprovadas no PRD.
 
 ## Critérios de aceitação
 
-1. Login com conta convidada válida abre o catálogo; credencial inválida não
+- CA-01: Login com conta convidada válida abre o catálogo; credencial inválida não
    abre sessão; logout encerra a sessão.
-2. Acesso sem sessão e sem vínculo é recusado na interface e em todo procedimento.
-3. Equipamento cadastrado continua no catálogo após recarga e nova sessão.
-4. Solicitação e devolução persistem após recarga e preservam consistência entre
+- CA-02: Acesso sem sessão e sem vínculo é recusado na interface e em todo procedimento.
+- CA-03: Equipamento cadastrado continua no catálogo após recarga e nova sessão.
+- CA-04: Solicitação e devolução persistem após recarga e preservam consistência entre
    equipamento e empréstimo mesmo sob duas solicitações simultâneas.
-5. Limite de três itens, bloqueio por atraso e manutenção são impostos no servidor.
-6. Um usuário não vê empréstimos de outro; Operações vê apenas seu tenant.
-7. Um tenant não lê nem modifica registros de outro, em cada procedimento.
-8. Colaborador não cadastra equipamentos nem registra devoluções de terceiros.
-9. Typecheck, lint, testes, build e testes dos fluxos críticos passam.
+- CA-05: Limite de três itens, bloqueio por atraso e manutenção são impostos no servidor.
+- CA-06: Um usuário não vê empréstimos de outro; Operações vê apenas seu tenant.
+- CA-07: Um tenant não lê nem modifica registros de outro, em cada procedimento.
+- CA-08: Colaborador não cadastra equipamentos nem registra devoluções de terceiros.
+- CA-09: Typecheck, lint, testes, build e testes dos fluxos críticos passam.
 
 ## Fora de escopo
 

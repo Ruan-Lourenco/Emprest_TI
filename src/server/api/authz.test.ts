@@ -7,7 +7,7 @@ import type { createContext } from "./trpc";
 type Context = Awaited<ReturnType<typeof createContext>>;
 
 describe("autenticação e autorização", () => {
-  it("recusa credenciais inválidas", async () => {
+  it("CA-01 (parcial): recusa credenciais inválidas", async () => {
     const ctx = {
       user: null, membership: null,
       supabase: { auth: { signInWithPassword: vi.fn().mockResolvedValue({ data: { user: null }, error: new Error("invalid") }) } }
@@ -17,7 +17,7 @@ describe("autenticação e autorização", () => {
       .rejects.toMatchObject({ code: "UNAUTHORIZED" });
   });
 
-  it("recusa usuário Auth sem vínculo de tenant", async () => {
+  it("CA-02 (parcial): recusa usuário Auth sem vínculo de tenant", async () => {
     const signOut = vi.fn().mockResolvedValue({});
     const ctx = {
       user: null, membership: null,
@@ -30,7 +30,7 @@ describe("autenticação e autorização", () => {
     expect(signOut).toHaveBeenCalledOnce();
   });
 
-  it("impede colaborador de cadastrar equipamento", async () => {
+  it("CA-08 (parcial): impede colaborador de cadastrar equipamento", async () => {
     const ctx = {
       user: { id: randomUUID() }, membership: { tenantId: randomUUID(), role: "collaborator" }
     } as unknown as Context;

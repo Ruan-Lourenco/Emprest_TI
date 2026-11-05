@@ -21,15 +21,16 @@ branch curta → pull request → Architecture checks → revisão → main → 
 | Atualização de dependências | Dependabot semanal | Preparada |
 | Mudança de banco | workflow manual no Environment `production` | Migration Prisma versionada |
 | Bootstrap de Operações | workflow manual no Environment `production` | Usuário Auth criado antes do vínculo |
-| Deploy de aplicação | Vercel | Configuração do projeto ainda necessária |
+| Deploy de aplicação | Vercel | Estado remoto precisa ser confirmado no provedor antes de declarar produção pronta |
 | Observabilidade | Sentry | Não conectado; sem DSN |
 
-## Configuração pendente e deliberada
+## Configuração e validação pendentes
 
-Antes do primeiro deploy, o responsável deve:
+Antes de declarar o ambiente remoto pronto, o responsável deve confirmar
+quais itens abaixo já foram realizados e concluir os demais:
 
 1. Conectar o projeto Vercel ao repositório e cadastrar as variáveis do `.env.example` por ambiente.
-2. Criar o projeto Supabase em `sa-east-1`, sem versionar credenciais.
+2. Confirmar o projeto Supabase em `sa-east-1`, sem versionar credenciais.
 3. Criar o Environment `production` no GitHub, restringir aprovação a responsáveis e cadastrar `DATABASE_URL`, `DIRECT_URL` e `BOOTSTRAP_OPERATIONS_USER_ID` como secrets. O último é o UUID de uma conta já criada no Supabase Auth; não o escreva em logs ou documentação.
 4. Habilitar proteção de `main`: pull request obrigatório, uma aprovação, conversas resolvidas e status check `Documentation and secret guard`.
 5. Configurar a integração do Sentry depois da feature que introduzir o runtime.

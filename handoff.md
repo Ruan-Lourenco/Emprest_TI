@@ -1,13 +1,32 @@
 # Handoff
 
-Artefato efêmero para registrar onde uma sessão terminou e o que ficou pendente.
-Não é fonte de verdade sobre requisitos, comportamento ou arquitetura.
+## Onde parei
 
-## Estado atual
+Frontend e integração local de autenticação, tRPC e persistência estão no código.
+O fluxo SDD, a skill de isolamento e o verificador de spec foram alinhados às
+pastas de Codex e Cursor. A spec `persistencia-auth` continua parcial: migration
+remota, bootstrap e login real ainda não foram comprovados.
 
-* O ADR-001 e a spec `frontend-mvp` foram aprovados em 2026-09-28.
-* O monólito Next.js foi inicializado.
-* As seis telas do frontend demonstrativo estão implementadas com dados locais.
-* Typecheck, lint, testes de componente, E2E e build passaram.
-* Autenticação, banco, API, persistência e deploy continuam pendentes e exigem
-  specs próprias.
+## Decisões não óbvias
+
+- Apenas `suporte_ti` é usado na v1 (ADR-002 aprovado).
+- A skill tem fonte única em `.agents/skills/`; o verificador tem fonte em
+  `agents/verificador-spec.md` e adaptadores para Cursor e Codex.
+
+## O que tentei e não funcionou
+
+- Antes de instalar dependências, typecheck, lint e Vitest não iniciavam porque
+  os executáveis locais não estavam disponíveis.
+
+## Próximo passo exato
+
+Conferir `docs/specs/alinhamento-harness/tasks.md` e concluir apenas checks
+locais comprovados. Depois validar `persistencia-auth` com conta real e o fluxo
+remoto protegido, mantendo suas tarefas abertas até haver evidência.
+
+## Arquivos relevantes
+
+- `docs/specs/alinhamento-harness/`
+- `docs/specs/persistencia-auth/`
+- `docs/adr/002-selecao-tenant.md`
+- `rules/`
