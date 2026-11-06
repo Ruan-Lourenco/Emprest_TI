@@ -14,7 +14,9 @@ description: Prepara e valida fotos dos equipamentos do catálogo via API do Pex
    imagens 800×600 em `.photo-prep/`.
 3. **Pare antes de aprovar**. Uma pessoa examina cada arquivo e rejeita foto
    com pessoa, marca ou logo legível, texto ou tela com conteúdo. Registre
-   rejeições e motivos. A seleção automática não comprova esse critério.
+   rejeições e motivos. Para refazer a busca, coloque os IDs reprovados em
+   `.photo-prep/rejected.json` (lista JSON de números) e execute o script de
+   novo. A seleção automática não comprova esse critério.
 4. Para as 12 aprovadas, registre em `data/fotos-aprovadas.json` ID Pexels,
    fotógrafo, página de origem, licença Pexels e URL pública prevista. Valide
    com `node scripts/validate-equipment-photos.mjs`. A pessoa responsável faz

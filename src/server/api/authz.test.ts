@@ -16,6 +16,35 @@ describe("autenticação e autorização", () => {
     const caller = appRouter.createCaller({ user: { id: randomUUID() }, membership: null } as unknown as Context);
     await expect(caller.loans.request({ equipmentId: randomUUID() })).rejects.toMatchObject({ code: "FORBIDDEN" });
   });
+
+  it("CA-01/CA-06: lista pessoal usa usuário e tenant do contexto", async () => {
+    const userId = randomUUID();
+    const tenantId = randomUUID();
+    const findMany = vi.fn().mockResolvedValue([]);
+    const ctx = { user: { id: userId }, membership: { userId, tenantId, role: "collaborator" },
+      prisma: { loan: { findMany } } } as unknown as Context;
+    const caller = appRouter.createCaller(ctx);
+    await caller.loans.mine({});
+    expect(findMany).toHaveBeenCalledWith(expect.objectContaining({ where: { tenantId, userId } }));
+    await expect(caller.loans.all({})).rejects.toMatchObject({ code: "FORBIDDEN" });
+  });
+
+  it("CA-01/CA-03: solicitação usa identidade e tenant do contexto", async () => {
+    const userId = randomUUID();
+    const tenantId = randomUUID();
+    const equipmentId = randomUUID();
+    const findMany = vi.fn().mockResolvedValue([]);
+    const updateMany = vi.fn().mockResolvedValue({ count: 1 });
+    const createLoan = vi.fn().mockResolvedValue({ id: randomUUID() });
+    const tx = { loan: { findMany, create: createLoan }, equipment: { updateMany },
+      auditLog: { create: vi.fn().mockResolvedValue({}) } };
+    const ctx = { user: { id: userId }, membership: { userId, tenantId, role: "collaborator" },
+      prisma: { $transaction: (callback: (arg: typeof tx) => unknown) => callback(tx) } } as unknown as Context;
+    await appRouter.createCaller(ctx).loans.request({ equipmentId });
+    expect(findMany).toHaveBeenCalledWith(expect.objectContaining({ where: { tenantId, userId, returnedAt: null } }));
+    expect(updateMany).toHaveBeenCalledWith(expect.objectContaining({ where: { tenantId, id: equipmentId, status: "available" } }));
+    expect(createLoan).toHaveBeenCalledWith({ data: expect.objectContaining({ tenantId, userId, equipmentId }) });
+  });
   it("CA-01 (parcial): recusa credenciais inválidas", async () => {
     const ctx = {
       user: null, membership: null,

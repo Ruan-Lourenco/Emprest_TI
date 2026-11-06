@@ -7,6 +7,8 @@ A prática de SDD está implementada **parcialmente** na branch
 seed, interface, testes e workflows manuais foram preparados. Fotos reais,
 Storage, migration/seed remoto, conta convidada e teste autenticado em produção
 seguem sem evidência; as duas specs permanecem NÃO PRONTAS.
+Nesta continuação, typecheck, lint, build e 23 testes passaram localmente;
+`docs/specs/*/evidence.md` mapeia o que cada CA ainda não comprova.
 
 ## Decisões não óbvias
 
@@ -20,7 +22,8 @@ A página de login Vercel respondeu HTTP 200, mas não houve login real. A
 automação do Chrome parou por não conseguir confirmar a URL atual; o PR #19
 foi aberto por API do GitHub, atualizado com `main` e está sem conflito. Seus
 checks de documentação/segredos e build passaram. Sem chave Pexels local não
-foi possível gerar imagens.
+foi possível gerar imagens. O Docker Desktop não iniciou o daemon; a porta
+5432 pertence a outro aplicativo e não foi usada para testes.
 Não há PostgreSQL local comprovado para `npm run test:db`.
 
 ## Próximo passo exato

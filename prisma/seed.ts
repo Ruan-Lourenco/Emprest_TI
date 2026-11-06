@@ -19,8 +19,14 @@ async function seedEquipment(tenantId: string) {
   const category = { notebook: "Notebook", monitor: "Monitor", cabo: "Acessório", camera: "Câmera" } as const;
   for (const item of items) {
     const photo = byPatrimony.get(item.patrimonio);
-    if (!photo || photo.license !== "Pexels License" || !photo.sourceUrl.startsWith("https://www.pexels.com/photo/") ||
-        !photo.publicUrl.includes("/storage/v1/object/public/equipment/")) throw new Error(`Foto não aprovada: ${item.patrimonio}`);
+    if (!photo || photo.license !== "Pexels License" || !photo.sourceUrl.startsWith("https://www.pexels.com/photo/"))
+      throw new Error(`Foto não aprovada: ${item.patrimonio}`);
+    let publicUrl: URL;
+    try { publicUrl = new URL(photo.publicUrl); } catch { throw new Error(`URL inválida: ${item.patrimonio}`); }
+    if (publicUrl.protocol !== "https:" || !publicUrl.hostname.endsWith(".supabase.co") ||
+        publicUrl.pathname !== `/storage/v1/object/public/equipment/${item.patrimonio}.jpg` || publicUrl.search)
+      throw new Error(`URL inválida: ${item.patrimonio}`);
+    if (item.situacao !== "disponivel" && item.situacao !== "manutencao") throw new Error(`Situação inválida: ${item.patrimonio}`);
     const mappedCategory = category[item.categoria as keyof typeof category];
     if (!mappedCategory) throw new Error(`Categoria inválida: ${item.patrimonio}`);
     const image = { imageUrl: photo.publicUrl, imagePexelsId: photo.pexelsId,

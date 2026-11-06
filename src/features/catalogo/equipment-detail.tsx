@@ -33,7 +33,9 @@ export function EquipmentDetail({ patrimony }: { patrimony: string }) {
   }
 
   const hasOverdue = currentUserLoans.some((loan) => loan.dueAt < todayInSaoPaulo());
-  const refusalReason = selectedItem.status !== "available" ? "Este item não está disponível para empréstimo."
+  const refusalReason = selectedItem.status === "maintenance" ? "Este item está em manutenção."
+    : selectedItem.status === "loaned" ? "Este item já está emprestado."
+    : selectedItem.status === "retired" ? "Este item está fora de uso."
     : hasOverdue ? "Devolva os itens em atraso antes de solicitar outro."
     : currentUserLoans.length >= 3 ? "Você já está com três itens." : null;
   const canRequest = refusalReason === null;

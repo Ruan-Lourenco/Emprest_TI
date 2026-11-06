@@ -83,6 +83,30 @@ Na rodada inicial, `npm test` passou com 12 testes, `npm run lint` e
 sucesso. Depois das correções locais, `npm test` passou com **16 testes**,
 além de typecheck, lint e build.
 
+Na continuação, testes de contexto tRPC e motivos visíveis elevaram a suíte
+para **23 testes aprovados**. `npm run typecheck`, `npm run lint` e
+`npm run build` passaram novamente. O roteiro `scripts/test-db.ts` passou a
+exigir conflito em tentativa entre tenants e lista pessoal no mesmo tenant,
+mas não foi executado: o Docker Desktop não iniciou o daemon e a porta local
+5432 pertence a outro aplicativo. As evidências CA a CA estão em
+`docs/specs/dados-iniciais/evidence.md` e
+`docs/specs/solicitar-emprestimo/evidence.md`.
+
+Segunda rodada independente, antes dos ajustes finais:
+
+| Spec | CA-01 | CA-02 | CA-03 | CA-04 | CA-05 | CA-06 | Veredito |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| Dados iniciais | PARCIAL | PARCIAL | BLOQUEADO | SEM TESTE | BLOQUEADO | PARCIAL | NÃO PRONTA |
+| Solicitar empréstimo | ATENDIDO local | PARCIAL | PARCIAL | PARCIAL | BLOQUEADO | PARCIAL | NÃO PRONTA |
+
+O verificador de dados apontou que o teste não comparava nomes; o agente
+principal acrescentou a lista exata em `src/test/initial-equipment.test.ts`.
+O verificador de empréstimo apontou que o teste de concorrência não verificava
+o código `CONFLICT`; o agente principal acrescentou essa asserção em
+`scripts/test-db.ts`. Também passou a diferenciar na interface os motivos de
+manutenção e empréstimo em aberto. Essas correções foram validadas localmente,
+mas continuam sem execução em PostgreSQL e produção.
+
 Prova com erro plantado, em dois commits após a baseline `b8aeee3`:
 
 | Rodada | Commit | CA-04 / evidência | Veredito |

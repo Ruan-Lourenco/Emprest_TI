@@ -11,6 +11,15 @@ const items = JSON.parse(await readFile("data/equipamentos-iniciais.json", "utf8
 const out = path.resolve(".photo-prep");
 await mkdir(out, { recursive: true });
 const used = new Set();
+let rejected = [];
+try {
+  rejected = JSON.parse(await readFile(path.join(out, "rejected.json"), "utf8"));
+} catch (error) {
+  if (error?.code !== "ENOENT") throw error;
+}
+if (!Array.isArray(rejected) || rejected.some((id) => !Number.isInteger(Number(id))))
+  throw new Error(".photo-prep/rejected.json deve ser uma lista de IDs Pexels.");
+const rejectedIds = new Set(rejected.map(Number));
 const manifest = [];
 
 for (const item of items) {
@@ -21,14 +30,15 @@ for (const item of items) {
   if (!response.ok) throw new Error(`Busca Pexels falhou para ${item.patrimonio}: HTTP ${response.status}`);
   const body = await response.json();
   const photo = body.photos?.find((candidate) =>
-    Number.isInteger(candidate.id) && !used.has(candidate.id) &&
+    Number.isInteger(candidate.id) && !used.has(candidate.id) && !rejectedIds.has(candidate.id) &&
     candidate.src?.original?.startsWith("https://images.pexels.com/") &&
     candidate.url?.startsWith("https://www.pexels.com/photo/") && candidate.photographer
   );
   if (!photo) throw new Error(`Nenhuma foto única candidata para ${item.patrimonio}`);
   used.add(photo.id);
   const download = await fetch(photo.src.original);
-  if (!download.ok) throw new Error(`Download Pexels falhou para ${item.patrimonio}: HTTP ${download.status}`);
+  if (!download.ok || !download.url.startsWith("https://images.pexels.com/"))
+    throw new Error(`Download Pexels falhou para ${item.patrimonio}: HTTP ${download.status}`);
   const bytes = Buffer.from(await download.arrayBuffer());
   const image = await sharp(bytes).resize(800, 600, { fit: "cover", position: "attention" }).jpeg({ quality: 84 }).toBuffer();
   const metadata = await sharp(image).metadata();
