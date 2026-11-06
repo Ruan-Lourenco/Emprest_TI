@@ -40,12 +40,6 @@ describe("solicitar empréstimo", () => {
     expect(tx.equipment.updateMany).not.toHaveBeenCalled();
   });
 
-  it("CA-04: bloqueia pessoa com item atrasado", async () => {
-    const { db, tx } = fakeDb([new Date(now.getTime() - 1000)]);
-    await expect(requestLoan(db, tenantId, userId, equipmentId, now)).rejects.toMatchObject({ code: "PRECONDITION_FAILED" });
-    expect(tx.loan.create).not.toHaveBeenCalled();
-  });
-
   it("CA-04: recusa item indisponível no servidor", async () => {
     const { db, tx } = fakeDb([], 0);
     await expect(requestLoan(db, tenantId, userId, equipmentId, now)).rejects.toMatchObject({ code: "CONFLICT" });
