@@ -2,31 +2,37 @@
 
 ## Onde parei
 
-Frontend e integração local de autenticação, tRPC e persistência estão no código.
-O fluxo SDD, a skill de isolamento e o verificador de spec foram alinhados às
-pastas de Codex e Cursor. A spec `persistencia-auth` continua parcial: migration
-remota, bootstrap e login real ainda não foram comprovados.
+A prática de SDD está implementada **parcialmente** na branch
+`feat/pratica-sdd-subagentes`: specs, ADR-003, skill Pexels, migration,
+seed, interface, testes e workflows manuais foram preparados. Fotos reais,
+Storage, migration/seed remoto, conta convidada e teste autenticado em produção
+seguem sem evidência; as duas specs permanecem NÃO PRONTAS.
 
 ## Decisões não óbvias
 
-- Apenas `suporte_ti` é usado na v1 (ADR-002 aprovado).
-- A skill tem fonte única em `.agents/skills/`; o verificador tem fonte em
-  `agents/verificador-spec.md` e adaptadores para Cursor e Codex.
+Conflitos e lacunas estão em `ENTREGA.md`; ADR-003 decide metadados das fotos.
+A chave Pexels é lida de arquivo local fora do repositório, sem nova variável
+de ambiente. O professor deve ser vinculado como `collaborator`.
 
 ## O que tentei e não funcionou
 
-- Antes de instalar dependências, typecheck, lint e Vitest não iniciavam porque
-  os executáveis locais não estavam disponíveis.
+A página de login Vercel respondeu HTTP 200, mas não houve login real. A
+automação do Chrome parou por não conseguir confirmar a URL atual; não foi
+usada para criar PR. Sem chave Pexels local não foi possível gerar imagens.
+Não há PostgreSQL local comprovado para `npm run test:db`.
 
 ## Próximo passo exato
 
-Conferir `docs/specs/alinhamento-harness/tasks.md` e concluir apenas checks
-locais comprovados. Depois validar `persistencia-auth` com conta real e o fluxo
-remoto protegido, mantendo suas tarefas abertas até haver evidência.
+Depois de reunir uma chave Pexels em arquivo local fora do repositório,
+executar `node scripts/prepare-equipment-photos.mjs <caminho-absoluto>`;
+conferir visualmente as 12 fotos, produzir `data/fotos-aprovadas.json` e
+validar com `node scripts/validate-equipment-photos.mjs` antes do upload humano.
+Para o restante da sequência protegida, seguir `docs/OPERACAO-PRATICA.md`.
 
 ## Arquivos relevantes
 
-- `docs/specs/alinhamento-harness/`
-- `docs/specs/persistencia-auth/`
-- `docs/adr/002-selecao-tenant.md`
-- `rules/`
+- `ENTREGA.md`
+- `docs/specs/dados-iniciais/`
+- `docs/specs/solicitar-emprestimo/`
+- `.agents/skills/imagens-equipamentos/`
+- `docs/OPERACAO-PRATICA.md`

@@ -79,7 +79,18 @@ recarga para empréstimo. O agente principal adicionou testes de procedimento,
 contagem e filtro pessoal após a rodada; isso **não substitui nova verificação**.
 Na rodada inicial, `npm test` passou com 12 testes, `npm run lint` e
 `npm run typecheck` passaram. O agente principal executou `npm run build` com
-sucesso. Prova com erro plantado: **pendente de registro real**.
+sucesso. Depois das correções locais, `npm test` passou com **16 testes**,
+além de typecheck, lint e build.
+
+Prova com erro plantado, em dois commits após a baseline `b8aeee3`:
+
+| Rodada | Commit | CA-04 / evidência | Veredito |
+| --- | --- | --- | --- |
+| Erro plantado | `4501a76` | PARCIAL: o teste de bloqueio por atraso foi removido de `src/server/services/loans.test.ts`; o verificador apontou ausência de exercício de `dueAt < now` | NÃO PRONTA |
+| Restauração | `dbf4abf` | O teste voltou em `src/server/services/loans.test.ts:43`; verifica `PRECONDITION_FAILED` e nenhuma criação de empréstimo | NÃO PRONTA pelas demais pendências |
+
+O verificador não corrigiu o teste. A restauração foi feita pelo agente
+principal, e o `git show dbf4abf` permite comparar os dois estados.
 
 ## 7. Regra posta à prova
 
