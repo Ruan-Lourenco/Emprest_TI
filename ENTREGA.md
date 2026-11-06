@@ -3,6 +3,7 @@
 ## Links
 
 - Repositório: https://github.com/Ruan-Lourenco/Emprest_TI
+- PR em rascunho: https://github.com/Ruan-Lourenco/Emprest_TI/pull/19
 - Produção informada pelo responsável: https://emprest-ti-coral.vercel.app/login
 - Estado: **entrega parcial**. A página de login respondeu HTTP 200 em
   2026-11-06; fotos, dados, conta convidada e fluxo autenticado no deploy ainda
@@ -111,6 +112,7 @@ chave ainda não foi disponibilizado neste ambiente.
   e confirmar zero empréstimos sem usá-la nos testes.
 - Rodar teste de concorrência/RLS em PostgreSQL local e testar fluxo na Vercel
   com outra conta; conferir que as 12 fotos aparecem e links abrem sem login.
-- Concluir checks, verificador, PR, merge e tag somente com evidência real.
+- Concluir verificações de banco e produção, atualizar o PR em rascunho,
+  fazer merge e criar a tag somente com evidência real.
 
 `EmprestTI.zip` preexistente e não rastreado ficou fora desta entrega.

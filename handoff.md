@@ -17,8 +17,8 @@ de ambiente. O professor deve ser vinculado como `collaborator`.
 ## O que tentei e não funcionou
 
 A página de login Vercel respondeu HTTP 200, mas não houve login real. A
-automação do Chrome parou por não conseguir confirmar a URL atual; não foi
-usada para criar PR. Sem chave Pexels local não foi possível gerar imagens.
+automação do Chrome parou por não conseguir confirmar a URL atual; o PR #19
+foi aberto por API do GitHub. Sem chave Pexels local não foi possível gerar imagens.
 Não há PostgreSQL local comprovado para `npm run test:db`.
 
 ## Próximo passo exato
