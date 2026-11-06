@@ -101,6 +101,12 @@ o script recebe **o caminho de um arquivo local fora do repositório** e lê a
 chave sem criar variável nova nem passá-la na linha de comando. O arquivo de
 chave ainda não foi disponibilizado neste ambiente.
 
+Ao atualizar o PR com `main`, a branch principal trouxe uma segunda cópia da
+skill em `.cursor/skills/` e `prisma` CLI 7 com `@prisma/client` 6. Mantive a
+fonte canônica `.agents/skills/` prevista em `AGENTS.md` e alinhei o CLI à
+linha 6 do client para preservar geração e build. As demais atualizações de
+dependências de `main` foram mantidas e precisam passar novamente pelos checks.
+
 ## 8. Fora de escopo e pendências
 
 - Obter chave Pexels no ambiente local, preparar e revisar 12 fotos; registrar
