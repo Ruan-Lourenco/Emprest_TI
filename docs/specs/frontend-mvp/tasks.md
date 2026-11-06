@@ -1,6 +1,7 @@
 # Tarefas — Frontend navegável do EmpresTI
 
-Status: CONCLUÍDO em 2026-09-28
+Status: CONCLUÍDO em 2026-09-28 para o incremento demonstrativo. Os comandos
+abaixo são evidência histórica, não uma validação executada nesta entrega.
 
 Spec relacionada: `docs/specs/frontend-mvp/spec.md`
 

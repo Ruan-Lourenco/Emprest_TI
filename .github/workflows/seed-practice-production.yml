@@ -1,0 +1,36 @@
+name: Seed practice equipment in production
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirmation:
+        description: Type APPLY after the approved photos are public and the migration has completed.
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  seed:
+    if: inputs.confirmation == 'APPLY'
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npx prisma generate
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          DIRECT_URL: ${{ secrets.DIRECT_URL }}
+      - name: Require 12 approved photos
+        run: node scripts/validate-equipment-photos.mjs --metadata-only
+      - name: Upsert initial equipment
+        run: npm run db:seed -- --initial-equipment
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          DIRECT_URL: ${{ secrets.DIRECT_URL }}

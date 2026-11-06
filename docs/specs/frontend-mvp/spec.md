@@ -1,6 +1,8 @@
 # Spec — Frontend navegável do EmpresTI
 
-Status: APROVADO em 2026-09-28
+Status: APROVADA e implementada em 2026-09-28; comportamento demonstrativo
+SUPERADO pela implementação de `docs/specs/persistencia-auth/`. Preservada como
+registro histórico, não como descrição da interface atual.
 
 ## Objetivo
 

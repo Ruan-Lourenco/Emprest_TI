@@ -42,7 +42,9 @@ export function AppDataProvider({ children }: { children: ReactNode }) {
     id: item.id, name: item.name, category: item.category as Equipment["category"],
     patrimony: item.patrimony, serial: item.serial, location: item.location,
     status: item.status as Equipment["status"], description: item.description,
-    lastReturn: item.lastReturnAt ? dateOnly(item.lastReturnAt) : "Nunca"
+    lastReturn: item.lastReturnAt ? dateOnly(item.lastReturnAt) : "Nunca",
+    imageUrl: item.imageUrl, imagePhotographer: item.imagePhotographer,
+    imageSourceUrl: item.imageSourceUrl
   })).sort((a, b) => a.name.localeCompare(b.name, "pt-BR")), [items.data]);
   const ownRows = mine.data?.pages.flatMap((page) => page.items) ?? [];
   const allRows = all.data?.pages.flatMap((page) => page.items) ?? [];

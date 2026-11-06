@@ -18,6 +18,11 @@ Consulte os documentos nesta ordem, conforme o tipo de decisão:
 5. `docs/layout.md` — referência visual do produto.
 6. Código e testes — implementação e evidências do comportamento especificado.
 
+Para tarefas de implementação, leia `rules/spec-flow.md`. Para testes e
+conclusão, leia `rules/tests.md` e `rules/checks.md`. `rules/operacao.md`
+define as ações locais e remotas autorizadas; `rules/handoff.md` define a
+retomada entre sessões. Cada procedimento tem um único arquivo dono.
+
 Se houver conflito, não esconda a divergência: registre-a e peça a decisão
 apropriada. Uma decisão marcada como `RASCUNHO`, `PENDENTE` ou equivalente não
 deve ser tratada como aprovada.
@@ -38,6 +43,10 @@ Toda feature deve seguir:
 Não implemente uma feature apenas a partir de uma issue, conversa ou ideia
 solta. Se a mudança alterar comportamento, comece pela spec. Se alterar uma
 decisão técnica, atualize ou crie um ADR antes do código.
+
+Trabalho de documentação, configuração ou manutenção sem comportamento de
+produto usa escopo e verificação proporcionais; não precisa inventar uma spec
+de feature. O fluxo detalhado está em `rules/spec-flow.md`.
 
 ## Regras de implementação
 
@@ -75,6 +84,36 @@ decisão técnica, atualize ou crie um ADR antes do código.
 - O PR deve informar a spec relacionada, os comandos executados e seus
 	resultados.
 
+## Estado atual
+
+O frontend e a integração local de autenticação/persistência estão no código.
+`docs/specs/persistencia-auth/tasks.md` ainda registra a migration remota, o
+bootstrap e o teste de login real como pendências. Não trate essas etapas como
+concluídas até haver evidência do ambiente correspondente. A implementação
+atual resolve somente o tenant `suporte_ti`, conforme o ADR-002 aprovado.
+Seleção entre vários vínculos está fora desta versão. Nenhum MCP de banco ou serviço
+externo está configurado neste repositório.
+
+A prática de catálogo com fotos e solicitação está na branch
+`feat/pratica-sdd-subagentes` e no PR #19 em rascunho. As specs
+`dados-iniciais` e `solicitar-emprestimo` foram aprovadas, mas seguem NÃO
+PRONTAS: faltam fotos revisadas, Storage, banco local/produção e login real.
+Veja `ENTREGA.md` e `handoff.md` antes de afirmar que a prática foi publicada.
+
+## Skills
+
+A fonte das skills deste projeto é `.agents/skills/<nome>/SKILL.md`. Leia o
+`name` e a `description` para decidir se uma skill se aplica; abra o corpo só
+quando a tarefa corresponder. No Cursor, esta seção anuncia a mesma pasta do
+repositório, sem manter uma segunda cópia em `.cursor/skills/`. No Codex, a
+pasta é descoberta como skill de projeto. Em conflito, rules, PRD, ADR e spec
+vigentes prevalecem sobre orientações genéricas da skill.
+
+- `verificar-isolamento-multitenant`: use ao criar ou revisar procedimentos
+  tRPC que acessam dados de tenant ou ao reunir evidência de isolamento.
+- `imagens-equipamentos`: use para selecionar, preparar ou revisar fotos do
+  catálogo via Pexels; não publica arquivos em produção.
+
 <!-- BEGIN:nextjs-agent-rules -->
 
 # This is NOT the Next.js you know
@@ -84,3 +123,14 @@ This version has breaking changes — APIs, conventions, and file structure may 
 This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
 
 <!-- END:nextjs-agent-rules -->
+
+## Subagentes
+
+- A instrução canônica de cada papel fica em `agents/<nome>.md`. Os adaptadores
+  de descoberta ficam em `.cursor/agents/` e `.codex/agents/` e apontam para
+  essa fonte, sem duplicar o procedimento.
+- Antes de declarar uma spec implementada e verificada, use
+  `verificador-spec` conforme `rules/spec-flow.md`.
+- O subagente não herda a conversa: passe o caminho da spec e o escopo exato
+  da verificação. Sem suporte a subagentes, abra outra sessão com a instrução
+  canônica e as mesmas entradas.

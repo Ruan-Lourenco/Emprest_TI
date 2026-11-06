@@ -41,6 +41,11 @@ model Equipment {
   location     String
   status       String
   description  String    @default("")
+  imageUrl     String?   @map("image_url")
+  imagePexelsId String? @unique @map("image_pexels_id")
+  imagePhotographer String? @map("image_photographer")
+  imageSourceUrl String? @map("image_source_url")
+  imageLicense String? @map("image_license")
   lastReturnAt DateTime? @map("last_return_at") @db.Timestamptz(6)
   tenant       Tenant    @relation(fields: [tenantId], references: [id])
   loans        Loan[]

@@ -26,4 +26,18 @@ describe("CatalogView", () => {
     expect(screen.queryByText("ThinkPad T14")).not.toBeInTheDocument();
     expect(screen.getByText('MacBook Pro 14"')).toBeInTheDocument();
   });
+
+  it("CA-02/CA-06: apresenta foto e crédito Pexels", () => {
+    initialEquipment[0].imageUrl = "https://example.supabase.co/storage/v1/object/public/equipment/TI-0001.jpg";
+    try {
+      render(<CatalogView />);
+      expect(screen.getByRole("img", { name: initialEquipment[0].name })).toHaveAttribute("width", "800");
+      expect(screen.getByRole("link", { name: "Fotos: Pexels" })).toHaveAttribute("href", "https://www.pexels.com/");
+      expect(screen.getByText(initialEquipment[0].name)).toBeInTheDocument();
+      expect(screen.getByText(`${initialEquipment[0].category} · ${initialEquipment[0].patrimony}`)).toBeInTheDocument();
+      expect(screen.getAllByText("Disponível").length).toBeGreaterThan(0);
+    } finally {
+      initialEquipment[0].imageUrl = null;
+    }
+  });
 });

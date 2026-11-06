@@ -1,13 +1,43 @@
 # Handoff
 
-Artefato efêmero para registrar onde uma sessão terminou e o que ficou pendente.
-Não é fonte de verdade sobre requisitos, comportamento ou arquitetura.
+## Onde parei
 
-## Estado atual
+A prática de SDD está implementada **parcialmente** na branch
+`feat/pratica-sdd-subagentes`: specs, ADR-003, skill Pexels, migration,
+seed, interface, testes e workflows manuais foram preparados. Fotos reais,
+Storage, migration/seed remoto, conta convidada e teste autenticado em produção
+seguem sem evidência; as duas specs permanecem NÃO PRONTAS.
+Nesta continuação, typecheck, lint, build e 23 testes passaram localmente;
+`docs/specs/*/evidence.md` mapeia o que cada CA ainda não comprova.
 
-* O ADR-001 e a spec `frontend-mvp` foram aprovados em 2026-09-28.
-* O monólito Next.js foi inicializado.
-* As seis telas do frontend demonstrativo estão implementadas com dados locais.
-* Typecheck, lint, testes de componente, E2E e build passaram.
-* Autenticação, banco, API, persistência e deploy continuam pendentes e exigem
-  specs próprias.
+## Decisões não óbvias
+
+Conflitos e lacunas estão em `ENTREGA.md`; ADR-003 decide metadados das fotos.
+A chave Pexels é lida de arquivo local fora do repositório, sem nova variável
+de ambiente. O professor deve ser vinculado como `collaborator`.
+
+## O que tentei e não funcionou
+
+A página de login Vercel respondeu HTTP 200, mas não houve login real. A
+automação do Chrome parou por não conseguir confirmar a URL atual; o PR #19
+foi aberto por API do GitHub, atualizado com `main` e está sem conflito. Seus
+checks de documentação/segredos e build passaram. Sem chave Pexels local não
+foi possível gerar imagens. O Docker Desktop não iniciou o daemon; a porta
+5432 pertence a outro aplicativo e não foi usada para testes.
+Não há PostgreSQL local comprovado para `npm run test:db`.
+
+## Próximo passo exato
+
+Depois de reunir uma chave Pexels em arquivo local fora do repositório,
+executar `node scripts/prepare-equipment-photos.mjs <caminho-absoluto>`;
+conferir visualmente as 12 fotos, produzir `data/fotos-aprovadas.json` e
+validar com `node scripts/validate-equipment-photos.mjs` antes do upload humano.
+Para o restante da sequência protegida, seguir `docs/OPERACAO-PRATICA.md`.
+
+## Arquivos relevantes
+
+- `ENTREGA.md`
+- `docs/specs/dados-iniciais/`
+- `docs/specs/solicitar-emprestimo/`
+- `.agents/skills/imagens-equipamentos/`
+- `docs/OPERACAO-PRATICA.md`
