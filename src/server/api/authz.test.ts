@@ -7,6 +7,15 @@ import type { createContext } from "./trpc";
 type Context = Awaited<ReturnType<typeof createContext>>;
 
 describe("autenticação e autorização", () => {
+  it("CA-01 solicitar empréstimo: recusa sem sessão", async () => {
+    const caller = appRouter.createCaller({ user: null, membership: null } as unknown as Context);
+    await expect(caller.loans.request({ equipmentId: randomUUID() })).rejects.toMatchObject({ code: "UNAUTHORIZED" });
+  });
+
+  it("CA-01 solicitar empréstimo: recusa sessão sem vínculo", async () => {
+    const caller = appRouter.createCaller({ user: { id: randomUUID() }, membership: null } as unknown as Context);
+    await expect(caller.loans.request({ equipmentId: randomUUID() })).rejects.toMatchObject({ code: "FORBIDDEN" });
+  });
   it("CA-01 (parcial): recusa credenciais inválidas", async () => {
     const ctx = {
       user: null, membership: null,

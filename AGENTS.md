@@ -105,6 +105,8 @@ vigentes prevalecem sobre orientações genéricas da skill.
 
 - `verificar-isolamento-multitenant`: use ao criar ou revisar procedimentos
   tRPC que acessam dados de tenant ou ao reunir evidência de isolamento.
+- `imagens-equipamentos`: use para selecionar, preparar ou revisar fotos do
+  catálogo via Pexels; não publica arquivos em produção.
 
 <!-- BEGIN:nextjs-agent-rules -->
 

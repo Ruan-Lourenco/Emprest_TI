@@ -37,6 +37,10 @@ quais itens abaixo já foram realizados e concluir os demais:
 
 O workflow de migrations não dispara automaticamente. Ele só é executável manualmente, com confirmação literal `APPLY`, e usa o Environment protegido. Após a migration, execute o workflow de bootstrap, também manual e protegido. O seed cria `suporte_ti` de forma idempotente e vincula a conta Auth informada como Operações.
 
+Para a prática de catálogo com fotos, siga `docs/OPERACAO-PRATICA.md`: há
+workflows manuais protegidos para seed dos 12 itens e vínculo de conta
+convidada. O upload das fotos ao Storage continua humano.
+
 No Supabase Auth, desabilite cadastro público e crie a primeira conta pela administração. Crie contas adicionais somente por convite e vincule cada UUID a um tenant e papel por um fluxo administrativo aprovado. Não há cadastro aberto na aplicação.
 
 Na Vercel, cadastre `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`, `DATABASE_URL` e `DIRECT_URL` em cada ambiente. `DIRECT_URL` é usada na geração do Prisma Client durante o build e nas migrations protegidas; os requests usam `DATABASE_URL`. Faça novo deploy após alterar variáveis.
