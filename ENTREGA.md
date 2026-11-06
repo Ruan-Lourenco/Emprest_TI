@@ -12,25 +12,25 @@
 
 ## 1. Conflitos: pedido versus fontes vigentes
 
-| Pedido | Contrariava | Decisão e motivo | Registro |
-| --- | --- | --- | --- |
-| Limite de cinco empréstimos | PRD: três | Mantidos três; só Operações altera regra aprovada | `docs/specs/solicitar-emprestimo/spec.md`, CA-04 |
-| Prazo de 14 dias úteis | PRD e código atual: 14 dias corridos | Mantidos 14 corridos até decisão de Operações | `docs/specs/solicitar-emprestimo/spec.md`, CA-03 |
-| Catálogo sem crédito | Diretrizes da API Pexels e contrato da skill | Exibir link "Fotos: Pexels" | ADR-003, CA-02/CA-06 |
-| Senha no seed | `rules/secrets.md`, `AGENTS.md` e outra seção do enunciado | Não registrar senha; convite Auth e vínculo por UUID | `docs/specs/dados-iniciais/spec.md`, CA-05 |
-| Apenas dois itens em manutenção | Lista canônica de 12 inclui TI-0010 em manutenção | Três em manutenção, nove disponíveis | `data/equipamentos-iniciais.json`, CA-01 |
-| Verificador corrigir teste | Independência exigida para o papel | Verificador só aponta; agente principal corrige | `agents/verificador-spec.md` |
-| Agente publicar dados | Regra geral da própria prática e `rules/operacao.md` | Agente prepara; pessoa executa no deploy | `docs/specs/dados-iniciais/spec.md` |
+| Pedido | Contrariava | Decisão e motivo | Registro | Commit |
+| --- | --- | --- | --- | --- |
+| Limite de cinco empréstimos | PRD: três | Mantidos três; só Operações altera regra aprovada | `docs/specs/solicitar-emprestimo/spec.md`, CA-04 | `b8aeee3` |
+| Prazo de 14 dias úteis | PRD e código atual: 14 dias corridos | Mantidos 14 corridos até decisão de Operações | `docs/specs/solicitar-emprestimo/spec.md`, CA-03 | `b8aeee3` |
+| Catálogo sem crédito | Diretrizes da API Pexels e contrato da skill | Exibir link "Fotos: Pexels" | ADR-003, CA-02/CA-06 | `b8aeee3` |
+| Senha no seed | `rules/secrets.md`, `AGENTS.md` e outra seção do enunciado | Não registrar senha; convite Auth e vínculo por UUID | `docs/specs/dados-iniciais/spec.md`, CA-05 | `b8aeee3` |
+| Apenas dois itens em manutenção | Lista canônica de 12 inclui TI-0010 em manutenção | Três em manutenção, nove disponíveis | `data/equipamentos-iniciais.json`, CA-01 | `b8aeee3` |
+| Verificador corrigir teste | Independência exigida para o papel | Verificador só aponta; agente principal corrige | `agents/verificador-spec.md` e seção 6 | `4501a76`, `dbf4abf` |
+| Agente publicar dados | Regra geral da própria prática e `rules/operacao.md` | Agente prepara; pessoa executa no deploy | `docs/specs/dados-iniciais/spec.md` | `b8aeee3` |
 
 ## 1b. Lacunas decididas
 
-| Spec | Faltava | Alternativas e decisão | Motivo |
-| --- | --- | --- | --- |
-| Dados iniciais | Série e localização | Placeholders técnicos `SEED-TI-xxxx` e `Acervo de TI` | Schema exige os campos; não inventa série real. Corrigir antes de operar. |
-| Dados iniciais | Categoria `cabo` fora do enum atual | Mapear para `Acessório` | Preserva contrato da aplicação sem categoria nova. |
-| Dados iniciais | Papel da conta do professor | `collaborator` | Precisa solicitar e ver apenas os próprios itens; sem acesso de Operações. |
-| Fotos | Onde guardar origem e crédito | Colunas opcionais em `equipment` | Registro verificável, compatível com dados existentes. |
-| Solicitação | Aprovação ou fila | Nenhuma; cria imediatamente | Decisão explícita do briefing, sem conflito com PRD. |
+| Spec | Faltava | Alternativas e decisão | Motivo | Commit |
+| --- | --- | --- | --- | --- |
+| Dados iniciais | Série e localização | Placeholders técnicos `SEED-TI-xxxx` e `Acervo de TI` | Schema exige os campos; não inventa série real. Corrigir antes de operar. | `b8aeee3` |
+| Dados iniciais | Categoria `cabo` fora do enum atual | Mapear para `Acessório` | Preserva contrato da aplicação sem categoria nova. | `b8aeee3` |
+| Dados iniciais | Papel da conta do professor | `collaborator` | Precisa solicitar e ver apenas os próprios itens; sem acesso de Operações. | `b8aeee3` |
+| Fotos | Onde guardar origem e crédito | Colunas opcionais em `equipment` | Registro verificável, compatível com dados existentes. | `b8aeee3` |
+| Solicitação | Aprovação ou fila | Nenhuma; cria imediatamente | Decisão explícita do briefing, sem conflito com PRD. | `b8aeee3` |
 
 ## 2. Onde o agente tentou decidir
 

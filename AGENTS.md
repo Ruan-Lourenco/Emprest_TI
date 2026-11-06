@@ -94,6 +94,12 @@ atual resolve somente o tenant `suporte_ti`, conforme o ADR-002 aprovado.
 Seleção entre vários vínculos está fora desta versão. Nenhum MCP de banco ou serviço
 externo está configurado neste repositório.
 
+A prática de catálogo com fotos e solicitação está na branch
+`feat/pratica-sdd-subagentes` e no PR #19 em rascunho. As specs
+`dados-iniciais` e `solicitar-emprestimo` foram aprovadas, mas seguem NÃO
+PRONTAS: faltam fotos revisadas, Storage, banco local/produção e login real.
+Veja `ENTREGA.md` e `handoff.md` antes de afirmar que a prática foi publicada.
+
 ## Skills
 
 A fonte das skills deste projeto é `.agents/skills/<nome>/SKILL.md`. Leia o
