@@ -105,7 +105,11 @@ Ao atualizar o PR com `main`, a branch principal trouxe uma segunda cópia da
 skill em `.cursor/skills/` e `prisma` CLI 7 com `@prisma/client` 6. Mantive a
 fonte canônica `.agents/skills/` prevista em `AGENTS.md` e alinhei o CLI à
 linha 6 do client para preservar geração e build. As demais atualizações de
-dependências de `main` foram mantidas e precisam passar novamente pelos checks.
+dependências de `main` foram mantidas. Após o merge `d4e4ab7`, `npm ci`,
+`npm run build`, `npm run lint`, `npm test` (16 testes) e `git diff --check`
+passaram. No PR #19, os checks `Documentation and secret guard` e
+`Production build` também passaram. O PR segue em rascunho pelas pendências
+de dados, banco e produção descritas acima.
 
 ## 8. Fora de escopo e pendências
 
