@@ -8,7 +8,7 @@ import { useAppData } from "@/features/data/app-data-provider";
 const categories = ["Todos", "Notebook", "Monitor", "Câmera", "Acessório", "Projetor"] as const;
 
 export function CatalogView() {
-  const { equipment } = useAppData();
+  const { equipment, loading, error } = useAppData();
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState<(typeof categories)[number]>("Todos");
   const [availableOnly, setAvailableOnly] = useState(false);
@@ -21,6 +21,9 @@ export function CatalogView() {
     });
   }, [availableOnly, category, equipment, query]);
   const available = equipment.filter((item) => item.status === "available").length;
+
+  if (error) return <div className="page"><p role="alert">Não foi possível carregar o catálogo. Atualize a página e tente novamente.</p></div>;
+  if (loading) return <div className="page"><p role="status">Carregando catálogo...</p></div>;
 
   return (
     <div className="page">

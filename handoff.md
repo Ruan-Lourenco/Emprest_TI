@@ -2,10 +2,13 @@
 
 ## Estado
 
-Branch `feat/pratica-sdd-subagentes`, PR #19 pronto para revisão. Specs de dados
-iniciais e empréstimo aprovadas, mas **não prontas** para conclusão: faltam
-revisão e publicação das fotos, migration/seed protegidos,
-conta convidada e login autenticado na Vercel.
+O PR #19 foi incorporado em `main`. Na branch `codex/fix-pooler-runtime`, a
+correção do erro intermitente de produção `prepared statement "s3" does not
+exist` está em validação local. O responsável conseguiu entrar na Vercel e
+relatou ter executado o seed protegido duas vezes; o vídeo de 2026-11-09
+mostra o catálogo, uma solicitação e depois a tela de empréstimos vazia seguida
+de erro HTTP do servidor. As specs seguem **não prontas** até a jornada
+autenticada completa e os demais critérios terem evidência.
 
 Em 2026-11-09 o responsável confirmou que a orientação atualizada da prática
 exige Pixabay; o HTML original citava Pexels. ADR-004 e specs registram essa
@@ -24,8 +27,10 @@ continuam NÃO PRONTAS até evidência de produção dos critérios restantes.
 
 ## Próximos passos
 
-1. Revisar o PR #19 com o manifesto versionado, executar os checks e obter a
-   revisão exigida antes do merge em `main`.
+1. Publicar a correção de runtime pelo fluxo de PR aprovado. Conferir na
+   Vercel que `DATABASE_URL` usa o Supavisor transaction pooler na porta 6543,
+   sem expor a URL. Repetir login, solicitação, recarga e lista pessoal com a
+   conta de teste, mantendo a conta do professor com zero empréstimos.
 2. PostgreSQL local isolado em `localhost:5433` recebeu as três migrations;
    `npm run test:db` passou após correção de `P2028`, e o seed idempotente foi
    verificado com fixture ignorada pelo Git. Aplicar migrations/seed de produção

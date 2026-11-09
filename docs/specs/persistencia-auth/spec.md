@@ -24,7 +24,7 @@ login real por e-mail e senha, mantendo os fluxos e as regras aprovadas no PRD.
   equipamentos. O servidor verifica o papel em cada operação.
 - Recarregar a página mantém os dados gravados. Erros de autenticação, permissão,
   conflito de solicitação e indisponibilidade do banco são mostrados sem vazar
-  detalhes sensíveis.
+  detalhes sensíveis. Uma consulta que falhou não aparece como lista vazia.
 - Dados de demonstração não são importados automaticamente.
 
 ## Segurança e dados
@@ -34,6 +34,9 @@ login real por e-mail e senha, mantendo os fluxos e as regras aprovadas no PRD.
   por padrão para as tabelas de domínio.
 - A API usa tRPC, serviços e Prisma conforme ADR-001. A chave de serviço do
   Supabase não vai ao navegador.
+- Em produção, Prisma usa o Supavisor transaction pooler na porta 6543 com
+  `pgbouncer=true&connection_limit=1`, conforme ADR-001; conexões diretas não
+  são reescritas pelo runtime.
 - Mutações críticas registram ator, tenant, ação e recurso em auditoria.
 
 ## Decisões

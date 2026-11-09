@@ -20,8 +20,8 @@ export function EquipmentDetail({ patrimony }: { patrimony: string }) {
     if (open) confirmRef.current?.focus();
   }, [open]);
 
-  if (loading) return <div className="page"><p role="status">Carregando equipamento...</p></div>;
   if (error) return <div className="page"><p role="alert">Não foi possível carregar o equipamento.</p></div>;
+  if (loading) return <div className="page"><p role="status">Carregando equipamento...</p></div>;
   if (!item) return <div className="page"><div className="empty"><h1>Equipamento não encontrado</h1><Link className="button" href="/catalogo"><ArrowLeft /> Voltar ao catálogo</Link></div></div>;
   const selectedItem = item;
 

@@ -63,6 +63,11 @@ aplicada, sobrescreva `DATABASE_URL` somente no processo do teste e execute
 - Erro de conexão: confira a URL do pooler na porta 6543 para `DATABASE_URL` e
   a conexão de migration em `DIRECT_URL`. Senhas com caracteres reservados
   precisam estar codificadas na URL.
+- Erro `prepared statement "sN" does not exist` ou `already exists`: confira
+  se `DATABASE_URL` do runtime na Vercel usa o Supavisor transaction pooler na
+  porta 6543. O runtime força `pgbouncer=true&connection_limit=1` nesse caso,
+  conforme ADR-001. Se a variável foi alterada, publique um novo deploy. Não
+  imprima nem compartilhe a URL completa: ela contém a senha do banco.
 - Login aceito pelo Supabase, mas acesso recusado: a conta ainda precisa de
   vínculo em `memberships` pelo fluxo aprovado.
 - Alteração de variável na Vercel: faça novo deploy para que ela entre em vigor.
