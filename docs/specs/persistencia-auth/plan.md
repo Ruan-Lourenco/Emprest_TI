@@ -2,6 +2,15 @@
 
 Status: APROVADO em 2026-10-19.
 
+## Correção de estabilidade observada em produção (2026-11-09)
+
+- Garantir no runtime Prisma os parâmetros do Supavisor transaction pooler
+  definidos no ADR-001, mesmo se a URL de deploy omitir os parâmetros.
+- Mostrar falha de carregamento no catálogo e em Meus empréstimos sem expor
+  detalhes internos, em vez de apresentar uma lista vazia como dado verdadeiro.
+- Verificar os dois casos localmente e repetir o fluxo autenticado no deploy
+  após a publicação pelo processo aprovado.
+
 1. Resolver a divergência de ferramenta de migration e fechar o provisionamento
    do primeiro usuário de Operações.
 2. Modelar tenant, vínculo de usuário, equipamento, empréstimo e auditoria em

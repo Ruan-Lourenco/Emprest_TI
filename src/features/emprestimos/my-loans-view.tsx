@@ -9,10 +9,13 @@ import { isOverdue } from "@/features/data/dates";
 import type { Loan } from "@/features/data/types";
 
 export function MyLoansView() {
-  const { equipment, currentUserLoans, loans, returnLoan, user } = useAppData();
+  const { equipment, currentUserLoans, loans, returnLoan, user, loading, error } = useAppData();
   const [selected, setSelected] = useState<Loan | null>(null);
   const [feedback, setFeedback] = useState<{ message: string; ok: boolean } | null>(null);
   const history = loans.filter((loan) => loan.userId === user?.id && loan.returnedAt);
+
+  if (error) return <div className="page"><p role="alert">Não foi possível carregar seus empréstimos. Atualize a página e tente novamente.</p></div>;
+  if (loading) return <div className="page"><p role="status">Carregando empréstimos...</p></div>;
 
   async function confirmReturn() {
     if (!selected) return;
