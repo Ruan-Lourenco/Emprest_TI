@@ -11,7 +11,8 @@ export type Equipment = {
   description: string;
   lastReturn: string;
   imageUrl?: string | null;
-  imagePhotographer?: string | null;
+  imageProvider?: string | null;
+  imageCreator?: string | null;
   imageSourceUrl?: string | null;
 };
 

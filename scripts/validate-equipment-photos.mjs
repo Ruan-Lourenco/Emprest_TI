@@ -9,10 +9,10 @@ const patrimonies = new Set(items.map((item) => item.patrimonio));
 const ids = new Set();
 for (const photo of photos) {
   if (!patrimonies.delete(photo.patrimonio)) throw new Error(`Patrimônio ausente ou repetido: ${photo.patrimonio}`);
-  if (!photo.pexelsId || ids.has(photo.pexelsId)) throw new Error(`ID Pexels ausente ou repetido: ${photo.patrimonio}`);
-  ids.add(photo.pexelsId);
-  if (!photo.photographer || photo.license !== "Pexels License" ||
-      !photo.sourceUrl?.startsWith("https://www.pexels.com/photo/")) throw new Error(`Crédito incompleto: ${photo.patrimonio}`);
+  if (!photo.sourceId || ids.has(photo.sourceId)) throw new Error(`ID Pixabay ausente ou repetido: ${photo.patrimonio}`);
+  ids.add(photo.sourceId);
+  if (photo.provider !== "Pixabay" || !photo.creator || photo.license !== "Pixabay Content License" ||
+      !photo.sourceUrl?.startsWith("https://pixabay.com/")) throw new Error(`Crédito incompleto: ${photo.patrimonio}`);
   let publicUrl;
   try { publicUrl = new URL(photo.publicUrl); } catch { throw new Error(`URL de Storage público inválida: ${photo.patrimonio}`); }
   if (publicUrl.protocol !== "https:" || !publicUrl.hostname.endsWith(".supabase.co") ||

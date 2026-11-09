@@ -43,7 +43,7 @@ export function AppDataProvider({ children }: { children: ReactNode }) {
     patrimony: item.patrimony, serial: item.serial, location: item.location,
     status: item.status as Equipment["status"], description: item.description,
     lastReturn: item.lastReturnAt ? dateOnly(item.lastReturnAt) : "Nunca",
-    imageUrl: item.imageUrl, imagePhotographer: item.imagePhotographer,
+    imageUrl: item.imageUrl, imageProvider: item.imageProvider, imageCreator: item.imageCreator,
     imageSourceUrl: item.imageSourceUrl
   })).sort((a, b) => a.name.localeCompare(b.name, "pt-BR")), [items.data]);
   const ownRows = mine.data?.pages.flatMap((page) => page.items) ?? [];

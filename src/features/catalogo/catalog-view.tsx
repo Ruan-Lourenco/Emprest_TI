@@ -45,7 +45,8 @@ export function CatalogView() {
       {filtered.length ? <div className="equipment-grid">{filtered.map((item) => <EquipmentCard key={item.id} item={item} />)}</div> : (
         <div className="empty"><Package size={30} /><h2>Nenhum equipamento encontrado</h2><p>Ajuste a busca ou remova algum filtro.</p></div>
       )}
-      {filtered.some((item) => item.imageUrl) && <p className="photo-credit"><a href="https://www.pexels.com/" target="_blank" rel="noreferrer">Fotos: Pexels</a></p>}
+      {filtered.some((item) => item.imageUrl && item.imageProvider === "Pixabay") && <p className="photo-credit"><a href="https://pixabay.com/" target="_blank" rel="noreferrer">Fotos: Pixabay</a></p>}
+      {filtered.some((item) => item.imageUrl && item.imageProvider === "Pexels") && <p className="photo-credit"><a href="https://www.pexels.com/" target="_blank" rel="noreferrer">Fotos: Pexels</a></p>}
     </div>
   );
 }

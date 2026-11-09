@@ -2,51 +2,67 @@ import { readFile, writeFile, mkdir } from "node:fs/promises";
 import path from "node:path";
 import sharp from "sharp";
 
-const keyFile = process.argv[2];
-if (!keyFile || !path.isAbsolute(keyFile) || path.resolve(keyFile).startsWith(process.cwd() + path.sep))
-  throw new Error("Informe o caminho absoluto de um arquivo de chave fora do repositório.");
-const key = (await readFile(keyFile, "utf8")).trim();
-if (!key) throw new Error("Arquivo de chave Pexels vazio.");
+process.loadEnvFile(".env.local");
+const key = process.env.PIXABAY_API_KEY;
+if (!key) throw new Error("Configure PIXABAY_API_KEY em .env.local.");
 const items = JSON.parse(await readFile("data/equipamentos-iniciais.json", "utf8"));
 const out = path.resolve(".photo-prep");
 await mkdir(out, { recursive: true });
-const used = new Set();
 let rejected = [];
-try {
-  rejected = JSON.parse(await readFile(path.join(out, "rejected.json"), "utf8"));
-} catch (error) {
-  if (error?.code !== "ENOENT") throw error;
-}
+try { rejected = JSON.parse(await readFile(path.join(out, "rejected.json"), "utf8")); }
+catch (error) { if (error?.code !== "ENOENT") throw error; }
 if (!Array.isArray(rejected) || rejected.some((id) => !Number.isInteger(Number(id))))
-  throw new Error(".photo-prep/rejected.json deve ser uma lista de IDs Pexels.");
+  throw new Error(".photo-prep/rejected.json deve ser uma lista de IDs numéricos.");
 const rejectedIds = new Set(rejected.map(Number));
+const used = new Set();
 const manifest = [];
 
 for (const item of items) {
-  const url = new URL("https://api.pexels.com/v1/search");
-  url.searchParams.set("query", item.busca);
-  url.searchParams.set("per_page", "40");
-  const response = await fetch(url, { headers: { Authorization: key } });
-  if (!response.ok) throw new Error(`Busca Pexels falhou para ${item.patrimonio}: HTTP ${response.status}`);
-  const body = await response.json();
-  const photo = body.photos?.find((candidate) =>
-    Number.isInteger(candidate.id) && !used.has(candidate.id) && !rejectedIds.has(candidate.id) &&
-    candidate.src?.original?.startsWith("https://images.pexels.com/") &&
-    candidate.url?.startsWith("https://www.pexels.com/photo/") && candidate.photographer
-  );
-  if (!photo) throw new Error(`Nenhuma foto única candidata para ${item.patrimonio}`);
+  let hits;
+  const cacheFile = path.join(out, `${item.patrimonio}.json`);
+  try {
+    const cached = JSON.parse(await readFile(cacheFile, "utf8"));
+    if (Date.now() - cached.fetchedAt < 86_400_000) hits = cached.hits;
+  } catch (error) { if (error?.code !== "ENOENT") throw new Error(`Cache inválido: ${item.patrimonio}`); }
+  if (!hits) {
+    const url = new URL("https://pixabay.com/api/");
+    url.searchParams.set("key", key);
+    url.searchParams.set("q", item.busca);
+    url.searchParams.set("image_type", "photo");
+    url.searchParams.set("orientation", "horizontal");
+    url.searchParams.set("min_width", "800");
+    url.searchParams.set("min_height", "600");
+    url.searchParams.set("safesearch", "true");
+    url.searchParams.set("per_page", "40");
+    let response;
+    try { response = await fetch(url); }
+    catch { throw new Error(`Busca Pixabay indisponível: ${item.patrimonio}`); }
+    if (!response.ok) throw new Error(`Busca Pixabay falhou: ${item.patrimonio}, HTTP ${response.status}`);
+    const body = await response.json();
+    hits = body.hits;
+    if (!Array.isArray(hits)) throw new Error(`Resposta Pixabay inválida: ${item.patrimonio}`);
+    await writeFile(cacheFile, JSON.stringify({ fetchedAt: Date.now(), hits }));
+  }
+  const photo = hits.find((candidate) => Number.isInteger(candidate.id) &&
+    !used.has(candidate.id) && !rejectedIds.has(candidate.id) &&
+    candidate.largeImageURL?.startsWith("https://pixabay.com/get/") &&
+    candidate.pageURL?.startsWith("https://pixabay.com/") && candidate.user);
+  if (!photo) throw new Error(`Nenhuma foto única candidata: ${item.patrimonio}`);
   used.add(photo.id);
-  const download = await fetch(photo.src.original);
-  if (!download.ok || !download.url.startsWith("https://images.pexels.com/"))
-    throw new Error(`Download Pexels falhou para ${item.patrimonio}: HTTP ${download.status}`);
-  const bytes = Buffer.from(await download.arrayBuffer());
-  const image = await sharp(bytes).resize(800, 600, { fit: "cover", position: "attention" }).jpeg({ quality: 84 }).toBuffer();
-  const metadata = await sharp(image).metadata();
-  if (metadata.width !== 800 || metadata.height !== 600) throw new Error(`Dimensão inválida: ${item.patrimonio}`);
+  let download;
+  try { download = await fetch(photo.largeImageURL); }
+  catch { throw new Error(`Download Pixabay indisponível: ${item.patrimonio}`); }
+  if (!download.ok || !["pixabay.com", "cdn.pixabay.com"].includes(new URL(download.url).hostname))
+    throw new Error(`Download Pixabay falhou: ${item.patrimonio}, HTTP ${download.status}`);
+  const image = await sharp(Buffer.from(await download.arrayBuffer()))
+    .resize(800, 600, { fit: "cover", position: "attention" }).jpeg({ quality: 84 }).toBuffer();
+  const meta = await sharp(image).metadata();
+  if (meta.width !== 800 || meta.height !== 600) throw new Error(`Dimensão inválida: ${item.patrimonio}`);
   await writeFile(path.join(out, `${item.patrimonio}.jpg`), image);
-  manifest.push({ patrimonio: item.patrimonio, pexelsId: String(photo.id), photographer: photo.photographer,
-    sourceUrl: photo.url, license: "Pexels License", localFile: `${item.patrimonio}.jpg`,
-    review: "PENDENTE — conferir pessoas, marcas, logos, texto e telas" });
+  manifest.push({ patrimonio: item.patrimonio, provider: "Pixabay", sourceId: String(photo.id),
+    creator: photo.user, sourceUrl: photo.pageURL, license: "Pixabay Content License",
+    localFile: `${item.patrimonio}.jpg`, review: "PENDENTE — conferir pessoas, marcas, logos, texto e telas" });
+  process.stdout.write(`Preparada ${manifest.length}/${items.length}: ${item.patrimonio}\n`);
 }
 await writeFile(path.join(out, "candidatas.json"), JSON.stringify(manifest, null, 2) + "\n");
 process.stdout.write("12 candidatas preparadas em .photo-prep/; revisão visual obrigatória.\n");

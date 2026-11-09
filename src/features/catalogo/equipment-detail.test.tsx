@@ -17,17 +17,32 @@ describe("detalhe do equipamento", () => {
   it("CA-06 dados iniciais: mostra foto e crédito no detalhe", () => {
     const item = initialEquipment[0];
     item.imageUrl = "https://example.supabase.co/storage/v1/object/public/equipment/TI-0001.jpg";
-    item.imagePhotographer = "Fotógrafo teste";
-    item.imageSourceUrl = "https://www.pexels.com/photo/example-123/";
+    item.imageProvider = "Pixabay";
+    item.imageCreator = "Autor teste";
+    item.imageSourceUrl = "https://pixabay.com/photos/example-123/";
     try {
       render(<EquipmentDetail patrimony={item.patrimony} />);
       expect(screen.getByRole("img", { name: item.name })).toHaveAttribute("width", "800");
-      expect(screen.getByRole("link", { name: "Fotos: Pexels" })).toHaveAttribute("href", "https://www.pexels.com/");
-      expect(screen.getByRole("link", { name: "Foto: Fotógrafo teste" })).toHaveAttribute("href", item.imageSourceUrl);
+      expect(screen.getByRole("link", { name: "Fotos: Pixabay" })).toHaveAttribute("href", "https://pixabay.com/");
+      expect(screen.getByRole("link", { name: "Foto: Autor teste" })).toHaveAttribute("href", item.imageSourceUrl);
     } finally {
       item.imageUrl = null;
-      item.imagePhotographer = null;
+      item.imageProvider = null;
+      item.imageCreator = null;
       item.imageSourceUrl = null;
+    }
+  });
+
+  it("preserva crédito de foto Pexels anterior à migration", () => {
+    const item = initialEquipment[0];
+    item.imageUrl = "https://example.supabase.co/storage/v1/object/public/equipment/TI-0001.jpg";
+    item.imageProvider = "Pexels";
+    try {
+      render(<EquipmentDetail patrimony={item.patrimony} />);
+      expect(screen.getByRole("link", { name: "Fotos: Pexels" })).toHaveAttribute("href", "https://www.pexels.com/");
+    } finally {
+      item.imageUrl = null;
+      item.imageProvider = null;
     }
   });
 

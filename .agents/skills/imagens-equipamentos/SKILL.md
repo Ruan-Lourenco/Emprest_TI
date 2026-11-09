@@ -1,29 +1,24 @@
 ---
 name: imagens-equipamentos
-description: Prepara e valida fotos dos equipamentos do catálogo via API do Pexels. Use ao selecionar, revisar ou atualizar fotos dos 12 itens iniciais; não publica em produção.
+description: Prepara e valida fotos dos 12 equipamentos via API Pixabay. Use ao selecionar, revisar ou atualizar fotos do catálogo; não publica em produção.
 ---
 
 # Imagens de equipamentos
 
-1. Leia `docs/adr/003-fotos-equipamentos.md`, a spec de dados iniciais e
-   `references/pexels.md`. A lista canônica está em `data/equipamentos-iniciais.json`.
-2. Execute `node scripts/prepare-equipment-photos.mjs <arquivo-de-chave>` com
-   caminho absoluto de um arquivo local **fora do repositório**. Não imprima,
-   copie ou versione a chave. Não passe a chave na linha de comando.
-   O script consulta somente a API do Pexels, escolhe IDs distintos e gera
-   imagens 800×600 em `.photo-prep/`.
-3. **Pare antes de aprovar**. Uma pessoa examina cada arquivo e rejeita foto
-   com pessoa, marca ou logo legível, texto ou tela com conteúdo. Registre
-   rejeições e motivos. Para refazer a busca, coloque os IDs reprovados em
-   `.photo-prep/rejected.json` (lista JSON de números) e execute o script de
-   novo. A seleção automática não comprova esse critério.
-4. Para as 12 aprovadas, registre em `data/fotos-aprovadas.json` ID Pexels,
-   fotógrafo, página de origem, licença Pexels e URL pública prevista. Valide
-   com `node scripts/validate-equipment-photos.mjs`. A pessoa responsável faz
-   upload dos arquivos para o bucket público e confere URLs sem login.
-5. Não chame API de escrita do Supabase, não rode migration/seed remoto e não
-   use chave de serviço. A preparação é local e idempotente: arquivos com o
-   mesmo ID/caminho são substituídos, não duplicados.
+1. Leia `docs/adr/004-origem-fotos-pixabay.md`, a spec de dados iniciais e
+   `references/pixabay.md`. A lista canônica é `data/equipamentos-iniciais.json`.
+2. Configure `PIXABAY_API_KEY` no `.env.local` ignorado pelo Git, sem imprimir ou
+   versionar a chave. Execute `node scripts/prepare-equipment-photos.mjs`.
+   O script usa a API Pixabay, cache de 24 horas e gera 12 JPEGs 800×600 em
+   `.photo-prep/`.
+3. Uma pessoa examina cada arquivo. Rejeite foto com pessoa, marca ou logo
+   legível, texto ou tela com conteúdo. Registre os IDs rejeitados em
+   `.photo-prep/rejected.json` e execute novamente o script.
+4. Após aprovação visual e upload humano no bucket público, registre em
+   `data/fotos-aprovadas.json` o provedor, ID, criador, página de origem,
+   licença e URL pública. Valide com `node scripts/validate-equipment-photos.mjs`.
+5. Não escreva no Supabase, rode migration/seed remoto ou use chave de serviço
+   por meio desta skill.
 
-Critérios por código: fonte da API, IDs distintos, tamanho e metadados.
-Critérios por revisão humana: conteúdo visual, publicação e URL acessível.
+Código comprova fonte da API, IDs únicos, dimensões e metadados. Revisão humana
+comprova conteúdo visual, publicação e URL pública acessível.

@@ -1,43 +1,31 @@
 # Handoff
 
-## Onde parei
+## Estado
 
-A prática de SDD está implementada **parcialmente** na branch
-`feat/pratica-sdd-subagentes`: specs, ADR-003, skill Pexels, migration,
-seed, interface, testes e workflows manuais foram preparados. Fotos reais,
-Storage, migration/seed remoto, conta convidada e teste autenticado em produção
-seguem sem evidência; as duas specs permanecem NÃO PRONTAS.
-Nesta continuação, typecheck, lint, build e 23 testes passaram localmente;
-`docs/specs/*/evidence.md` mapeia o que cada CA ainda não comprova.
+Branch `feat/pratica-sdd-subagentes`, PR #19 em rascunho. Specs de dados
+iniciais e empréstimo aprovadas, mas **não prontas** para conclusão: faltam
+revisão e publicação das fotos, PostgreSQL local, migration/seed protegidos,
+conta convidada e login autenticado na Vercel.
 
-## Decisões não óbvias
+Em 2026-11-09 o responsável escolheu Pixabay, embora o enunciado exija Pexels.
+ADR-004 e specs registram a divergência. Código, migration incremental,
+skill, scripts, créditos e testes foram adaptados. A chave está somente no
+`.env.local` ignorado pelo Git, com placeholder em `.env.example`; não deve ir
+à Vercel. Não exibir a chave nem URL de requisição com query.
 
-Conflitos e lacunas estão em `ENTREGA.md`; ADR-003 decide metadados das fotos.
-A chave Pexels é lida de arquivo local fora do repositório, sem nova variável
-de ambiente. O professor deve ser vinculado como `collaborator`.
+O script `node scripts/prepare-equipment-photos.mjs` já gerou 12 candidatas
+locais em `.photo-prep/`. A seleção automática teve fotos inadequadas; IDs
+rejeitados estão em `.photo-prep/rejected.json`. As candidatas ainda não estão
+aprovadas. Revisão visual humana, upload e `data/fotos-aprovadas.json` pendem.
 
-## O que tentei e não funcionou
+## Próximos passos
 
-A página de login Vercel respondeu HTTP 200, mas não houve login real. A
-automação do Chrome parou por não conseguir confirmar a URL atual; o PR #19
-foi aberto por API do GitHub, atualizado com `main` e está sem conflito. Seus
-checks de documentação/segredos e build passaram. Sem chave Pexels local não
-foi possível gerar imagens. O Docker Desktop não iniciou o daemon; a porta
-5432 pertence a outro aplicativo e não foi usada para testes.
-Não há PostgreSQL local comprovado para `npm run test:db`.
+1. Revisar as fotos em `.photo-prep/`, rejeitar pessoas, logos, texto, telas e
+   equipamentos incorretos; repetir a busca com IDs reprovados.
+2. Seguir `docs/OPERACAO-PRATICA.md` para upload humano e manifesto aprovado.
+3. Executar PostgreSQL local e `npm run test:db`; depois migrations/seed somente
+   pelos workflows protegidos, convite Auth e teste autenticado na Vercel.
+4. Atualizar evidências, PR e status das specs antes de merge/tag.
 
-## Próximo passo exato
-
-Depois de reunir uma chave Pexels em arquivo local fora do repositório,
-executar `node scripts/prepare-equipment-photos.mjs <caminho-absoluto>`;
-conferir visualmente as 12 fotos, produzir `data/fotos-aprovadas.json` e
-validar com `node scripts/validate-equipment-photos.mjs` antes do upload humano.
-Para o restante da sequência protegida, seguir `docs/OPERACAO-PRATICA.md`.
-
-## Arquivos relevantes
-
-- `ENTREGA.md`
-- `docs/specs/dados-iniciais/`
-- `docs/specs/solicitar-emprestimo/`
-- `.agents/skills/imagens-equipamentos/`
-- `docs/OPERACAO-PRATICA.md`
+O Docker Desktop não iniciou o daemon no teste anterior; a porta 5432 pertence
+a outro aplicativo. Não usar esse banco como ambiente de teste.

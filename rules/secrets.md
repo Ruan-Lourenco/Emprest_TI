@@ -17,9 +17,12 @@ do banco, ou ao escrever código que lê configuração.
 2. Chave de serviço: ignora todas as políticas. Só em código que roda
    no servidor, nunca em componente de cliente, nunca em variável com
    prefixo público.
-3. Variável nova existe em TRÊS lugares ou em nenhum:
+3. Variável de runtime ou build existe em TRÊS lugares ou em nenhum:
    `.env.local` (sua máquina) · `.env.example` (versionado, sem valor)
    · painel da Vercel (preview e production).
+   Exceção: `PIXABAY_API_KEY` é usada somente pelo script local de preparação
+   de fotos. Fica em `.env.local` e como placeholder em `.env.example`; não
+   deve ser configurada na Vercel, que não executa esse script.
 4. Ao criar uma variável, diga na resposta em quais dos três lugares
    você já a colocou e o que falta eu fazer à mão.
 
@@ -30,7 +33,7 @@ sem nenhum valor real.
 
 ## Não faça
 - Não escreva valor de chave em resposta, commit, log ou comentário.
-- Não crie variável só no `.env.local`. Ela quebra o deploy e o erro
+- Não crie variável de runtime ou build só no `.env.local`. Ela quebra o deploy e o erro
   só aparece no build da Vercel.
 - Não contorne uma política de acesso trocando de chave. Se a política
   atrapalha, a política está errada — pare e me avise.

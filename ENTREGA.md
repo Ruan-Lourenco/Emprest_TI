@@ -17,6 +17,7 @@
 | Limite de cinco empréstimos | PRD: três | Mantidos três; só Operações altera regra aprovada | `docs/specs/solicitar-emprestimo/spec.md`, CA-04 | `b8aeee3` |
 | Prazo de 14 dias úteis | PRD e código atual: 14 dias corridos | Mantidos 14 corridos até decisão de Operações | `docs/specs/solicitar-emprestimo/spec.md`, CA-03 | `b8aeee3` |
 | Catálogo sem crédito | Diretrizes da API Pexels e contrato da skill | Exibir link "Fotos: Pexels" | ADR-003, CA-02/CA-06 | `b8aeee3` |
+| Fonte das fotos após revisão | Enunciado exige Pexels exclusivamente | Responsável escolheu Pixabay; este requisito da avaliação **não será atendido** | ADR-004, specs revisadas em 2026-11-09 | branch atual |
 | Senha no seed | `rules/secrets.md`, `AGENTS.md` e outra seção do enunciado | Não registrar senha; convite Auth e vínculo por UUID | `docs/specs/dados-iniciais/spec.md`, CA-05 | `b8aeee3` |
 | Apenas dois itens em manutenção | Lista canônica de 12 inclui TI-0010 em manutenção | Três em manutenção, nove disponíveis | `data/equipamentos-iniciais.json`, CA-01 | `b8aeee3` |
 | Verificador corrigir teste | Independência exigida para o papel | Verificador só aponta; agente principal corrige | `agents/verificador-spec.md` e seção 6 | `4501a76`, `dbf4abf` |
@@ -46,16 +47,20 @@ defensável de manter um manifesto separado. A coluna junto ao equipamento
 facilita auditoria e unicidade da foto. A migration adiciona colunas opcionais
 para preservar os registros existentes.
 
+O ADR-004 registra a escolha posterior por Pixabay e a migration incremental
+que preserva metadados Pexels anteriores, se existirem.
+
 ## 4. Skill `imagens-equipamentos`
 
 O `SKILL.md` contém o procedimento e o ponto de parada humano; `references/`
 guarda os links e campos da API; os scripts fazem busca, recorte, detecção de
 IDs repetidos e verificação de 800×600. A ausência de pessoas, logos, texto e
 telas com conteúdo exige inspeção visual. O script não contém endpoint de
-upload nem chave do Supabase. **Fotos reprovadas: não apurado**, pois a chave
-Pexels não está configurada e a revisão ainda não ocorreu. A API oficial pede
-link visível para Pexels e recomenda crédito ao fotógrafo:
-https://www.pexels.com/api/documentation/.
+upload nem chave do Supabase. Em 2026-11-09, foram preparadas 12 candidatas
+Pixabay locais. A primeira seleção teve 11 fotos visualmente rejeitadas por
+conteúdo inadequado ou equipamento incorreto. A segunda seleção também tem
+fotos inadequadas; a revisão continua aberta. A chave está no `.env.local`
+ignorado pelo Git. Fonte: https://pixabay.com/api/docs/.
 
 ## 5. Subagente verificador
 
@@ -119,11 +124,10 @@ principal, e o `git show dbf4abf` permite comparar os dois estados.
 
 ## 7. Regra posta à prova
 
-`rules/secrets.md` pede que toda variável nova também exista na Vercel, mas a
-chave Pexels é só de preparação local e nunca deve ir para o deploy. Por isso
-o script recebe **o caminho de um arquivo local fora do repositório** e lê a
-chave sem criar variável nova nem passá-la na linha de comando. O arquivo de
-chave ainda não foi disponibilizado neste ambiente.
+`rules/secrets.md` foi esclarecido: variáveis de runtime e build vão à Vercel;
+`PIXABAY_API_KEY` é exclusiva da preparação local. Existe em `.env.local` e
+como placeholder em `.env.example`, sem valor no Git. Não deve ir à Vercel.
+O script não imprime a chave nem a URL de requisição, que a contém na query.
 
 Ao atualizar o PR com `main`, a branch principal trouxe uma segunda cópia da
 skill em `.cursor/skills/` e `prisma` CLI 7 com `@prisma/client` 6. Mantive a
@@ -137,8 +141,8 @@ de dados, banco e produção descritas acima.
 
 ## 8. Fora de escopo e pendências
 
-- Obter chave Pexels no ambiente local, preparar e revisar 12 fotos; registrar
-  IDs únicos e rejeições; upload **humano** para bucket público do Storage.
+- Concluir revisão das candidatas Pixabay, registrar rejeições e motivos;
+  upload **humano** para bucket público do Storage.
 - Confirmar URLs, criar `data/fotos-aprovadas.json` e executar o validador.
 - Aplicar migration pelo workflow protegido e rodar seed inicial duas vezes,
   verificando contagem e nenhuma alteração em empréstimos existentes.

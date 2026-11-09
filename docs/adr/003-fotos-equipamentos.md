@@ -1,6 +1,7 @@
 # ADR-003 — Fotos do catálogo
 
-Status: APROVADO pelo responsável nesta conversa em 2026-11-06.
+Status: SUPERADO pelo ADR-004 em 2026-11-09. Esta foi a decisão original
+alinhada ao enunciado da prática; mantém-se para rastrear a divergência.
 
 ## Decisão
 

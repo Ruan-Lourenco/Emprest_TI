@@ -42,8 +42,9 @@ model Equipment {
   status       String
   description  String    @default("")
   imageUrl     String?   @map("image_url")
-  imagePexelsId String? @unique @map("image_pexels_id")
-  imagePhotographer String? @map("image_photographer")
+  imageProvider String? @map("image_provider")
+  imageSourceId String? @map("image_source_id")
+  imageCreator String? @map("image_creator")
   imageSourceUrl String? @map("image_source_url")
   imageLicense String? @map("image_license")
   lastReturnAt DateTime? @map("last_return_at") @db.Timestamptz(6)
@@ -52,6 +53,7 @@ model Equipment {
 
   @@unique([tenantId, patrimony])
   @@unique([id, tenantId])
+  @@unique([imageProvider, imageSourceId])
   @@map("equipment")
 }
 

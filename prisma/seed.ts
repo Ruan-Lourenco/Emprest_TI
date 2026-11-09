@@ -8,18 +8,19 @@ const userId = positionals[0];
 const role = positionals[1] ?? "operations";
 
 type InitialItem = { patrimonio: string; nome: string; categoria: string; situacao: string };
-type ApprovedPhoto = { patrimonio: string; pexelsId: string; photographer: string; sourceUrl: string; license: string; publicUrl: string };
+type ApprovedPhoto = { patrimonio: string; provider: string; sourceId: string; creator: string; sourceUrl: string; license: string; publicUrl: string };
 
 async function seedEquipment(tenantId: string) {
   const items = JSON.parse(await readFile("data/equipamentos-iniciais.json", "utf8")) as InitialItem[];
   const photos = JSON.parse(await readFile("data/fotos-aprovadas.json", "utf8")) as ApprovedPhoto[];
   if (items.length !== 12 || photos.length !== 12 || new Set(items.map((item) => item.patrimonio)).size !== 12 ||
-      new Set(photos.map((photo) => photo.pexelsId)).size !== 12) throw new Error("Manifesto de equipamentos/fotos incompleto.");
+      new Set(photos.map((photo) => photo.sourceId)).size !== 12) throw new Error("Manifesto de equipamentos/fotos incompleto.");
   const byPatrimony = new Map(photos.map((photo) => [photo.patrimonio, photo]));
   const category = { notebook: "Notebook", monitor: "Monitor", cabo: "Acessório", camera: "Câmera" } as const;
   for (const item of items) {
     const photo = byPatrimony.get(item.patrimonio);
-    if (!photo || photo.license !== "Pexels License" || !photo.sourceUrl.startsWith("https://www.pexels.com/photo/"))
+    if (!photo || photo.provider !== "Pixabay" || !photo.sourceId || !photo.creator || photo.license !== "Pixabay Content License" ||
+        !photo.sourceUrl.startsWith("https://pixabay.com/"))
       throw new Error(`Foto não aprovada: ${item.patrimonio}`);
     let publicUrl: URL;
     try { publicUrl = new URL(photo.publicUrl); } catch { throw new Error(`URL inválida: ${item.patrimonio}`); }
@@ -29,8 +30,8 @@ async function seedEquipment(tenantId: string) {
     if (item.situacao !== "disponivel" && item.situacao !== "manutencao") throw new Error(`Situação inválida: ${item.patrimonio}`);
     const mappedCategory = category[item.categoria as keyof typeof category];
     if (!mappedCategory) throw new Error(`Categoria inválida: ${item.patrimonio}`);
-    const image = { imageUrl: photo.publicUrl, imagePexelsId: photo.pexelsId,
-      imagePhotographer: photo.photographer, imageSourceUrl: photo.sourceUrl, imageLicense: photo.license };
+    const image = { imageUrl: photo.publicUrl, imageProvider: photo.provider, imageSourceId: photo.sourceId,
+      imageCreator: photo.creator, imageSourceUrl: photo.sourceUrl, imageLicense: photo.license };
     await prisma.equipment.upsert({
       where: { tenantId_patrimony: { tenantId, patrimony: item.patrimonio } },
       create: { tenantId, patrimony: item.patrimonio, name: item.nome, category: mappedCategory,

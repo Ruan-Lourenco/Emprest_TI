@@ -1,6 +1,7 @@
 # Spec — Solicitar empréstimo
 
-Status: APROVADA pelo responsável nesta conversa em 2026-11-06.
+Status: APROVADA em 2026-11-06; crédito visual revisado para Pixabay com a
+decisão explícita do responsável em 2026-11-09.
 Verificação integral: pendente conforme `tasks.md`.
 
 ## Objetivo e vínculo
@@ -19,14 +20,15 @@ aprovada de persistência/autenticação.
 - `tenant_id` e usuário vêm do contexto, não do cliente. Solicitação usa uma
   transação serializable, atualização condicional de equipamento e constraint
   de um empréstimo aberto por equipamento.
-- O catálogo exibe foto, nome, categoria e situação; o crédito Pexels é
-  obrigatório conforme ADR-003, apesar do briefing pedir sua remoção.
+- O catálogo exibe foto, nome, categoria e situação; o crédito Pixabay é
+  obrigatório conforme ADR-004, apesar do briefing pedir sua remoção. Isso
+  diverge da exigência Pexels do enunciado.
 - A conta do professor não é usada para testes que criem empréstimos.
 
 ## Critérios de aceitação
 
 - CA-01: Sem sessão ou vínculo no tenant ativo, solicitar é recusado.
-- CA-02: Catálogo mostra foto, nome, categoria, situação e crédito Pexels.
+- CA-02: Catálogo mostra foto, nome, categoria, situação e crédito Pixabay.
 - CA-03: Solicitar item disponível cria um empréstimo com vencimento 14 dias
   depois e muda o item para emprestado em uma operação atômica.
 - CA-04: Três abertos impedem nova solicitação; atraso também impede, com
