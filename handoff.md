@@ -18,7 +18,9 @@ O script `node scripts/prepare-equipment-photos.mjs` gerou 12 candidatas
 locais em `.photo-prep/`. O responsável publicou 12 URLs no bucket `EmprestTi`;
 todas responderam HTTP 200 como JPEG 800×600 e são idênticas às candidatas
 daquele momento. Sete fotos publicadas foram rejeitadas na triagem visual,
-cinco aguardam aprovação humana. As URLs e os pareceres estão em
+cinco foram confirmadas pelo responsável. Sete substitutas em
+`.photo-prep/replacements/` foram aprovadas visualmente pelo responsável;
+o upload humano ainda está pendente. As URLs e os pareceres estão em
 `docs/specs/dados-iniciais/urls-publicadas-pendentes.json`; os metadados de
 origem estão em `.photo-prep/publicadas-pendentes.json`; IDs rejeitados em
 `.photo-prep/rejected.json`. O manifesto `data/fotos-aprovadas.json` não existe
@@ -26,8 +28,8 @@ e não deve ser criado antes da substituição das fotos reprovadas.
 
 ## Próximos passos
 
-1. Finalizar 12 fotos adequadas em `.photo-prep/`; a seleção automática ainda
-   produziu resultados inadequados para alguns itens.
+1. Substituir as sete imagens reprovadas no bucket público com os arquivos
+   aprovados em `.photo-prep/para-revisar-7/`.
 2. Seguir `docs/OPERACAO-PRATICA.md` para substituir no bucket `EmprestTi` as
    fotos rejeitadas, aprovar visualmente todas e criar manifesto aprovado.
 3. PostgreSQL local isolado em `localhost:5433` recebeu as três migrations;

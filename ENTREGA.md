@@ -63,8 +63,11 @@ conteúdo inadequado ou equipamento incorreto. O responsável publicou as 12
 candidatas no bucket público `EmprestTi` antes da aprovação visual final. As
 12 URLs responderam HTTP 200 como JPEG 800×600 e correspondem aos arquivos
 arquivados em `.photo-prep/remote-review/`, mas 7 fotos publicadas foram
-reprovadas na triagem (pessoa, marca, tela/texto ou item incorreto); 5 ainda
-aguardam aprovação humana. URLs e pareceres estão em
+reprovadas na triagem (pessoa, marca, tela/texto ou item incorreto); 5 foram
+confirmadas pelo responsável como corretas. Sete substitutas em
+`.photo-prep/replacements/` foram aprovadas visualmente pelo responsável;
+o upload humano ainda está pendente.
+URLs e pareceres estão em
 `docs/specs/dados-iniciais/urls-publicadas-pendentes.json`. Metadados de origem
 estão no rascunho local `.photo-prep/publicadas-pendentes.json`; nenhum deles
 é usado pelo seed. As fotos reprovadas precisam ser substituídas no

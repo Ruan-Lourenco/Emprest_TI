@@ -2,14 +2,14 @@
   {
     "patrimonio": "TI-0001",
     "publicUrl": "https://rxamhwlkelvvssklwbcb.supabase.co/storage/v1/object/public/EmprestTi/TI-0001.jpg",
-    "reviewStatus": "PENDENTE_APROVACAO_HUMANA",
-    "reviewReason": "Conferir visualmente antes de aprovar"
+    "reviewStatus": "APROVADA_PELO_RESPONSAVEL",
+    "reviewReason": "Responsável confirmou como correta no Supabase em 2026-11-09"
   },
   {
     "patrimonio": "TI-0002",
     "publicUrl": "https://rxamhwlkelvvssklwbcb.supabase.co/storage/v1/object/public/EmprestTi/TI-0002.jpg",
-    "reviewStatus": "PENDENTE_APROVACAO_HUMANA",
-    "reviewReason": "Conferir visualmente antes de aprovar"
+    "reviewStatus": "APROVADA_PELO_RESPONSAVEL",
+    "reviewReason": "Responsável confirmou como correta no Supabase em 2026-11-09"
   },
   {
     "patrimonio": "TI-0003",
@@ -20,8 +20,8 @@
   {
     "patrimonio": "TI-0004",
     "publicUrl": "https://rxamhwlkelvvssklwbcb.supabase.co/storage/v1/object/public/EmprestTi/TI-0004.jpg",
-    "reviewStatus": "PENDENTE_APROVACAO_HUMANA",
-    "reviewReason": "Conferir visualmente antes de aprovar"
+    "reviewStatus": "APROVADA_PELO_RESPONSAVEL",
+    "reviewReason": "Responsável confirmou como correta no Supabase em 2026-11-09"
   },
   {
     "patrimonio": "TI-0005",
@@ -44,8 +44,8 @@
   {
     "patrimonio": "TI-0008",
     "publicUrl": "https://rxamhwlkelvvssklwbcb.supabase.co/storage/v1/object/public/EmprestTi/TI-0008.jpg",
-    "reviewStatus": "PENDENTE_APROVACAO_HUMANA",
-    "reviewReason": "Conferir visualmente antes de aprovar"
+    "reviewStatus": "APROVADA_PELO_RESPONSAVEL",
+    "reviewReason": "Responsável confirmou como correta no Supabase em 2026-11-09"
   },
   {
     "patrimonio": "TI-0009",
@@ -56,8 +56,8 @@
   {
     "patrimonio": "TI-0010",
     "publicUrl": "https://rxamhwlkelvvssklwbcb.supabase.co/storage/v1/object/public/EmprestTi/TI-0010.jpg",
-    "reviewStatus": "PENDENTE_APROVACAO_HUMANA",
-    "reviewReason": "Conferir visualmente antes de aprovar"
+    "reviewStatus": "APROVADA_PELO_RESPONSAVEL",
+    "reviewReason": "Responsável confirmou como correta no Supabase em 2026-11-09"
   },
   {
     "patrimonio": "TI-0011",
