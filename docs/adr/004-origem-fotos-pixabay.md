@@ -17,7 +17,8 @@ de foto, crédito e operação continuam aplicáveis.
 - Buscar apenas fotos com orientação horizontal, filtro seguro e dimensões
   mínimas; baixar o arquivo para preparo local, sem hotlink permanente.
 - Redimensionar cada foto aprovada a 800×600, manter IDs únicos e exigir
-  revisão visual humana antes do upload ao bucket público `equipment`.
+  revisão visual humana antes do upload ao bucket público `EmprestTi`, nome
+  informado pelas URLs públicas enviadas pelo responsável em 2026-11-09.
 - Registrar em `equipment` provedor, ID de origem, criador, página da foto,
   licença e URL pública. A unicidade é por provedor + ID. Metadados antigos
   do Pexels, se existirem, são preservados e identificados no backfill para

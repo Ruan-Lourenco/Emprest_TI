@@ -16,7 +16,7 @@ for (const photo of photos) {
   let publicUrl;
   try { publicUrl = new URL(photo.publicUrl); } catch { throw new Error(`URL de Storage público inválida: ${photo.patrimonio}`); }
   if (publicUrl.protocol !== "https:" || !publicUrl.hostname.endsWith(".supabase.co") ||
-      publicUrl.pathname !== `/storage/v1/object/public/equipment/${photo.patrimonio}.jpg` || publicUrl.search)
+      publicUrl.pathname !== `/storage/v1/object/public/EmprestTi/${photo.patrimonio}.jpg` || publicUrl.search)
     throw new Error(`URL de Storage público inválida: ${photo.patrimonio}`);
   if (!metadataOnly) {
     const meta = await sharp(`.photo-prep/${photo.patrimonio}.jpg`).metadata();

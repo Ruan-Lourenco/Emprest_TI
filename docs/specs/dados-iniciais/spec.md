@@ -30,6 +30,9 @@ registrar credencial no repositório. Segue PRD e ADR-001/002/004.
   prepara arquivos locais. O upload ao
   Storage e a aplicação no banco de produção são ações humanas conforme
   `rules/operacao.md` e `docs/DEVOPS.md`.
+- As URLs públicas usam o bucket `EmprestTi` informado pelo responsável;
+  metadados de fotos publicadas ainda precisam passar pela revisão visual
+  antes de entrar no manifesto aprovado usado pelo seed.
 - Fotos antigas de equipamentos de outra origem ficam ocultas na interface
   até serem substituídas pelas fotos Pixabay aprovadas; os metadados antigos
   permanecem no banco para auditoria da migration.

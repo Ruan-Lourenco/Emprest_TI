@@ -1,0 +1,74 @@
+[
+  {
+    "patrimonio": "TI-0001",
+    "publicUrl": "https://rxamhwlkelvvssklwbcb.supabase.co/storage/v1/object/public/EmprestTi/TI-0001.jpg",
+    "reviewStatus": "PENDENTE_APROVACAO_HUMANA",
+    "reviewReason": "Conferir visualmente antes de aprovar"
+  },
+  {
+    "patrimonio": "TI-0002",
+    "publicUrl": "https://rxamhwlkelvvssklwbcb.supabase.co/storage/v1/object/public/EmprestTi/TI-0002.jpg",
+    "reviewStatus": "PENDENTE_APROVACAO_HUMANA",
+    "reviewReason": "Conferir visualmente antes de aprovar"
+  },
+  {
+    "patrimonio": "TI-0003",
+    "publicUrl": "https://rxamhwlkelvvssklwbcb.supabase.co/storage/v1/object/public/EmprestTi/TI-0003.jpg",
+    "reviewStatus": "REJEITAR",
+    "reviewReason": "Tela com código/texto"
+  },
+  {
+    "patrimonio": "TI-0004",
+    "publicUrl": "https://rxamhwlkelvvssklwbcb.supabase.co/storage/v1/object/public/EmprestTi/TI-0004.jpg",
+    "reviewStatus": "PENDENTE_APROVACAO_HUMANA",
+    "reviewReason": "Conferir visualmente antes de aprovar"
+  },
+  {
+    "patrimonio": "TI-0005",
+    "publicUrl": "https://rxamhwlkelvvssklwbcb.supabase.co/storage/v1/object/public/EmprestTi/TI-0005.jpg",
+    "reviewStatus": "REJEITAR",
+    "reviewReason": "Calendário com texto legível"
+  },
+  {
+    "patrimonio": "TI-0006",
+    "publicUrl": "https://rxamhwlkelvvssklwbcb.supabase.co/storage/v1/object/public/EmprestTi/TI-0006.jpg",
+    "reviewStatus": "REJEITAR",
+    "reviewReason": "Pessoa/mãos e tela com conteúdo"
+  },
+  {
+    "patrimonio": "TI-0007",
+    "publicUrl": "https://rxamhwlkelvvssklwbcb.supabase.co/storage/v1/object/public/EmprestTi/TI-0007.jpg",
+    "reviewStatus": "REJEITAR",
+    "reviewReason": "Foto de notebook, não de monitor"
+  },
+  {
+    "patrimonio": "TI-0008",
+    "publicUrl": "https://rxamhwlkelvvssklwbcb.supabase.co/storage/v1/object/public/EmprestTi/TI-0008.jpg",
+    "reviewStatus": "PENDENTE_APROVACAO_HUMANA",
+    "reviewReason": "Conferir visualmente antes de aprovar"
+  },
+  {
+    "patrimonio": "TI-0009",
+    "publicUrl": "https://rxamhwlkelvvssklwbcb.supabase.co/storage/v1/object/public/EmprestTi/TI-0009.jpg",
+    "reviewStatus": "REJEITAR",
+    "reviewReason": "Conector não corresponde claramente a USB-C"
+  },
+  {
+    "patrimonio": "TI-0010",
+    "publicUrl": "https://rxamhwlkelvvssklwbcb.supabase.co/storage/v1/object/public/EmprestTi/TI-0010.jpg",
+    "reviewStatus": "PENDENTE_APROVACAO_HUMANA",
+    "reviewReason": "Conferir visualmente antes de aprovar"
+  },
+  {
+    "patrimonio": "TI-0011",
+    "publicUrl": "https://rxamhwlkelvvssklwbcb.supabase.co/storage/v1/object/public/EmprestTi/TI-0011.jpg",
+    "reviewStatus": "REJEITAR",
+    "reviewReason": "Pessoa visível"
+  },
+  {
+    "patrimonio": "TI-0012",
+    "publicUrl": "https://rxamhwlkelvvssklwbcb.supabase.co/storage/v1/object/public/EmprestTi/TI-0012.jpg",
+    "reviewStatus": "REJEITAR",
+    "reviewReason": "Marca legível na câmera"
+  }
+]

@@ -16,7 +16,7 @@ beforeEach(() => { state.currentUserLoans = []; });
 describe("detalhe do equipamento", () => {
   it("CA-06 dados iniciais: mostra foto e crédito no detalhe", () => {
     const item = initialEquipment[0];
-    item.imageUrl = "https://example.supabase.co/storage/v1/object/public/equipment/TI-0001.jpg";
+    item.imageUrl = "https://example.supabase.co/storage/v1/object/public/EmprestTi/TI-0001.jpg";
     item.imageProvider = "Pixabay";
     item.imageCreator = "Autor teste";
     item.imageSourceUrl = "https://pixabay.com/photos/example-123/";
@@ -35,7 +35,7 @@ describe("detalhe do equipamento", () => {
 
   it("CA-06 dados iniciais: oculta foto antiga de outra origem", () => {
     const item = initialEquipment[0];
-    item.imageUrl = "https://example.supabase.co/storage/v1/object/public/equipment/TI-0001.jpg";
+    item.imageUrl = "https://example.supabase.co/storage/v1/object/public/EmprestTi/TI-0001.jpg";
     item.imageProvider = "Pexels";
     try {
       render(<EquipmentDetail patrimony={item.patrimony} />);

@@ -28,7 +28,7 @@ describe("CatalogView", () => {
   });
 
   it("CA-02/CA-06: apresenta foto e crédito Pixabay", () => {
-    initialEquipment[0].imageUrl = "https://example.supabase.co/storage/v1/object/public/equipment/TI-0001.jpg";
+    initialEquipment[0].imageUrl = "https://example.supabase.co/storage/v1/object/public/EmprestTi/TI-0001.jpg";
     initialEquipment[0].imageProvider = "Pixabay";
     try {
       render(<CatalogView />);
@@ -44,7 +44,7 @@ describe("CatalogView", () => {
   });
 
   it("CA-02/CA-06: não exibe foto antiga de outra origem", () => {
-    initialEquipment[0].imageUrl = "https://example.supabase.co/storage/v1/object/public/equipment/TI-0001.jpg";
+    initialEquipment[0].imageUrl = "https://example.supabase.co/storage/v1/object/public/EmprestTi/TI-0001.jpg";
     initialEquipment[0].imageProvider = "Pexels";
     try {
       render(<CatalogView />);

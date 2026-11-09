@@ -3,13 +3,19 @@
 Estas etapas são executadas **pela pessoa responsável** no ambiente de
 produção, após revisão do PR. O agente não faz upload nem escreve no deploy.
 
+Estado em 2026-11-09: o bucket informado é `EmprestTi` e os 12 objetos já
+respondem sem login. Sete fotos publicadas ainda precisam ser substituídas;
+as outras cinco aguardam aprovação humana. Consulte
+`docs/specs/dados-iniciais/urls-publicadas-pendentes.json`. Não use o rascunho
+local `.photo-prep/publicadas-pendentes.json` como `fotos-aprovadas.json`.
+
 1. A chave Pixabay já está no `.env.local` ignorado pelo Git. Não enviar a
    chave por chat nem colocá-la no Git ou no deploy. Rodar
    `node scripts/prepare-equipment-photos.mjs`. Examinar as 12 candidatas em `.photo-prep/`.
    Registrar IDs reprovados em `.photo-prep/rejected.json`, repetir o script,
    registrar quantidade e motivos, e confirmar
    ausência de pessoa, logo legível, texto e tela com conteúdo.
-2. Criar bucket público `equipment` no Supabase Storage. Fazer upload humano
+2. Usar o bucket público `EmprestTi` no Supabase Storage. Fazer upload humano
    de `TI-0001.jpg` a `TI-0012.jpg` nos mesmos caminhos; ao repetir, substituir
    o objeto existente para não duplicar arquivos. Confirmar com navegador
    sem login que as URLs públicas abrem. Criar `data/fotos-aprovadas.json`
@@ -28,7 +34,7 @@ produção, após revisão do PR. O agente não faz upload nem escreve no deploy
      "creator": "<nome-do-criador>",
      "sourceUrl": "https://pixabay.com/photos/<pagina-da-foto>/",
      "license": "Pixabay Content License",
-     "publicUrl": "https://<projeto>.supabase.co/storage/v1/object/public/equipment/TI-0001.jpg"
+     "publicUrl": "https://<projeto>.supabase.co/storage/v1/object/public/EmprestTi/TI-0001.jpg"
    }
    ```
 3. Concluir revisão do PR, merge em `main` e o workflow manual protegido

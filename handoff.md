@@ -14,16 +14,22 @@ skill, scripts, créditos e testes foram adaptados. A chave está somente no
 `.env.local` ignorado pelo Git, com placeholder em `.env.example`; não deve ir
 à Vercel. Não exibir a chave nem URL de requisição com query.
 
-O script `node scripts/prepare-equipment-photos.mjs` já gerou 12 candidatas
-locais em `.photo-prep/`. A seleção automática teve fotos inadequadas; IDs
-rejeitados estão em `.photo-prep/rejected.json`. As candidatas ainda não estão
-aprovadas. Revisão visual humana, upload e `data/fotos-aprovadas.json` pendem.
+O script `node scripts/prepare-equipment-photos.mjs` gerou 12 candidatas
+locais em `.photo-prep/`. O responsável publicou 12 URLs no bucket `EmprestTi`;
+todas responderam HTTP 200 como JPEG 800×600 e são idênticas às candidatas
+daquele momento. Sete fotos publicadas foram rejeitadas na triagem visual,
+cinco aguardam aprovação humana. As URLs e os pareceres estão em
+`docs/specs/dados-iniciais/urls-publicadas-pendentes.json`; os metadados de
+origem estão em `.photo-prep/publicadas-pendentes.json`; IDs rejeitados em
+`.photo-prep/rejected.json`. O manifesto `data/fotos-aprovadas.json` não existe
+e não deve ser criado antes da substituição das fotos reprovadas.
 
 ## Próximos passos
 
-1. Revisar as fotos em `.photo-prep/`, rejeitar pessoas, logos, texto, telas e
-   equipamentos incorretos; repetir a busca com IDs reprovados.
-2. Seguir `docs/OPERACAO-PRATICA.md` para upload humano e manifesto aprovado.
+1. Finalizar 12 fotos adequadas em `.photo-prep/`; a seleção automática ainda
+   produziu resultados inadequados para alguns itens.
+2. Seguir `docs/OPERACAO-PRATICA.md` para substituir no bucket `EmprestTi` as
+   fotos rejeitadas, aprovar visualmente todas e criar manifesto aprovado.
 3. PostgreSQL local isolado em `localhost:5433` recebeu as três migrations;
    `npm run test:db` passou após correção de `P2028`, e o seed idempotente foi
    verificado com fixture ignorada pelo Git. Aplicar migrations/seed de produção

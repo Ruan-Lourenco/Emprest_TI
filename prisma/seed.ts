@@ -25,7 +25,7 @@ async function seedEquipment(tenantId: string) {
     let publicUrl: URL;
     try { publicUrl = new URL(photo.publicUrl); } catch { throw new Error(`URL inválida: ${item.patrimonio}`); }
     if (publicUrl.protocol !== "https:" || !publicUrl.hostname.endsWith(".supabase.co") ||
-        publicUrl.pathname !== `/storage/v1/object/public/equipment/${item.patrimonio}.jpg` || publicUrl.search)
+        publicUrl.pathname !== `/storage/v1/object/public/EmprestTi/${item.patrimonio}.jpg` || publicUrl.search)
       throw new Error(`URL inválida: ${item.patrimonio}`);
     if (item.situacao !== "disponivel" && item.situacao !== "manutencao") throw new Error(`Situação inválida: ${item.patrimonio}`);
     const mappedCategory = category[item.categoria as keyof typeof category];

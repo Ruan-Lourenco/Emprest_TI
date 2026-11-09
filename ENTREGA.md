@@ -59,9 +59,23 @@ IDs repetidos e verificação de 800×600. A ausência de pessoas, logos, texto 
 telas com conteúdo exige inspeção visual. O script não contém endpoint de
 upload nem chave do Supabase. Em 2026-11-09, foram preparadas 12 candidatas
 Pixabay locais. A primeira seleção teve 11 fotos visualmente rejeitadas por
-conteúdo inadequado ou equipamento incorreto. A segunda seleção também tem
-fotos inadequadas; a revisão continua aberta. A chave está no `.env.local`
+conteúdo inadequado ou equipamento incorreto. O responsável publicou as 12
+candidatas no bucket público `EmprestTi` antes da aprovação visual final. As
+12 URLs responderam HTTP 200 como JPEG 800×600 e correspondem aos arquivos
+arquivados em `.photo-prep/remote-review/`, mas 7 fotos publicadas foram
+reprovadas na triagem (pessoa, marca, tela/texto ou item incorreto); 5 ainda
+aguardam aprovação humana. URLs e pareceres estão em
+`docs/specs/dados-iniciais/urls-publicadas-pendentes.json`. Metadados de origem
+estão no rascunho local `.photo-prep/publicadas-pendentes.json`; nenhum deles
+é usado pelo seed. As fotos reprovadas precisam ser substituídas no
+bucket antes de criar `data/fotos-aprovadas.json`. A chave está no `.env.local`
 ignorado pelo Git. Fonte: https://pixabay.com/api/docs/.
+
+Na triagem das fotos publicadas: TI-0003 tem código na tela; TI-0005 tem
+calendário legível; TI-0006 mostra pessoa e tela com conteúdo; TI-0007 mostra
+notebook no lugar de monitor; TI-0009 não representa claramente um cabo USB-C;
+TI-0011 mostra pessoa; TI-0012 tem marca legível. Esta é uma triagem do agente,
+não a aprovação visual humana exigida pela spec.
 
 ## 5. Subagente verificador
 
