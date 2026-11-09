@@ -1,42 +1,47 @@
 # Handoff
 
-## Estado
+## Onde parei
 
-O PR #19 foi incorporado em `main`. Na branch `codex/fix-pooler-runtime`, a
-correção do erro intermitente de produção `prepared statement "s3" does not
-exist` está em validação local. O responsável conseguiu entrar na Vercel e
-relatou ter executado o seed protegido duas vezes; o vídeo de 2026-11-09
-mostra o catálogo, uma solicitação e depois a tela de empréstimos vazia seguida
-de erro HTTP do servidor. As specs seguem **não prontas** até a jornada
-autenticada completa e os demais critérios terem evidência.
+Em 2026-11-09, os PRs #19 e #27 já estavam incorporados em `main`. Os
+workflows protegidos de migration, dois seeds e vínculo Auth concluíram com
+sucesso; o responsável informou que validou o fluxo da Vercel após a correção
+do pooler, mantendo a conta do professor sem empréstimos. Esta branch
+`codex/finalize-practice-docs` atualiza specs, evidências e `ENTREGA.md`.
+Dois testes foram adicionados e passaram; o responsável forneceu as duas
+capturas remotas. A revisão independente final aceitou CA-01 a CA-06 nas duas
+specs, agora **PRONTAS**. O lint e os testes específicos passaram; o typecheck
+foi repetido fora do OneDrive e terminou com código zero; o build do PR #28
+também passou.
 
-Em 2026-11-09 o responsável confirmou que a orientação atualizada da prática
-exige Pixabay; o HTML original citava Pexels. ADR-004 e specs registram essa
-mudança. Código, migration incremental,
-skill, scripts, créditos e testes foram adaptados. A chave está somente no
-`.env.local` ignorado pelo Git, com placeholder em `.env.example`; não deve ir
-à Vercel. Não exibir a chave nem URL de requisição com query.
+## Decisões não óbvias
 
-O responsável aprovou cinco fotos já publicadas e sete substitutas Pixabay;
-as sete foram enviadas por ele ao bucket `EmprestTi`. As 12 URLs responderam
-HTTP 200 sem login e os arquivos remotos coincidiram por SHA-256 com os JPEGs
-aprovados 800×600. URLs e pareceres estão em
-`docs/specs/dados-iniciais/urls-publicadas-validadas.json`. O manifesto
-`data/fotos-aprovadas.json` existe e passou no validador local. As specs
-continuam NÃO PRONTAS até evidência de produção dos critérios restantes.
+- A orientação atualizada da turma usa Pixabay apesar de o HTML original
+  mencionar Pexels; ver ADR-004 e `ENTREGA.md`.
+- O responsável definiu senha na conta Auth existente pela API administrativa
+  após convite e conferência de UUID/e-mail. O segredo não está versionado;
+  ver `docs/specs/dados-iniciais/spec.md`.
+- As verificações remotas de catálogo, limite e zero empréstimos foram
+  informadas pelo responsável. Links de workflow e evidência local estão nos
+  diretórios das specs; não existe captura da repetição bem-sucedida.
 
-## Próximos passos
+## O que tentei e não funcionou
 
-1. Publicar a correção de runtime pelo fluxo de PR aprovado. Conferir na
-   Vercel que `DATABASE_URL` usa o Supavisor transaction pooler na porta 6543,
-   sem expor a URL. Repetir login, solicitação, recarga e lista pessoal com a
-   conta de teste, mantendo a conta do professor com zero empréstimos.
-2. PostgreSQL local isolado em `localhost:5433` recebeu as três migrations;
-   `npm run test:db` passou após correção de `P2028`, e o seed idempotente foi
-   verificado com fixture ignorada pelo Git. Aplicar migrations/seed de produção
-   somente pelos workflows protegidos; convite Auth e teste autenticado na Vercel.
-3. Atualizar evidências e status das specs após a verificação real. Criar a tag
-   de entrega somente quando os critérios de aceitação estiverem comprovados.
+O primeiro teste autenticado do responsável encontrou falha intermitente
+`prepared statement "s3" does not exist`; o PR #27 corrigiu o runtime e o
+responsável informou que o deploy posterior funciona. A tentativa anterior
+de vínculo Auth que falhou não foi usada como evidência de conclusão.
 
-A porta 5432 pertence a outro aplicativo. O teste atual usou contêiner isolado
-em 5433; não usar o banco do outro aplicativo ou o Supabase remoto em testes.
+## Próximo passo exato
+
+Incorporar a documentação final em `main` e criar a tag `entrega-pratica` no
+commit final. Não reabrir as specs sem nova mudança de comportamento.
+
+## Arquivos relevantes
+
+- `ENTREGA.md`
+- `docs/OPERACAO-PRATICA.md`
+- `docs/specs/dados-iniciais/{spec,tasks,evidence}.md`
+- `docs/specs/solicitar-emprestimo/{spec,tasks,evidence}.md`
+- `docs/specs/persistencia-auth/{spec,tasks,evidence}.md`
+
+`EmprestTI.zip` preexistente e não rastreado permanece fora da entrega.

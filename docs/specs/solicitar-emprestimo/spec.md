@@ -1,8 +1,10 @@
 # Spec — Solicitar empréstimo
 
-Status: APROVADA em 2026-11-06; crédito visual revisado para Pixabay com a
-decisão explícita do responsável em 2026-11-09.
-Verificação integral: pendente conforme `tasks.md`.
+Status: **PRONTA** em 2026-11-09. Aprovada em 2026-11-06; crédito visual
+revisado para Pixabay com a decisão explícita do responsável em 2026-11-09.
+Implementação publicada e fluxo de produção validado pelo responsável.
+Todos os critérios foram aceitos pelo `verificador-spec` independente;
+detalhes em `tasks.md` e `evidence.md`.
 
 ## Objetivo e vínculo
 

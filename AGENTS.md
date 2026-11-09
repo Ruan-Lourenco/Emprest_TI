@@ -86,21 +86,23 @@ de feature. O fluxo detalhado está em `rules/spec-flow.md`.
 
 ## Estado atual
 
-O frontend e a integração local de autenticação/persistência estão no código.
-`docs/specs/persistencia-auth/tasks.md` ainda registra a migration remota, o
-bootstrap e o teste de login real como pendências. Não trate essas etapas como
-concluídas até haver evidência do ambiente correspondente. A implementação
-atual resolve somente o tenant `suporte_ti`, conforme o ADR-002 aprovado.
+O frontend e a autenticação/persistência estão publicados. A migration e os
+dois seeds da prática têm workflows de produção concluídos em 2026-11-09;
+o responsável informou ter validado login e fluxo autenticado na Vercel após
+o PR #27. `docs/specs/persistencia-auth/tasks.md` mantém abertas as provas dos
+demais critérios dessa spec ampla. A implementação atual resolve somente o
+tenant `suporte_ti`, conforme o ADR-002 aprovado.
 Seleção entre vários vínculos está fora desta versão. Nenhum MCP de banco ou serviço
 externo está configurado neste repositório.
 
-A prática de catálogo com fotos e solicitação está na branch
-`feat/pratica-sdd-subagentes` e no PR #19 pronto para revisão. As specs
-`dados-iniciais` e `solicitar-emprestimo` foram aprovadas, mas seguem NÃO
-PRONTAS: as 12 fotos Pixabay foram aprovadas, publicadas no Storage e
-validadas; ainda faltam seed e login reais em produção e os critérios
-restantes da prática.
-Veja `ENTREGA.md` e `handoff.md` antes de afirmar que a prática foi publicada.
+A prática de catálogo com fotos e solicitação foi incorporada pelo PR #19; o
+PR #27 corrigiu a conexão de runtime no Supavisor. As 12 fotos Pixabay foram
+aprovadas e publicadas no Storage. As specs `dados-iniciais` e
+`solicitar-emprestimo` estão **PRONTAS** após revisão independente final: as
+evidências remotas solicitadas foram fornecidas, duas coberturas locais foram
+adicionadas e typecheck, lint, testes, build e checks do PR passaram. Veja
+`ENTREGA.md` e `handoff.md` para distinguir workflows observados de
+conferências de produção informadas pelo responsável.
 
 ## Skills
 
