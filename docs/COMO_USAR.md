@@ -27,6 +27,12 @@ Colaboradores veem seus próprios empréstimos. O servidor aplica limite de trê
 itens, prazo de 14 dias, bloqueio por atraso e indisponibilidade de itens em
 manutenção.
 
+O contexto atual usa somente o tenant `suporte_ti`, conforme o ADR-002.
+Seleção entre vários vínculos fica fora desta versão.
+Os fluxos acima descrevem o uso esperado após o primeiro acesso remoto; a
+validação com conta real e persistência remota continua pendente em
+`docs/specs/persistencia-auth/tasks.md`.
+
 ## Primeiro acesso
 
 1. No Supabase Auth, desabilite cadastro público e crie a conta inicial pela

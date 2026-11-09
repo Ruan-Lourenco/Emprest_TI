@@ -10,6 +10,10 @@ export type Equipment = {
   status: EquipmentStatus;
   description: string;
   lastReturn: string;
+  imageUrl?: string | null;
+  imageProvider?: string | null;
+  imageCreator?: string | null;
+  imageSourceUrl?: string | null;
 };
 
 export type Loan = {

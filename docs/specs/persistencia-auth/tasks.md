@@ -1,6 +1,7 @@
 # Tarefas — Autenticação e persistência
 
-Status: APROVADO em 2026-10-19.
+Status: PLANO APROVADO em 2026-10-19; EXECUÇÃO PARCIAL. As duas tarefas abertas
+abaixo impedem o veredito de spec pronta.
 
 - [x] Resolver decisões pendentes na spec e aprovar a modelagem do banco.
 - [x] Criar migration versionada com constraints, RLS e auditoria.
@@ -32,3 +33,6 @@ Status: APROVADO em 2026-10-19.
 Pendências externas: migration remota pelo workflow protegido, criação da conta
 inicial no Supabase Auth, vínculo pelo workflow de bootstrap e variáveis na
 Vercel. Login real e persistência remota ainda não foram validados.
+
+Limite aprovado: `src/server/api/trpc.ts` resolve apenas o tenant `suporte_ti`,
+conforme `docs/adr/002-selecao-tenant.md`. Troca entre vínculos está fora da v1.

@@ -1,0 +1,47 @@
+name: Bind invited user to suporte_ti
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirmation:
+        description: Type APPLY after the account exists in Supabase Auth.
+        required: true
+        type: string
+      user_id:
+        description: UUID of the invited Supabase Auth account; do not enter a password.
+        required: true
+        type: string
+      role:
+        description: Role in suporte_ti
+        required: true
+        type: choice
+        options:
+          - collaborator
+          - operations
+
+permissions:
+  contents: read
+
+jobs:
+  bind:
+    if: inputs.confirmation == 'APPLY'
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npx prisma generate
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          DIRECT_URL: ${{ secrets.DIRECT_URL }}
+      - name: Bind user without logging identifiers
+        run: npm run db:seed -- "$INVITED_USER_ID" "$INVITED_ROLE"
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          DIRECT_URL: ${{ secrets.DIRECT_URL }}
+          INVITED_USER_ID: ${{ inputs.user_id }}
+          INVITED_ROLE: ${{ inputs.role }}

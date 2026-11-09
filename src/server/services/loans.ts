@@ -30,8 +30,8 @@ export async function requestLoan(db: PrismaClient, tenantId: string, userId: st
       return loan;
     }, { isolationLevel: Prisma.TransactionIsolationLevel.Serializable });
   } catch (error) {
-    if (error instanceof Prisma.PrismaClientKnownRequestError && ["P2002", "P2034"].includes(error.code)) {
-      throw new TRPCError({ code: "CONFLICT", message: "A disponibilidade mudou. Atualize a página e tente novamente." });
+    if (error instanceof Prisma.PrismaClientKnownRequestError && ["P2002", "P2028", "P2034"].includes(error.code)) {
+      throw new TRPCError({ code: "CONFLICT", message: "Não foi possível concluir a solicitação. Atualize a página e tente novamente." });
     }
     throw error;
   }

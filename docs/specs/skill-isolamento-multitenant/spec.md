@@ -1,6 +1,7 @@
 # Spec — Skill de verificação de isolamento multitenant
 
-Status: APROVADO pelo responsável em 2026-11-05. Não define comportamento do produto.
+Status: APROVADA pelo responsável em 2026-11-05. Não define comportamento do produto.
+Implementação: skill em `.agents/skills/verificar-isolamento-multitenant/`.
 
 ## Objetivo
 

@@ -1,0 +1,26 @@
+import { readFile } from "node:fs/promises";
+import sharp from "sharp";
+
+const items = JSON.parse(await readFile("data/equipamentos-iniciais.json", "utf8"));
+const photos = JSON.parse(await readFile("data/fotos-aprovadas.json", "utf8"));
+const metadataOnly = process.argv.includes("--metadata-only");
+if (items.length !== 12 || photos.length !== 12) throw new Error("São necessários exatamente 12 itens e 12 fotos aprovadas.");
+const patrimonies = new Set(items.map((item) => item.patrimonio));
+const ids = new Set();
+for (const photo of photos) {
+  if (!patrimonies.delete(photo.patrimonio)) throw new Error(`Patrimônio ausente ou repetido: ${photo.patrimonio}`);
+  if (!photo.sourceId || ids.has(photo.sourceId)) throw new Error(`ID Pixabay ausente ou repetido: ${photo.patrimonio}`);
+  ids.add(photo.sourceId);
+  if (photo.provider !== "Pixabay" || !photo.creator || photo.license !== "Pixabay Content License" ||
+      !photo.sourceUrl?.startsWith("https://pixabay.com/")) throw new Error(`Crédito incompleto: ${photo.patrimonio}`);
+  let publicUrl;
+  try { publicUrl = new URL(photo.publicUrl); } catch { throw new Error(`URL de Storage público inválida: ${photo.patrimonio}`); }
+  if (publicUrl.protocol !== "https:" || !publicUrl.hostname.endsWith(".supabase.co") ||
+      publicUrl.pathname !== `/storage/v1/object/public/EmprestTi/${photo.patrimonio}.jpg` || publicUrl.search)
+    throw new Error(`URL de Storage público inválida: ${photo.patrimonio}`);
+  if (!metadataOnly) {
+    const meta = await sharp(`.photo-prep/${photo.patrimonio}.jpg`).metadata();
+    if (meta.width !== 800 || meta.height !== 600 || meta.format !== "jpeg") throw new Error(`Imagem inválida: ${photo.patrimonio}`);
+  }
+}
+process.stdout.write(`12 fotos únicas e metadados válidos${metadataOnly ? " (dimensões não verificadas neste ambiente)" : " em arquivos 800×600"}; conferência visual e URLs públicas ainda são humanas.\n`);

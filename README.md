@@ -4,7 +4,8 @@ Sistema interno para controlar o empréstimo de equipamentos de TI — como note
 
 > **Estado do projeto:** autenticação e persistência implementadas no código.
 > A ativação remota depende da migration protegida, do primeiro usuário no
-> Supabase Auth, do vínculo de Operações e das variáveis na Vercel.
+> Supabase Auth, do vínculo de Operações e das variáveis na Vercel. Login real
+> e persistência remota ainda não foram validados.
 
 ## Produto
 
@@ -36,12 +37,16 @@ O processo do projeto é SDD repo-native: `SPEC → PLAN → TASKS → CODE`. Po
 3. A spec da integração está em `docs/specs/persistencia-auth/`.
 4. Antes do uso remoto, execute o fluxo de migration e bootstrap em `docs/DEVOPS.md`.
 
+O contexto de request resolve somente `suporte_ti`, conforme o
+[ADR-002](docs/adr/002-selecao-tenant.md) aprovado. Seleção entre vários
+vínculos fica fora desta versão, embora o schema aceite outros tenants.
+
 ## Executar o frontend
 
 Requer Node.js LTS. Depois de instalar as dependências:
 
 ```bash
-npm install
+npm ci
 npm run dev
 ```
 
@@ -73,6 +78,9 @@ As variáveis `NEXT_PUBLIC_*` podem chegar ao navegador; as demais são exclusiv
 - [Layout](docs/layout.md) — sistema visual e telas de referência.
 - [Restrições de segurança](rules/restrictions.md) — segredos e limites permanentes.
 - [Estratégia de testes](rules/tests.md) — evidências esperadas após as specs.
+- [Fluxo de specs](rules/spec-flow.md) — spec, plano, tarefas e verificação.
+- [Operação](rules/operacao.md) — escopo de ações locais e remotas.
+- [Handoff](handoff.md) — estado observado para retomar a sessão.
 
 ## Contribuição
 

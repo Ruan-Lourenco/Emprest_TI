@@ -32,14 +32,24 @@ export function EquipmentDetail({ patrimony }: { patrimony: string }) {
     if (result.ok) window.setTimeout(() => router.push("/meus-emprestimos"), 900);
   }
 
-  const canRequest = selectedItem.status === "available" && currentUserLoans.length < 3 && !currentUserLoans.some((loan) => loan.dueAt < todayInSaoPaulo());
+  const hasOverdue = currentUserLoans.some((loan) => loan.dueAt < todayInSaoPaulo());
+  const refusalReason = selectedItem.status === "maintenance" ? "Este item está em manutenção."
+    : selectedItem.status === "loaned" ? "Este item já está emprestado."
+    : selectedItem.status === "retired" ? "Este item está fora de uso."
+    : hasOverdue ? "Devolva os itens em atraso antes de solicitar outro."
+    : currentUserLoans.length >= 3 ? "Você já está com três itens." : null;
+  const canRequest = refusalReason === null;
   return (
     <div className="page">
       <Link className="button ghost small" href="/catalogo"><ArrowLeft /> Voltar ao catálogo</Link>
       {feedback && <div className={`notice ${feedback.ok ? "success-notice" : ""}`} role={feedback.ok ? "status" : "alert"} style={{ marginTop: 14 }}><CheckCircle size={18} />{feedback.message}</div>}
       <div className="split" style={{ marginTop: 20 }}>
         <section>
-          <div className="hero-image"><EquipmentIcon category={selectedItem.category} size={70} /></div>
+          <div className="hero-image">{selectedItem.imageUrl && selectedItem.imageProvider === "Pixabay" ? <>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img className="hero-photo" src={selectedItem.imageUrl} alt={selectedItem.name} width={800} height={600} />
+          </> : <EquipmentIcon category={selectedItem.category} size={70} />}</div>
+          {selectedItem.imageUrl && selectedItem.imageProvider === "Pixabay" && <p className="photo-credit"><a href="https://pixabay.com/" target="_blank" rel="noreferrer">Fotos: Pixabay</a>{selectedItem.imageCreator && selectedItem.imageSourceUrl && <> · <a href={selectedItem.imageSourceUrl} target="_blank" rel="noreferrer">Foto: {selectedItem.imageCreator}</a></>}</p>}
           <div className="detail-title"><h1>{selectedItem.name}</h1><StatusPill status={selectedItem.status} /></div>
           <p className="subtitle" style={{ maxWidth: "60ch" }}>{selectedItem.description}</p>
           <dl className="spec-grid">
@@ -56,7 +66,7 @@ export function EquipmentDetail({ patrimony }: { patrimony: string }) {
             <div className="summary-row"><span>Prazo padrão</span><strong>14 dias</strong></div>
             <div className="summary-row"><span>Devolver até</span><strong>14 dias após retirada</strong></div>
             <button className="button" type="button" disabled={!canRequest} onClick={() => setOpen(true)}>Solicitar equipamento</button>
-            {!canRequest && <p className="muted" style={{ margin: "12px 0 0", fontSize: 11 }}>Item indisponível ou limite atingido.</p>}
+            {refusalReason && <p className="muted" role="status" style={{ margin: "12px 0 0", fontSize: 11 }}>{refusalReason}</p>}
           </section>
           <section className="card side-card">
             <p className="eyebrow">Seu limite</p><h2>{currentUserLoans.length} de 3 itens</h2>

@@ -1,0 +1,110 @@
+[
+  {
+    "patrimonio": "TI-0001",
+    "provider": "Pixabay",
+    "sourceId": "2982270",
+    "creator": "ClickerHappy",
+    "sourceUrl": "https://pixabay.com/photos/computer-laptop-work-place-mouse-2982270/",
+    "license": "Pixabay Content License",
+    "publicUrl": "https://rxamhwlkelvvssklwbcb.supabase.co/storage/v1/object/public/EmprestTi/TI-0001.jpg"
+  },
+  {
+    "patrimonio": "TI-0002",
+    "provider": "Pixabay",
+    "sourceId": "791032",
+    "creator": "kaboompics",
+    "sourceUrl": "https://pixabay.com/photos/technology-laptop-computer-netbook-791032/",
+    "license": "Pixabay Content License",
+    "publicUrl": "https://rxamhwlkelvvssklwbcb.supabase.co/storage/v1/object/public/EmprestTi/TI-0002.jpg"
+  },
+  {
+    "patrimonio": "TI-0003",
+    "provider": "Pixabay",
+    "sourceId": "925806",
+    "creator": "StockSnap",
+    "sourceUrl": "https://pixabay.com/photos/office-desk-business-working-925806/",
+    "license": "Pixabay Content License",
+    "publicUrl": "https://rxamhwlkelvvssklwbcb.supabase.co/storage/v1/object/public/EmprestTi/TI-0003.jpg"
+  },
+  {
+    "patrimonio": "TI-0004",
+    "provider": "Pixabay",
+    "sourceId": "593327",
+    "creator": "StartupStockPhotos",
+    "sourceUrl": "https://pixabay.com/photos/desk-laptop-notebook-pen-workspace-593327/",
+    "license": "Pixabay Content License",
+    "publicUrl": "https://rxamhwlkelvvssklwbcb.supabase.co/storage/v1/object/public/EmprestTi/TI-0004.jpg"
+  },
+  {
+    "patrimonio": "TI-0005",
+    "provider": "Pixabay",
+    "sourceId": "17768",
+    "creator": "PublicDomainPictures",
+    "sourceUrl": "https://pixabay.com/photos/blank-business-computer-desktop-17768/",
+    "license": "Pixabay Content License",
+    "publicUrl": "https://rxamhwlkelvvssklwbcb.supabase.co/storage/v1/object/public/EmprestTi/TI-0005.jpg"
+  },
+  {
+    "patrimonio": "TI-0006",
+    "provider": "Pixabay",
+    "sourceId": "17894",
+    "creator": "PublicDomainPictures",
+    "sourceUrl": "https://pixabay.com/photos/blank-business-computer-desktop-17894/",
+    "license": "Pixabay Content License",
+    "publicUrl": "https://rxamhwlkelvvssklwbcb.supabase.co/storage/v1/object/public/EmprestTi/TI-0006.jpg"
+  },
+  {
+    "patrimonio": "TI-0007",
+    "provider": "Pixabay",
+    "sourceId": "2570253",
+    "creator": "geralt",
+    "sourceUrl": "https://pixabay.com/photos/cloud-monitor-cloud-computing-2570253/",
+    "license": "Pixabay Content License",
+    "publicUrl": "https://rxamhwlkelvvssklwbcb.supabase.co/storage/v1/object/public/EmprestTi/TI-0007.jpg"
+  },
+  {
+    "patrimonio": "TI-0008",
+    "provider": "Pixabay",
+    "sourceId": "2202226",
+    "creator": "WikimediaImages",
+    "sourceUrl": "https://pixabay.com/photos/hdmi-connector-cable-plug-2202226/",
+    "license": "Pixabay Content License",
+    "publicUrl": "https://rxamhwlkelvvssklwbcb.supabase.co/storage/v1/object/public/EmprestTi/TI-0008.jpg"
+  },
+  {
+    "patrimonio": "TI-0009",
+    "provider": "Pixabay",
+    "sourceId": "1281038",
+    "creator": "denvit",
+    "sourceUrl": "https://pixabay.com/photos/iorange-usb-cable-type-c-grey-1281038/",
+    "license": "Pixabay Content License",
+    "publicUrl": "https://rxamhwlkelvvssklwbcb.supabase.co/storage/v1/object/public/EmprestTi/TI-0009.jpg"
+  },
+  {
+    "patrimonio": "TI-0010",
+    "provider": "Pixabay",
+    "sourceId": "494647",
+    "creator": "blickpixel",
+    "sourceUrl": "https://pixabay.com/photos/network-cable-cable-patch-494647/",
+    "license": "Pixabay Content License",
+    "publicUrl": "https://rxamhwlkelvvssklwbcb.supabase.co/storage/v1/object/public/EmprestTi/TI-0010.jpg"
+  },
+  {
+    "patrimonio": "TI-0011",
+    "provider": "Pixabay",
+    "sourceId": "1163880",
+    "creator": "willsong",
+    "sourceUrl": "https://pixabay.com/photos/video-conference-hd-material-1163880/",
+    "license": "Pixabay Content License",
+    "publicUrl": "https://rxamhwlkelvvssklwbcb.supabase.co/storage/v1/object/public/EmprestTi/TI-0011.jpg"
+  },
+  {
+    "patrimonio": "TI-0012",
+    "provider": "Pixabay",
+    "sourceId": "6919164",
+    "creator": "ReneSobeckMedia",
+    "sourceUrl": "https://pixabay.com/photos/go-pro-action-cam-camera-drone-6919164/",
+    "license": "Pixabay Content License",
+    "publicUrl": "https://rxamhwlkelvvssklwbcb.supabase.co/storage/v1/object/public/EmprestTi/TI-0012.jpg"
+  }
+]
