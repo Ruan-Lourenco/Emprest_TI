@@ -8,5 +8,5 @@
   Storage próprio. Não usar hotlink permanente.
 - Manter cache de resposta de busca por 24 horas; nunca gravar a chave ou a URL
   de requisição no cache ou em logs.
-- Exibir link de origem Pixabay no produto. A escolha diverge do enunciado
-  da prática, que exige Pexels.
+- Exibir link de origem Pixabay no produto. O HTML original citava Pexels;
+  o responsável confirmou Pixabay como orientação vigente da prática.

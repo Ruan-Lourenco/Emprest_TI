@@ -42,4 +42,17 @@ describe("CatalogView", () => {
       initialEquipment[0].imageProvider = null;
     }
   });
+
+  it("CA-02/CA-06: não exibe foto antiga de outra origem", () => {
+    initialEquipment[0].imageUrl = "https://example.supabase.co/storage/v1/object/public/equipment/TI-0001.jpg";
+    initialEquipment[0].imageProvider = "Pexels";
+    try {
+      render(<CatalogView />);
+      expect(screen.queryByRole("img", { name: initialEquipment[0].name })).not.toBeInTheDocument();
+      expect(screen.queryByRole("link", { name: "Fotos: Pexels" })).not.toBeInTheDocument();
+    } finally {
+      initialEquipment[0].imageUrl = null;
+      initialEquipment[0].imageProvider = null;
+    }
+  });
 });

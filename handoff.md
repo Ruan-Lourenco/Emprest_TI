@@ -7,8 +7,9 @@ iniciais e empréstimo aprovadas, mas **não prontas** para conclusão: faltam
 revisão e publicação das fotos, migration/seed protegidos,
 conta convidada e login autenticado na Vercel.
 
-Em 2026-11-09 o responsável escolheu Pixabay, embora o enunciado exija Pexels.
-ADR-004 e specs registram a divergência. Código, migration incremental,
+Em 2026-11-09 o responsável confirmou que a orientação atualizada da prática
+exige Pixabay; o HTML original citava Pexels. ADR-004 e specs registram essa
+mudança. Código, migration incremental,
 skill, scripts, créditos e testes foram adaptados. A chave está somente no
 `.env.local` ignorado pelo Git, com placeholder em `.env.example`; não deve ir
 à Vercel. Não exibir a chave nem URL de requisição com query.

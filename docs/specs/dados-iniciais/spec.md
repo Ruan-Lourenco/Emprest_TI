@@ -1,7 +1,7 @@
 # Spec — Dados iniciais e fotos de equipamentos
 
 Status: APROVADA em 2026-11-06; revisão da origem para Pixabay APROVADA pelo
-responsável em 2026-11-09. A revisão diverge do enunciado Pexels da prática.
+responsável em 2026-11-09, conforme orientação atualizada da prática.
 Implementação e produção: pendentes até evidência nos itens de `tasks.md`.
 
 ## Objetivo e vínculo
@@ -30,6 +30,9 @@ registrar credencial no repositório. Segue PRD e ADR-001/002/004.
   prepara arquivos locais. O upload ao
   Storage e a aplicação no banco de produção são ações humanas conforme
   `rules/operacao.md` e `docs/DEVOPS.md`.
+- Fotos antigas de equipamentos de outra origem ficam ocultas na interface
+  até serem substituídas pelas fotos Pixabay aprovadas; os metadados antigos
+  permanecem no banco para auditoria da migration.
 
 ## Critérios de aceitação
 
@@ -44,7 +47,8 @@ registrar credencial no repositório. Segue PRD e ADR-001/002/004.
   cria empréstimos; registros de outros tenants não mudam.
 - CA-05: A conta convidada do professor entra no login real e inicia com zero
   empréstimos; segredo não consta no repositório.
-- CA-06: Catálogo e detalhe mostram foto e crédito "Fotos: Pixabay" com link.
+- CA-06: Catálogo e detalhe mostram apenas foto Pixabay aprovada e crédito
+  "Fotos: Pixabay" com link; fotos antigas de outra origem não são exibidas.
 
 ## Fora de escopo
 

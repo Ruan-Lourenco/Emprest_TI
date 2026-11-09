@@ -33,13 +33,14 @@ describe("detalhe do equipamento", () => {
     }
   });
 
-  it("preserva crédito de foto Pexels anterior à migration", () => {
+  it("CA-06 dados iniciais: oculta foto antiga de outra origem", () => {
     const item = initialEquipment[0];
     item.imageUrl = "https://example.supabase.co/storage/v1/object/public/equipment/TI-0001.jpg";
     item.imageProvider = "Pexels";
     try {
       render(<EquipmentDetail patrimony={item.patrimony} />);
-      expect(screen.getByRole("link", { name: "Fotos: Pexels" })).toHaveAttribute("href", "https://www.pexels.com/");
+      expect(screen.queryByRole("img", { name: item.name })).not.toBeInTheDocument();
+      expect(screen.queryByRole("link", { name: "Fotos: Pexels" })).not.toBeInTheDocument();
     } finally {
       item.imageUrl = null;
       item.imageProvider = null;

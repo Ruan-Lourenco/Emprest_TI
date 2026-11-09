@@ -45,11 +45,11 @@ export function EquipmentDetail({ patrimony }: { patrimony: string }) {
       {feedback && <div className={`notice ${feedback.ok ? "success-notice" : ""}`} role={feedback.ok ? "status" : "alert"} style={{ marginTop: 14 }}><CheckCircle size={18} />{feedback.message}</div>}
       <div className="split" style={{ marginTop: 20 }}>
         <section>
-          <div className="hero-image">{selectedItem.imageUrl ? <>
+          <div className="hero-image">{selectedItem.imageUrl && selectedItem.imageProvider === "Pixabay" ? <>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img className="hero-photo" src={selectedItem.imageUrl} alt={selectedItem.name} width={800} height={600} />
           </> : <EquipmentIcon category={selectedItem.category} size={70} />}</div>
-          {selectedItem.imageUrl && (selectedItem.imageProvider === "Pixabay" || selectedItem.imageProvider === "Pexels") && <p className="photo-credit"><a href={selectedItem.imageProvider === "Pexels" ? "https://www.pexels.com/" : "https://pixabay.com/"} target="_blank" rel="noreferrer">Fotos: {selectedItem.imageProvider}</a>{selectedItem.imageCreator && selectedItem.imageSourceUrl && <> · <a href={selectedItem.imageSourceUrl} target="_blank" rel="noreferrer">Foto: {selectedItem.imageCreator}</a></>}</p>}
+          {selectedItem.imageUrl && selectedItem.imageProvider === "Pixabay" && <p className="photo-credit"><a href="https://pixabay.com/" target="_blank" rel="noreferrer">Fotos: Pixabay</a>{selectedItem.imageCreator && selectedItem.imageSourceUrl && <> · <a href={selectedItem.imageSourceUrl} target="_blank" rel="noreferrer">Foto: {selectedItem.imageCreator}</a></>}</p>}
           <div className="detail-title"><h1>{selectedItem.name}</h1><StatusPill status={selectedItem.status} /></div>
           <p className="subtitle" style={{ maxWidth: "60ch" }}>{selectedItem.description}</p>
           <dl className="spec-grid">

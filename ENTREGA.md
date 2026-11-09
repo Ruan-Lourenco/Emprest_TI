@@ -15,9 +15,9 @@
 | Pedido | Contrariava | Decisão e motivo | Registro | Commit |
 | --- | --- | --- | --- | --- |
 | Limite de cinco empréstimos | PRD: três | Mantidos três; só Operações altera regra aprovada | `docs/specs/solicitar-emprestimo/spec.md`, CA-04 | `b8aeee3` |
-| Prazo de 14 dias úteis | PRD e código atual: 14 dias corridos | Mantidos 14 corridos até decisão de Operações | `docs/specs/solicitar-emprestimo/spec.md`, CA-03 | `b8aeee3` |
-| Catálogo sem crédito | Diretrizes da API Pexels e contrato da skill | Exibir link "Fotos: Pexels" | ADR-003, CA-02/CA-06 | `b8aeee3` |
-| Fonte das fotos após revisão | Enunciado exige Pexels exclusivamente | Responsável escolheu Pixabay; este requisito da avaliação **não será atendido** | ADR-004, specs revisadas em 2026-11-09 | branch atual |
+| Prazo de 14 dias úteis | PRD: 14 dias sem definir úteis/corridos; implementação anterior: 14 corridos | Mantidos 14 corridos na spec aprovada; a unidade foi explicitada para não atribuí-la indevidamente ao PRD | `docs/specs/solicitar-emprestimo/spec.md`, CA-03 | `b8aeee3` |
+| Catálogo sem crédito | Diretrizes da API e contrato da skill | Exibir link "Fotos: Pixabay" conforme orientação atualizada; o HTML original citava Pexels | ADR-004, CA-02/CA-06 | `603adad` |
+| Fonte das fotos atualizada | HTML original: Pexels exclusivamente | Responsável confirmou em 2026-11-09 que Pixabay é a orientação vigente da prática; skill, specs e ADR-004 seguem essa fonte | ADR-004, specs revisadas | `603adad` |
 | Senha no seed | `rules/secrets.md`, `AGENTS.md` e outra seção do enunciado | Não registrar senha; convite Auth e vínculo por UUID | `docs/specs/dados-iniciais/spec.md`, CA-05 | `b8aeee3` |
 | Apenas dois itens em manutenção | Lista canônica de 12 inclui TI-0010 em manutenção | Três em manutenção, nove disponíveis | `data/equipamentos-iniciais.json`, CA-01 | `b8aeee3` |
 | Verificador corrigir teste | Independência exigida para o papel | Verificador só aponta; agente principal corrige | `agents/verificador-spec.md` e seção 6 | `4501a76`, `dbf4abf` |
@@ -47,8 +47,9 @@ defensável de manter um manifesto separado. A coluna junto ao equipamento
 facilita auditoria e unicidade da foto. A migration adiciona colunas opcionais
 para preservar os registros existentes.
 
-O ADR-004 registra a escolha posterior por Pixabay e a migration incremental
-que preserva metadados Pexels anteriores, se existirem.
+O ADR-004 registra a orientação atualizada para Pixabay e a migration
+incremental que preserva metadados Pexels anteriores, se existirem. A interface
+oculta essas fotos antigas até serem substituídas pelas fotos Pixabay aprovadas.
 
 ## 4. Skill `imagens-equipamentos`
 
@@ -122,6 +123,19 @@ Prova com erro plantado, em dois commits após a baseline `b8aeee3`:
 O verificador não corrigiu o teste. A restauração foi feita pelo agente
 principal, e o `git show dbf4abf` permite comparar os dois estados.
 
+Rodada mais recente em 2026-11-09, após PostgreSQL isolado e confirmação da
+fonte Pixabay. Os resultados abaixo são o estado atual, não substituem as
+evidências CA a CA nos diretórios das specs:
+
+| Spec | CA-01 | CA-02 | CA-03 | CA-04 | CA-05 | CA-06 | Veredito |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| Dados iniciais | ATENDIDO | PARCIAL | BLOQUEADO | PARCIAL | BLOQUEADO | PARCIAL | NÃO PRONTA |
+| Solicitar empréstimo | ATENDIDO | PARCIAL | ATENDIDO local | ATENDIDO local | ATENDIDO local | PARCIAL | NÃO PRONTA |
+
+O verificador apontou ausência de fotos aprovadas e URLs públicas, convite e
+login reais, dados de produção e recarga autenticada. A fixture local do seed
+comprova idempotência no PostgreSQL, mas não é o manifesto aprovado da prática.
+
 ## 7. Regra posta à prova
 
 `rules/secrets.md` foi esclarecido: variáveis de runtime e build vão à Vercel;
@@ -150,6 +164,10 @@ tenants antes/depois. Uma role não proprietária sob RLS viu zero registros.
 Essa fixture **não** é aprovação de foto nem substitui a execução protegida em
 produção. O verificador-spec deve manter as specs NÃO PRONTAS até evidência dos
 demais critérios.
+
+Após a confirmação de que Pixabay é a fonte vigente, catálogo e detalhe
+passaram a ocultar fotos antigas de outra origem até sua substituição. A suíte
+local passou com 26 testes, além de typecheck, lint e build.
 
 - Concluir revisão das candidatas Pixabay, registrar rejeições e motivos;
   upload **humano** para bucket público do Storage.

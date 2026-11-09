@@ -1,7 +1,8 @@
 # ADR-003 — Fotos do catálogo
 
 Status: SUPERADO pelo ADR-004 em 2026-11-09. Esta foi a decisão original
-alinhada ao enunciado da prática; mantém-se para rastrear a divergência.
+alinhada ao HTML inicial da prática; mantém-se para rastrear a atualização
+posterior da fonte de fotos.
 
 ## Decisão
 

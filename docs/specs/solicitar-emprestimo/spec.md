@@ -12,23 +12,27 @@ aprovada de persistência/autenticação.
 
 ## Decisões
 
-- Máximo de **três** empréstimos abertos e prazo de **14 dias corridos**,
-  conforme PRD e implementação existente. O briefing de cinco e 14 dias úteis
-  conflita com o PRD; mudar isso exige decisão de Operações e revisão do PRD.
+- Máximo de **três** empréstimos abertos, conforme PRD. O PRD diz **14 dias**
+  sem especificar úteis ou corridos; a implementação existente usa **14 dias
+  corridos**, mantidos na spec aprovada. O briefing de cinco e 14 dias úteis
+  conflita com o limite do PRD e com a implementação do prazo. Mudar essas
+  escolhas exige decisão de Operações e revisão das fontes afetadas.
 - Atraso é `dueAt < now` no servidor. Item em manutenção, emprestado ou fora
   de uso não pode ser solicitado. A resposta deve informar o motivo da recusa.
 - `tenant_id` e usuário vêm do contexto, não do cliente. Solicitação usa uma
   transação serializable, atualização condicional de equipamento e constraint
   de um empréstimo aberto por equipamento.
 - O catálogo exibe foto, nome, categoria e situação; o crédito Pixabay é
-  obrigatório conforme ADR-004, apesar do briefing pedir sua remoção. Isso
-  diverge da exigência Pexels do enunciado.
+  obrigatório conforme ADR-004, apesar do briefing pedir sua remoção. A
+  orientação atualizada da prática usa Pixabay. Fotos antigas de outra origem
+  ficam ocultas até a substituição.
 - A conta do professor não é usada para testes que criem empréstimos.
 
 ## Critérios de aceitação
 
 - CA-01: Sem sessão ou vínculo no tenant ativo, solicitar é recusado.
-- CA-02: Catálogo mostra foto, nome, categoria, situação e crédito Pixabay.
+- CA-02: Catálogo mostra foto Pixabay, nome, categoria, situação e crédito
+  Pixabay; foto antiga de outra origem não é exibida.
 - CA-03: Solicitar item disponível cria um empréstimo com vencimento 14 dias
   depois e muda o item para emprestado em uma operação atômica.
 - CA-04: Três abertos impedem nova solicitação; atraso também impede, com

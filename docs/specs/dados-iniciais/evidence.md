@@ -11,11 +11,11 @@ preparadas localmente em `.photo-prep/`, com revisão humana e upload pendentes.
 | CA-03 | Revisão preliminar rejeitou fotos com pessoa, marca, texto/tela ou item incorreto; nenhuma URL pública conferida | BLOQUEADO por revisão final e upload humano |
 | CA-04 | Três migrations aplicadas no PostgreSQL isolado em `localhost:5433`; seed executado três vezes com manifesto de teste temporário: 12 itens no `suporte_ti` (3 manutenção, 9 disponíveis), zero empréstimos; equipamentos de outros tenants permaneceram 108 antes/depois | ATENDIDO localmente; aplicação em produção pendente |
 | CA-05 | Convite, vínculo e login real não executados | BLOQUEADO por ação humana em produção |
-| CA-06 | `src/features/catalogo/catalog-view.test.tsx:30` e `src/features/catalogo/equipment-detail.test.tsx:17` cobrem foto e crédito com URL de teste | PARCIAL: não há fotos reais no catálogo remoto |
+| CA-06 | `src/features/catalogo/catalog-view.test.tsx` e `src/features/catalogo/equipment-detail.test.tsx` cobrem foto/crédito Pixabay e ocultação de foto antiga com URL de teste | PARCIAL: não há fotos reais no catálogo remoto |
 
-`npm test`: 6 arquivos, 25 testes passaram após a revisão do erro de
-concorrência. `npm run lint`, `npm run typecheck`, `node --check` nos scripts
-de fotos e `npm run build` passaram. Em 2026-11-09, Docker passou a
+`npm test`: 6 arquivos, 26 testes passaram após a atualização para exibir
+somente fotos Pixabay. `npm run lint`, `npm run typecheck`, `node --check` nos
+scripts de fotos e `npm run build` passaram. Em 2026-11-09, Docker passou a
 funcionar: o PostgreSQL isolado em `localhost:5433` recebeu as três migrations.
 O manifesto usado no seed foi uma fixture local ignorada pelo Git, com URLs
 fictícias; **não equivale a fotos aprovadas ou Storage publicado**. Uma role

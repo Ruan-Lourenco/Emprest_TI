@@ -36,7 +36,7 @@ export function EquipmentCard({ item }: { item: Equipment }) {
         <span className="item-icon"><EquipmentIcon category={item.category} /></span>
         <StatusPill status={item.status} />
       </div>
-      {item.imageUrl && <div className="equipment-photo-wrap">
+      {item.imageUrl && item.imageProvider === "Pixabay" && <div className="equipment-photo-wrap">
         {/* Public Supabase Storage object, approved through the image skill. */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img className="equipment-photo" src={item.imageUrl} alt={item.name} width={800} height={600} />
