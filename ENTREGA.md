@@ -6,17 +6,16 @@
 - PR da prática incorporado: https://github.com/Ruan-Lourenco/Emprest_TI/pull/19
 - PR da correção de produção incorporado: https://github.com/Ruan-Lourenco/Emprest_TI/pull/27
 - Produção informada pelo responsável: https://emprest-ti-coral.vercel.app/login
-- Estado em 2026-11-09: **produção validada pelo responsável; specs ainda
-  NÃO PRONTAS no parecer independente**. As 12 fotos no Storage foram conferidas
+- Estado em 2026-11-09: **produção validada e duas specs PRONTAS**. As 12 fotos no Storage foram conferidas
   por URL e hash; workflows protegidos de migration, dois seeds e vínculo
   concluíram com sucesso. O responsável informou ter conferido login, catálogo,
   empréstimo, recarga, limite e conta do professor com zero empréstimos na
   Vercel após o PR #27. Não há captura da repetição final: a fonte dessa parte
-  é o relato do responsável. O verificador pediu captura da contagem remota,
-  prova da conta do professor com zero empréstimos e duas coberturas locais;
-  os dois testes foram adicionados e passaram, mas exigem novo parecer.
-  A tag `entrega-pratica` depende do veredito PRONTA das duas specs e da
-  versão final deste documento em `main`.
+  era o relato do responsável. Depois, foram fornecidas capturas do Supabase
+  com 12 linhas e da Vercel com a conta do professor em zero empréstimos. Os
+  dois testes locais pedidos também foram adicionados e passaram. O
+  `verificador-spec` independente aceitou CA-01 a CA-06 de `dados-iniciais` e
+  `solicitar-emprestimo`; o typecheck explícito terminou com código zero.
 
 ## 1. Conflitos: pedido versus fontes vigentes
 
@@ -191,9 +190,7 @@ local passou com 26 testes, além de typecheck, lint e build.
 - Conservar a conta do professor com zero empréstimos até a correção.
 - Não usar o sistema como inventário operacional definitivo antes de corrigir
   os placeholders de série e localização com dados reais.
-- Anexar as provas remotas solicitadas e repetir o verificador independente
-  sobre as duas coberturas locais agora testadas. Incorporar esta revisão em `main`
-  antes da tag `entrega-pratica`.
+- Incorporar esta revisão em `main` antes da tag `entrega-pratica`.
 
 `EmprestTI.zip` preexistente e não rastreado ficou fora desta entrega.
 
@@ -213,12 +210,17 @@ local passou com 26 testes, além de typecheck, lint e build.
 - O responsável informou ter conferido 12 equipamentos sem duplicatas, três
   em manutenção, fotos e crédito, login separado, empréstimo e persistência
   após recarga, recusa pelo limite e zero empréstimos na conta do professor.
-  É evidência humana relatada, sem captura anexada. Os testes de concorrência,
+  A validação funcional ampla é evidência humana relatada; as contagens de
+  equipamentos e de empréstimos do professor têm capturas conferidas. Os testes de concorrência,
   atraso e isolamento entre tenants constam no PostgreSQL local em
   `docs/specs/solicitar-emprestimo/evidence.md`.
 - Após o primeiro parecer independente, foram adicionados testes para item
   fora de uso e vencimento exibido na lista pessoal; os dois arquivos de
-  teste passaram (8 testes). O verificador ainda precisa reavaliá-los.
+  teste passaram (8 testes). O responsável também forneceu captura da Vercel
+  com a conta do professor identificada e zero empréstimos e captura do
+  Supabase Production com 12 linhas em `equipment`. Os hashes das imagens
+  estão em `docs/specs/dados-iniciais/evidence.md`; os arquivos não são
+  versionados por conterem identificadores pessoais e internos.
 - Em nova verificação de 2026-11-09, as 12 URLs de
   `docs/specs/dados-iniciais/urls-publicadas-validadas.json` responderam
   HTTP 200 por HEAD sem autenticação; o validador local confirmou 12 fotos
@@ -226,3 +228,6 @@ local passou com 26 testes, além de typecheck, lint e build.
 - O HTML original exigia Pexels, mas o responsável informou que a orientação
   atualizada da turma é Pixabay. ADR-004, skill, manifesto e interface seguem
   a decisão registrada; a confirmação externa dessa mudança não está anexada.
+- Parecer independente final: `dados-iniciais` e `solicitar-emprestimo` com
+  CA-01 a CA-06 **ATENDIDOS** e veredito **PRONTA**. O typecheck explícito,
+  lint, testes, build e checks do PR #28 foram aprovados.

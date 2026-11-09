@@ -6,12 +6,12 @@ Em 2026-11-09, os PRs #19 e #27 já estavam incorporados em `main`. Os
 workflows protegidos de migration, dois seeds e vínculo Auth concluíram com
 sucesso; o responsável informou que validou o fluxo da Vercel após a correção
 do pooler, mantendo a conta do professor sem empréstimos. Esta branch
-`codex/finalize-practice-docs` atualiza specs, evidências e `ENTREGA.md`;
-o verificador-spec final manteve as duas specs NÃO PRONTAS pelas provas
-remotas e coberturas locais apontadas nos diretórios das specs. Dois testes
-foram adicionados e passaram; falta o novo parecer sobre eles.
-O lint dos arquivos alterados passou; o typecheck local foi interrompido
-após cinco minutos sem conclusão e precisa ser verificado pelo build do CI.
+`codex/finalize-practice-docs` atualiza specs, evidências e `ENTREGA.md`.
+Dois testes foram adicionados e passaram; o responsável forneceu as duas
+capturas remotas. A revisão independente final aceitou CA-01 a CA-06 nas duas
+specs, agora **PRONTAS**. O lint e os testes específicos passaram; o typecheck
+foi repetido fora do OneDrive e terminou com código zero; o build do PR #28
+também passou.
 
 ## Decisões não óbvias
 
@@ -33,11 +33,8 @@ de vínculo Auth que falhou não foi usada como evidência de conclusão.
 
 ## Próximo passo exato
 
-Anexar capturas da contagem no Supabase e dos zero empréstimos da conta do
-professor; obter novo parecer sobre os testes locais de item fora de uso e vencimento na lista;
-repetir `verificador-spec` sobre as duas specs. Só marcar PRONTA quando todos
-os CAs tiverem evidência aceita. Depois incorporar a documentação em `main` e criar a tag
-`entrega-pratica` no commit final, se as duas specs estiverem PRONTAS.
+Incorporar a documentação final em `main` e criar a tag `entrega-pratica` no
+commit final. Não reabrir as specs sem nova mudança de comportamento.
 
 ## Arquivos relevantes
 

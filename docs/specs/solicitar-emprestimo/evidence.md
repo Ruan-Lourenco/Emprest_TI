@@ -2,8 +2,8 @@
 
 Atualizado em 2026-11-09. PostgreSQL local verificado; o responsável informou
 ter validado o fluxo autenticado de produção com conta de teste separada,
-inclusive persistência após recarga e limite de empréstimos. **Veredito final
-do verificador-spec pendente.**
+inclusive persistência após recarga e limite de empréstimos. Todos os seis
+critérios foram aceitos na revisão independente final.
 
 | CA | Evidência observada | Estado |
 | --- | --- | --- |
@@ -35,9 +35,11 @@ src/features/catalogo/equipment-detail.test.tsx
 src/components/loan-list.test.tsx --maxWorkers=2` passou (2 arquivos,
 8 testes). A execução demorou 285,71 s no workspace do OneDrive, com 98% do
 tempo gasto em importação de módulos. O lint desses dois arquivos passou.
-`npm run typecheck` foi interrompido após cinco minutos sem conclusão no
-workspace local; o build do CI precisa suprir essa checagem. O verificador
-precisa reavaliar CA-04 e CA-06 com essas evidências.
+Uma primeira execução de `npm run typecheck` foi interrompida após cinco
+minutos no workspace sincronizado. A checagem foi repetida no commit
+`e25d36b`, em worktree temporária fora do OneDrive, e terminou com código zero.
+Rodada independente final de 2026-11-09: CA-01 a CA-06 **ATENDIDOS** e spec
+**PRONTA**, considerando também os checks aprovados do PR #28.
 
 | Procedimento alterado | Papel | Contexto | Tentativa entre tenants | Evidência | Resultado |
 | --- | --- | --- | --- | --- | --- |

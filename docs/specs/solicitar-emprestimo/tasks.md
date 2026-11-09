@@ -13,6 +13,7 @@ ADR-004; manter os demais CAs e pendências de banco/produção.
 - [x] CA-03/04: testar prazo, limite, atraso e manutenção localmente; o
   responsável informou ter validado o fluxo e a persistência em produção.
 - [x] CA-05: testar concorrência em PostgreSQL local.
-- [ ] CA-01–06: executar typecheck, lint, testes, build e verificador-spec.
+- [x] CA-01–06: typecheck, lint, testes e build aprovados; verificador-spec
+  final executado após as duas coberturas locais adicionais.
 - [x] CA-01–06: fluxo no link de produção conferido pelo responsável com
   conta própria em 2026-11-09; conta do professor preservada sem empréstimos.

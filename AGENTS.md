@@ -98,10 +98,11 @@ externo está configurado neste repositório.
 A prática de catálogo com fotos e solicitação foi incorporada pelo PR #19; o
 PR #27 corrigiu a conexão de runtime no Supavisor. As 12 fotos Pixabay foram
 aprovadas e publicadas no Storage. As specs `dados-iniciais` e
-`solicitar-emprestimo` seguem NÃO PRONTAS após a revisão independente final:
-faltam evidências remotas anexadas e a reavaliação de duas coberturas locais
-adicionadas após o primeiro parecer. Veja `ENTREGA.md` e `handoff.md` para distinguir workflows observados
-de conferências de produção informadas pelo responsável.
+`solicitar-emprestimo` estão **PRONTAS** após revisão independente final: as
+evidências remotas solicitadas foram fornecidas, duas coberturas locais foram
+adicionadas e typecheck, lint, testes, build e checks do PR passaram. Veja
+`ENTREGA.md` e `handoff.md` para distinguir workflows observados de
+conferências de produção informadas pelo responsável.
 
 ## Skills
 

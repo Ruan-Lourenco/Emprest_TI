@@ -1,10 +1,10 @@
 # Spec — Dados iniciais e fotos de equipamentos
 
-Status: APROVADA em 2026-11-06; revisão da origem para Pixabay APROVADA pelo
-responsável em 2026-11-09, conforme orientação atualizada da prática.
-Implementação publicada; migração, dois seeds e vínculos têm workflows
-concluídos. O responsável informou ter validado o fluxo de produção em
-2026-11-09. Verificação final: acompanhar `tasks.md` e `evidence.md`.
+Status: **PRONTA** em 2026-11-09. Aprovada em 2026-11-06; revisão da origem
+para Pixabay aprovada pelo responsável em 2026-11-09, conforme orientação
+atualizada da prática. Implementação publicada; migração, dois seeds e
+vínculo têm workflows concluídos. Todos os critérios foram aceitos pelo
+`verificador-spec` independente; detalhes em `tasks.md` e `evidence.md`.
 
 ## Objetivo e vínculo
 
