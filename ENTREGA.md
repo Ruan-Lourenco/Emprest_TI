@@ -141,6 +141,16 @@ de dados, banco e produção descritas acima.
 
 ## 8. Fora de escopo e pendências
 
+Atualização de 2026-11-09: Docker voltou a funcionar. Em PostgreSQL isolado
+`localhost:5433`, as três migrations aplicaram; `npm run test:db` passou após
+tratar `P2028` de espera por transação como conflito ao solicitar empréstimo.
+O seed rodou três vezes com fixture local temporária e manteve 12 equipamentos
+(3 manutenção, 9 disponíveis), zero empréstimos e 108 equipamentos dos outros
+tenants antes/depois. Uma role não proprietária sob RLS viu zero registros.
+Essa fixture **não** é aprovação de foto nem substitui a execução protegida em
+produção. O verificador-spec deve manter as specs NÃO PRONTAS até evidência dos
+demais critérios.
+
 - Concluir revisão das candidatas Pixabay, registrar rejeições e motivos;
   upload **humano** para bucket público do Storage.
 - Confirmar URLs, criar `data/fotos-aprovadas.json` e executar o validador.
@@ -148,8 +158,8 @@ de dados, banco e produção descritas acima.
   verificando contagem e nenhuma alteração em empréstimos existentes.
 - Criar conta do professor por convite Auth, vincular UUID como `collaborator`
   e confirmar zero empréstimos sem usá-la nos testes.
-- Rodar teste de concorrência/RLS em PostgreSQL local e testar fluxo na Vercel
-  com outra conta; conferir que as 12 fotos aparecem e links abrem sem login.
+- Testar fluxo na Vercel com outra conta; conferir que as 12 fotos aparecem e
+  links abrem sem login.
 - Concluir verificações de banco e produção, atualizar o PR em rascunho,
   fazer merge e criar a tag somente com evidência real.
 

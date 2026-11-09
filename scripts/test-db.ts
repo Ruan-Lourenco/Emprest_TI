@@ -33,7 +33,9 @@ async function main() {
   await assert.rejects(foreignCaller.loans.request({ equipmentId: item.id }), { code: "CONFLICT" });
   assert.equal((await db.equipment.findUniqueOrThrow({ where: { id: item.id } })).status, "available");
   assert.equal(await db.loan.count({ where: { tenantId: tenantB.id } }), 0);
-  await requestLoan(db, tenantA.id, userA, item.id);
+  const firstLoan = await requestLoan(db, tenantA.id, userA, item.id);
+  assert.equal(firstLoan.dueAt.getTime() - firstLoan.borrowedAt.getTime(), 14 * 24 * 60 * 60 * 1000);
+  assert.equal((await db.equipment.findUniqueOrThrow({ where: { id: item.id } })).status, "loaned");
   assert.equal((await listLoans(db, tenantA.id, userA)).items.length, 1);
   assert.equal((await listLoans(db, tenantB.id, userB)).items.length, 0);
   await assert.rejects(requestLoan(db, tenantA.id, userA, item.id));
@@ -69,10 +71,37 @@ async function main() {
   assert.equal(firstPage.items.length, 100);
   assert.equal(secondPage.items.length, 2);
   assert.equal(new Set([...firstPage.items, ...secondPage.items].map((entry) => entry.id)).size, 102);
-  process.stdout.write("Persistência, isolamento, conflito, concorrência, paginação e devolução: OK\n");
+  const limitedUser = randomUUID();
+  const lateUser = randomUUID();
+  await db.$executeRaw`INSERT INTO auth.users (id) VALUES (${limitedUser}::uuid), (${lateUser}::uuid)`;
+  await db.membership.createMany({ data: [
+    { tenantId: tenantA.id, userId: limitedUser, role: "collaborator" },
+    { tenantId: tenantA.id, userId: lateUser, role: "collaborator" }
+  ] });
+  const ruleItems = await Promise.all(Array.from({ length: 6 }, (_, index) => db.equipment.create({ data: {
+    tenantId: tenantA.id, name: `Regra ${index}`, category: "Acessório", patrimony: `PAT-${3000 + index}`,
+    serial: `RULE-${index}`, location: "Balcão teste", status: "available"
+  } })));
+  const reference = new Date("2026-11-09T12:00:00.000Z");
+  for (const equipment of ruleItems.slice(0, 3)) await requestLoan(db, tenantA.id, limitedUser, equipment.id, reference);
+  await assert.rejects(requestLoan(db, tenantA.id, limitedUser, ruleItems[3].id, reference), { code: "PRECONDITION_FAILED" });
+  assert.equal(await db.loan.count({ where: { tenantId: tenantA.id, userId: limitedUser, returnedAt: null } }), 3);
+  assert.equal((await db.equipment.findUniqueOrThrow({ where: { id: ruleItems[3].id } })).status, "available");
+  await requestLoan(db, tenantA.id, lateUser, ruleItems[4].id, new Date("2026-10-01T12:00:00.000Z"));
+  await assert.rejects(requestLoan(db, tenantA.id, lateUser, ruleItems[5].id, reference), { code: "PRECONDITION_FAILED" });
+  assert.equal(await db.loan.count({ where: { tenantId: tenantA.id, userId: lateUser, returnedAt: null } }), 1);
+  assert.equal((await db.equipment.findUniqueOrThrow({ where: { id: ruleItems[5].id } })).status, "available");
+  const maintenance = await db.equipment.create({ data: {
+    tenantId: tenantA.id, name: "Monitor em manutenção", category: "Monitor", patrimony: "PAT-3006",
+    serial: "RULE-6", location: "Balcão teste", status: "maintenance"
+  } });
+  await assert.rejects(requestLoan(db, tenantA.id, userC, maintenance.id, reference), { code: "CONFLICT" });
+  assert.equal((await db.equipment.findUniqueOrThrow({ where: { id: maintenance.id } })).status, "maintenance");
+  assert.equal(await db.loan.count({ where: { equipmentId: maintenance.id } }), 0);
+  process.stdout.write("Persistência, prazo, limite, atraso, manutenção, isolamento, conflito, concorrência, paginação e devolução: OK\n");
 }
 
 main().catch((error) => {
-  process.stderr.write(`Teste de banco falhou: ${error instanceof Error ? error.name : "erro"}\n`);
+  process.stderr.write(`Teste de banco falhou: ${error instanceof assert.AssertionError ? error.stack : error instanceof Error ? error.name : "erro"}\n`);
   process.exitCode = 1;
 }).finally(() => db.$disconnect());

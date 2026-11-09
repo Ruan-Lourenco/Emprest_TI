@@ -1,6 +1,6 @@
 // @vitest-environment node
 import { describe, expect, it, vi } from "vitest";
-import type { PrismaClient } from "@prisma/client";
+import { Prisma, type PrismaClient } from "@prisma/client";
 import { listLoans, requestLoan } from "./loans";
 
 const now = new Date("2026-11-06T12:00:00.000Z");
@@ -50,5 +50,13 @@ describe("solicitar empréstimo", () => {
     const { db, tx } = fakeDb([], 0);
     await expect(requestLoan(db, tenantId, userId, equipmentId, now)).rejects.toMatchObject({ code: "CONFLICT" });
     expect(tx.loan.create).not.toHaveBeenCalled();
+  });
+
+  it("CA-05: indisponibilidade da transação retorna conflito ao solicitante", async () => {
+    const error = new Prisma.PrismaClientKnownRequestError("Unable to start a transaction in the given time.", {
+      code: "P2028", clientVersion: Prisma.prismaVersion.client
+    });
+    const db = { $transaction: vi.fn().mockRejectedValue(error) } as unknown as PrismaClient;
+    await expect(requestLoan(db, tenantId, userId, equipmentId, now)).rejects.toMatchObject({ code: "CONFLICT" });
   });
 });
