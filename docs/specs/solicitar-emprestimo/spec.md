@@ -2,7 +2,8 @@
 
 Status: APROVADA em 2026-11-06; crédito visual revisado para Pixabay com a
 decisão explícita do responsável em 2026-11-09.
-Verificação integral: pendente conforme `tasks.md`.
+Implementação publicada; o responsável informou em 2026-11-09 que validou o
+fluxo de produção. Verificação final: acompanhar `tasks.md` e `evidence.md`.
 
 ## Objetivo e vínculo
 

@@ -2,7 +2,9 @@
 
 Status: APROVADA em 2026-11-06; revisão da origem para Pixabay APROVADA pelo
 responsável em 2026-11-09, conforme orientação atualizada da prática.
-Implementação e produção: pendentes até evidência nos itens de `tasks.md`.
+Implementação publicada; migração, dois seeds e vínculos têm workflows
+concluídos. O responsável informou ter validado o fluxo de produção em
+2026-11-09. Verificação final: acompanhar `tasks.md` e `evidence.md`.
 
 ## Objetivo e vínculo
 
@@ -22,8 +24,11 @@ registrar credencial no repositório. Segue PRD e ADR-001/002/004.
   técnico `SEED-TI-xxxx` e local `Acervo de TI`; isso não afirma localização
   física real. A equipe deve corrigir antes do uso operacional.
 - A conta é criada via convite administrativo do Supabase Auth, vinculada ao
-  tenant como `collaborator`, e começa sem empréstimos. Nenhuma senha fica em
-  código, seed, documento ou histórico. O seed não apaga empréstimos existentes.
+  tenant como `collaborator`, e começa sem empréstimos. Como o professor não
+  precisa concluir convites individuais para corrigir a turma, o responsável
+  pode definir a senha da conta Auth existente pela API administrativa, após
+  conferir seu UUID e e-mail; a senha não fica em código, seed, documento,
+  workflow ou histórico. O seed não apaga empréstimos existentes.
 - Fotos selecionadas exclusivamente pela API Pixabay têm 800×600, IDs únicos,
   metadados de origem/criador/licença e revisão humana. A chave fica apenas
   em `.env.local`, ignorado pelo Git, para a ferramenta local. O agente só
@@ -31,8 +36,8 @@ registrar credencial no repositório. Segue PRD e ADR-001/002/004.
   Storage e a aplicação no banco de produção são ações humanas conforme
   `rules/operacao.md` e `docs/DEVOPS.md`.
 - As URLs públicas usam o bucket `EmprestTi` informado pelo responsável;
-  metadados de fotos publicadas ainda precisam passar pela revisão visual
-  antes de entrar no manifesto aprovado usado pelo seed.
+  as 12 fotos publicadas passaram pela revisão visual e constam no manifesto
+  aprovado usado pelo seed.
 - Fotos antigas de equipamentos de outra origem ficam ocultas na interface
   até serem substituídas pelas fotos Pixabay aprovadas; os metadados antigos
   permanecem no banco para auditoria da migration.

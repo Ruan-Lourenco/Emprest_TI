@@ -1,16 +1,18 @@
 # Evidência — Solicitar empréstimo
 
-Atualizado em 2026-11-09. **Spec NÃO PRONTA**; o PostgreSQL local foi verificado,
-mas falta fluxo autenticado em produção com conta de teste separada.
+Atualizado em 2026-11-09. PostgreSQL local verificado; o responsável informou
+ter validado o fluxo autenticado de produção com conta de teste separada,
+inclusive persistência após recarga e limite de empréstimos. **Veredito final
+do verificador-spec pendente.**
 
 | CA | Evidência observada | Estado |
 | --- | --- | --- |
 | CA-01 | `src/server/api/authz.test.ts:10,15` recusa sem sessão e sem vínculo no procedimento | ATENDIDO localmente |
-| CA-02 | `src/features/catalogo/catalog-view.test.tsx` cobre foto, nome, categoria, estado, crédito Pixabay e ocultação de foto antiga | PARCIAL: foto de fixture, sem dados reais |
-| CA-03 | `src/server/api/authz.test.ts:32` prova contexto; `scripts/test-db.ts` confirmou prazo exato de 14 dias, criação e estado persistidos na mesma transação PostgreSQL | ATENDIDO localmente; fluxo de produção pendente |
-| CA-04 | `src/server/services/loans.test.ts` e `src/features/catalogo/equipment-detail.test.tsx` cobrem motivos; `scripts/test-db.ts` confirmou limite de três, atraso e manutenção no PostgreSQL, sem alterar os itens recusados | ATENDIDO localmente; fluxo de produção pendente |
-| CA-05 | `npm run test:db` no PostgreSQL isolado verificou exatamente uma criação, outro solicitante com `CONFLICT` e um empréstimo aberto; `P2028` de espera por transação passou a mapear para conflito | ATENDIDO localmente; produção pendente |
-| CA-06 | `src/server/api/authz.test.ts` e `src/server/services/loans.test.ts` cobrem filtro; `npm run test:db` confirmou lista pessoal e isolamento entre tenants | PARCIAL: recarga e fluxo autenticado em produção pendentes |
+| CA-02 | `src/features/catalogo/catalog-view.test.tsx` cobre foto, nome, categoria, estado, crédito Pixabay e ocultação de foto antiga; responsável conferiu fotos reais no deploy | ATENDIDO local e por validação humana em produção |
+| CA-03 | `src/server/api/authz.test.ts:32` prova contexto; `scripts/test-db.ts` confirmou prazo de 14 dias, criação e estado na mesma transação PostgreSQL; responsável informou solicitação e mudança de estado em produção | ATENDIDO local e por validação humana em produção |
+| CA-04 | Testes de service/UI e `scripts/test-db.ts` cobrem limite, atraso e manutenção; `src/features/catalogo/equipment-detail.test.tsx` passou a cobrir item fora de uso com botão bloqueado e motivo visível. O service só atualiza equipamento com `status: available`; responsável informou recusa visível e limite em produção | ATENDIDO local e por validação humana em produção; teste PostgreSQL específico para item fora de uso não foi executado |
+| CA-05 | `npm run test:db` no PostgreSQL isolado verificou uma criação e conflito na segunda solicitação, com um empréstimo aberto; `P2028` mapeado para conflito | ATENDIDO no PostgreSQL local; concorrência não foi repetida no deploy |
+| CA-06 | `src/server/api/authz.test.ts` e `src/server/services/loans.test.ts` cobrem filtro; `npm run test:db` confirmou lista pessoal e isolamento entre tenants; `src/components/loan-list.test.tsx` confirmou exibição do equipamento e vencimento; responsável informou recarga e login separados no deploy | ATENDIDO local e por validação humana em produção |
 
 `npm run test:db` passou em 2026-11-09 no PostgreSQL Docker isolado em
 `localhost:5433`, após aplicação das três migrations. Uma role não proprietária
@@ -18,6 +20,24 @@ sujeita a RLS viu zero registros de tenants, equipamentos e empréstimos.
 `npm test` passou com 26 testes; `npm run typecheck`, `npm run lint` e
 `npm run build` passaram após a correção de concorrência. O banco remoto não
 foi usado como ambiente de teste.
+
+O [PR #27](https://github.com/Ruan-Lourenco/Emprest_TI/pull/27) corrigiu a
+instabilidade do pooler que interrompia a consulta depois da primeira
+solicitação. Na branch do PR, `npm run typecheck`, `npm run lint`,
+`npm test -- --maxWorkers=4` (31 testes) e `npm run build` passaram. O
+responsável informou que o novo deploy funciona. Não há vídeo ou captura da
+repetição bem-sucedida; o relato é a fonte da evidência remota.
+
+Após o primeiro parecer independente, foram adicionados dois testes sem
+alterar código de produção: indisponibilidade de item fora de uso no detalhe
+e vencimento na lista pessoal. `npx vitest run
+src/features/catalogo/equipment-detail.test.tsx
+src/components/loan-list.test.tsx --maxWorkers=2` passou (2 arquivos,
+8 testes). A execução demorou 285,71 s no workspace do OneDrive, com 98% do
+tempo gasto em importação de módulos. O lint desses dois arquivos passou.
+`npm run typecheck` foi interrompido após cinco minutos sem conclusão no
+workspace local; o build do CI precisa suprir essa checagem. O verificador
+precisa reavaliar CA-04 e CA-06 com essas evidências.
 
 | Procedimento alterado | Papel | Contexto | Tentativa entre tenants | Evidência | Resultado |
 | --- | --- | --- | --- | --- | --- |

@@ -3,13 +3,20 @@
 ## Links
 
 - Repositório: https://github.com/Ruan-Lourenco/Emprest_TI
-- PR pronto para revisão: https://github.com/Ruan-Lourenco/Emprest_TI/pull/19
+- PR da prática incorporado: https://github.com/Ruan-Lourenco/Emprest_TI/pull/19
+- PR da correção de produção incorporado: https://github.com/Ruan-Lourenco/Emprest_TI/pull/27
 - Produção informada pelo responsável: https://emprest-ti-coral.vercel.app/login
-- Estado: **entrega parcial**. A página de login respondeu HTTP 200 em
-  2026-11-06; as 12 fotos no Storage foram validadas em 2026-11-09, mas dados,
-  conta convidada e fluxo autenticado no deploy ainda não foram comprovados.
-  Não se deve usar a tag `entrega-pratica` como sinal de conclusão antes dessas
-  verificações.
+- Estado em 2026-11-09: **produção validada pelo responsável; specs ainda
+  NÃO PRONTAS no parecer independente**. As 12 fotos no Storage foram conferidas
+  por URL e hash; workflows protegidos de migration, dois seeds e vínculo
+  concluíram com sucesso. O responsável informou ter conferido login, catálogo,
+  empréstimo, recarga, limite e conta do professor com zero empréstimos na
+  Vercel após o PR #27. Não há captura da repetição final: a fonte dessa parte
+  é o relato do responsável. O verificador pediu captura da contagem remota,
+  prova da conta do professor com zero empréstimos e duas coberturas locais;
+  os dois testes foram adicionados e passaram, mas exigem novo parecer.
+  A tag `entrega-pratica` depende do veredito PRONTA das duas specs e da
+  versão final deste documento em `main`.
 
 ## 1. Conflitos: pedido versus fontes vigentes
 
@@ -19,7 +26,7 @@
 | Prazo de 14 dias úteis | PRD: 14 dias sem definir úteis/corridos; implementação anterior: 14 corridos | Mantidos 14 corridos na spec aprovada; a unidade foi explicitada para não atribuí-la indevidamente ao PRD | `docs/specs/solicitar-emprestimo/spec.md`, CA-03 | `b8aeee3` |
 | Catálogo sem crédito | Diretrizes da API e contrato da skill | Exibir link "Fotos: Pixabay" conforme orientação atualizada; o HTML original citava Pexels | ADR-004, CA-02/CA-06 | `603adad` |
 | Fonte das fotos atualizada | HTML original: Pexels exclusivamente | Responsável confirmou em 2026-11-09 que Pixabay é a orientação vigente da prática; skill, specs e ADR-004 seguem essa fonte | ADR-004, specs revisadas | `603adad` |
-| Senha no seed | `rules/secrets.md`, `AGENTS.md` e outra seção do enunciado | Não registrar senha; convite Auth e vínculo por UUID | `docs/specs/dados-iniciais/spec.md`, CA-05 | `b8aeee3` |
+| Senha no seed | `rules/secrets.md`, `AGENTS.md` e outra seção do enunciado | Não registrar senha; convite Auth, vínculo por UUID e definição administrativa da senha na conta existente, executada pelo responsável | `docs/specs/dados-iniciais/spec.md`, CA-05 | `b8aeee3`; atualização desta entrega |
 | Apenas dois itens em manutenção | Lista canônica de 12 inclui TI-0010 em manutenção | Três em manutenção, nove disponíveis | `data/equipamentos-iniciais.json`, CA-01 | `b8aeee3` |
 | Verificador corrigir teste | Independência exigida para o papel | Verificador só aponta; agente principal corrige | `agents/verificador-spec.md` e seção 6 | `4501a76`, `dbf4abf` |
 | Agente publicar dados | Regra geral da própria prática e `rules/operacao.md` | Agente prepara; pessoa executa no deploy | `docs/specs/dados-iniciais/spec.md` | `b8aeee3` |
@@ -33,6 +40,7 @@
 | Dados iniciais | Papel da conta do professor | `collaborator` | Precisa solicitar e ver apenas os próprios itens; sem acesso de Operações. | `b8aeee3` |
 | Fotos | Onde guardar origem e crédito | Colunas opcionais em `equipment` | Registro verificável, compatível com dados existentes. | `b8aeee3` |
 | Solicitação | Aprovação ou fila | Nenhuma; cria imediatamente | Decisão explícita do briefing, sem conflito com PRD. | `b8aeee3` |
+| Conta do professor | Convite exigiria que ele concluísse um e-mail por projeto | Manter Supabase Auth e definir senha na conta convidada existente pela API administrativa, após conferir UUID/e-mail; não criar segunda tabela de login | Permite o login previsto sem expor senha em seed, Git, workflow ou documentação | Atualização desta entrega |
 
 ## 2. Onde o agente tentou decidir
 
@@ -160,8 +168,8 @@ linha 6 do client para preservar geração e build. As demais atualizações de
 dependências de `main` foram mantidas. Após o merge `d4e4ab7`, `npm ci`,
 `npm run build`, `npm run lint`, `npm test` (16 testes) e `git diff --check`
 passaram. No PR #19, os checks `Documentation and secret guard` e
-`Production build` também passaram. O PR foi marcado pronto para revisão após
-o manifesto e a validação das fotos; banco e login reais seguem pendentes.
+`Production build` também passaram. Esse parágrafo registra o estado anterior
+ao merge do PR #19; as execuções de produção posteriores constam abaixo.
 
 ## 8. Fora de escopo e pendências
 
@@ -172,8 +180,7 @@ O seed rodou três vezes com fixture local temporária e manteve 12 equipamentos
 (3 manutenção, 9 disponíveis), zero empréstimos e 108 equipamentos dos outros
 tenants antes/depois. Uma role não proprietária sob RLS viu zero registros.
 Essa fixture **não** é aprovação de foto nem substitui a execução protegida em
-produção. O verificador-spec deve manter as specs NÃO PRONTAS até evidência dos
-demais critérios.
+produção. Os workflows protegidos posteriores são listados na seção 9.
 
 Após a confirmação de que Pixabay é a fonte vigente, catálogo e detalhe
 passaram a ocultar fotos antigas de outra origem até sua substituição. A suíte
@@ -181,13 +188,41 @@ local passou com 26 testes, além de typecheck, lint e build.
 
 - Fotos Pixabay revisadas, upload **humano** e 12 URLs públicas conferidas;
   `data/fotos-aprovadas.json` validado localmente.
-- Aplicar migration pelo workflow protegido e rodar seed inicial duas vezes,
-  verificando contagem e nenhuma alteração em empréstimos existentes.
-- Criar conta do professor por convite Auth, vincular UUID como `collaborator`
-  e confirmar zero empréstimos sem usá-la nos testes.
-- Testar fluxo na Vercel com outra conta; conferir que as 12 fotos aparecem e
-  links abrem sem login.
-- Revisar o PR, fazer merge após os checks e a aprovação exigida; criar a tag
-  somente após as evidências de produção e a verificação final das specs.
+- Conservar a conta do professor com zero empréstimos até a correção.
+- Não usar o sistema como inventário operacional definitivo antes de corrigir
+  os placeholders de série e localização com dados reais.
+- Anexar as provas remotas solicitadas e repetir o verificador independente
+  sobre as duas coberturas locais agora testadas. Incorporar esta revisão em `main`
+  antes da tag `entrega-pratica`.
 
 `EmprestTI.zip` preexistente e não rastreado ficou fora desta entrega.
+
+## 9. Fechamento de produção em 2026-11-09
+
+- O [PR #19](https://github.com/Ruan-Lourenco/Emprest_TI/pull/19) publicou a
+  prática. O [PR #27](https://github.com/Ruan-Lourenco/Emprest_TI/pull/27)
+  corrigiu a falha intermitente do Prisma no Supavisor; na branch do PR,
+  typecheck, lint, 31 testes e build passaram. O responsável informou que o
+  deploy posterior funciona.
+- [Migration protegida](https://github.com/Ruan-Lourenco/Emprest_TI/actions/runs/42624490914),
+  [seed 1](https://github.com/Ruan-Lourenco/Emprest_TI/actions/runs/42624620235),
+  [seed 2](https://github.com/Ruan-Lourenco/Emprest_TI/actions/runs/42625055903)
+  e [vínculo Auth](https://github.com/Ruan-Lourenco/Emprest_TI/actions/runs/42626220868)
+  concluíram com sucesso. Houve também uma tentativa de vínculo que falhou;
+  ela não é contada como evidência de conclusão.
+- O responsável informou ter conferido 12 equipamentos sem duplicatas, três
+  em manutenção, fotos e crédito, login separado, empréstimo e persistência
+  após recarga, recusa pelo limite e zero empréstimos na conta do professor.
+  É evidência humana relatada, sem captura anexada. Os testes de concorrência,
+  atraso e isolamento entre tenants constam no PostgreSQL local em
+  `docs/specs/solicitar-emprestimo/evidence.md`.
+- Após o primeiro parecer independente, foram adicionados testes para item
+  fora de uso e vencimento exibido na lista pessoal; os dois arquivos de
+  teste passaram (8 testes). O verificador ainda precisa reavaliá-los.
+- Em nova verificação de 2026-11-09, as 12 URLs de
+  `docs/specs/dados-iniciais/urls-publicadas-validadas.json` responderam
+  HTTP 200 por HEAD sem autenticação; o validador local confirmou 12 fotos
+  únicas com metadados e JPEGs 800×600.
+- O HTML original exigia Pexels, mas o responsável informou que a orientação
+  atualizada da turma é Pixabay. ADR-004, skill, manifesto e interface seguem
+  a decisão registrada; a confirmação externa dessa mudança não está anexada.

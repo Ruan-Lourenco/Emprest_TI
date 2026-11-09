@@ -3,8 +3,9 @@
 Status: APROVADO em 2026-10-19, após aprovação do DDL e das decisões de
 migration e provisionamento pelo responsável.
 
-Implementação: código local presente; ativação remota, login real e verificação
-integral dos critérios permanecem pendentes conforme `tasks.md`.
+Implementação publicada; workflows de migration/seed e login real foram
+informados como concluídos. A verificação integral dos critérios desta spec
+ampla permanece pendente conforme `tasks.md` e `evidence.md`.
 
 ## Objetivo
 

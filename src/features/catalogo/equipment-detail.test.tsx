@@ -59,6 +59,18 @@ describe("detalhe do equipamento", () => {
     expect(screen.getByText("Este item já está emprestado.")).toBeInTheDocument();
   });
 
+  it("CA-04: item fora de uso não pode ser solicitado", () => {
+    const retired = { ...initialEquipment[0], id: "retired-item", patrimony: "PAT-9997", status: "retired" as const };
+    initialEquipment.push(retired);
+    try {
+      render(<EquipmentDetail patrimony={retired.patrimony} />);
+      expect(screen.getByRole("button", { name: "Solicitar equipamento" })).toBeDisabled();
+      expect(screen.getByText("Este item está fora de uso.")).toBeInTheDocument();
+    } finally {
+      initialEquipment.pop();
+    }
+  });
+
   it("CA-04: atraso informa o motivo da recusa", () => {
     state.currentUserLoans = [{ id: "atraso", equipmentId: "outro", borrower: "Teste", department: "", borrowedAt: "2000-01-01", dueAt: "2000-01-02" }];
     render(<EquipmentDetail patrimony="PAT-1042" />);
