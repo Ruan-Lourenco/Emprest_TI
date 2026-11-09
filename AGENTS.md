@@ -97,7 +97,9 @@ externo está configurado neste repositório.
 A prática de catálogo com fotos e solicitação está na branch
 `feat/pratica-sdd-subagentes` e no PR #19 em rascunho. As specs
 `dados-iniciais` e `solicitar-emprestimo` foram aprovadas, mas seguem NÃO
-PRONTAS: faltam fotos revisadas, Storage, banco local/produção e login real.
+PRONTAS: as 12 fotos Pixabay foram aprovadas, publicadas no Storage e
+validadas; ainda faltam seed e login reais em produção e os critérios
+restantes da prática.
 Veja `ENTREGA.md` e `handoff.md` antes de afirmar que a prática foi publicada.
 
 ## Skills

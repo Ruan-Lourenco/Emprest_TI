@@ -14,29 +14,24 @@ skill, scripts, créditos e testes foram adaptados. A chave está somente no
 `.env.local` ignorado pelo Git, com placeholder em `.env.example`; não deve ir
 à Vercel. Não exibir a chave nem URL de requisição com query.
 
-O script `node scripts/prepare-equipment-photos.mjs` gerou 12 candidatas
-locais em `.photo-prep/`. O responsável publicou 12 URLs no bucket `EmprestTi`;
-todas responderam HTTP 200 como JPEG 800×600 e são idênticas às candidatas
-daquele momento. Sete fotos publicadas foram rejeitadas na triagem visual,
-cinco foram confirmadas pelo responsável. Sete substitutas em
-`.photo-prep/replacements/` foram aprovadas visualmente pelo responsável;
-o upload humano ainda está pendente. As URLs e os pareceres estão em
-`docs/specs/dados-iniciais/urls-publicadas-pendentes.json`; os metadados de
-origem estão em `.photo-prep/publicadas-pendentes.json`; IDs rejeitados em
-`.photo-prep/rejected.json`. O manifesto `data/fotos-aprovadas.json` não existe
-e não deve ser criado antes da substituição das fotos reprovadas.
+O responsável aprovou cinco fotos já publicadas e sete substitutas Pixabay;
+as sete foram enviadas por ele ao bucket `EmprestTi`. As 12 URLs responderam
+HTTP 200 sem login e os arquivos remotos coincidiram por SHA-256 com os JPEGs
+aprovados 800×600. URLs e pareceres estão em
+`docs/specs/dados-iniciais/urls-publicadas-validadas.json`. O manifesto
+`data/fotos-aprovadas.json` existe e passou no validador local. As specs
+continuam NÃO PRONTAS até evidência de produção dos critérios restantes.
 
 ## Próximos passos
 
-1. Substituir as sete imagens reprovadas no bucket público com os arquivos
-   aprovados em `.photo-prep/para-revisar-7/`.
-2. Seguir `docs/OPERACAO-PRATICA.md` para substituir no bucket `EmprestTi` as
-   fotos rejeitadas, aprovar visualmente todas e criar manifesto aprovado.
-3. PostgreSQL local isolado em `localhost:5433` recebeu as três migrations;
+1. Revisar o PR #19 com o manifesto versionado, executar os checks e obter a
+   revisão exigida antes do merge em `main`.
+2. PostgreSQL local isolado em `localhost:5433` recebeu as três migrations;
    `npm run test:db` passou após correção de `P2028`, e o seed idempotente foi
    verificado com fixture ignorada pelo Git. Aplicar migrations/seed de produção
    somente pelos workflows protegidos; convite Auth e teste autenticado na Vercel.
-4. Atualizar evidências, PR e status das specs antes de merge/tag.
+3. Atualizar evidências e status das specs após a verificação real. Criar a tag
+   de entrega somente quando os critérios de aceitação estiverem comprovados.
 
 A porta 5432 pertence a outro aplicativo. O teste atual usou contêiner isolado
 em 5433; não usar o banco do outro aplicativo ou o Supabase remoto em testes.

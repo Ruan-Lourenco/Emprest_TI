@@ -8,7 +8,7 @@ seed, créditos, testes e operação antes de preparar fotos. Registrar no
 `ENTREGA.md` a diferença entre o HTML original e a orientação atualizada
 para Pixabay, confirmada pelo responsável.
 
-- [ ] CA-01/02/03: skill, script de preparação, manifesto e revisão visual; verificar 12 arquivos 800×600 e URLs públicas.
+- [x] CA-01/02/03: skill, script de preparação, manifesto e revisão visual; verificar 12 arquivos 800×600 e URLs públicas. Evidência em `evidence.md`.
 - [ ] CA-04: migration e seed; aplicar e repetir em PostgreSQL local, conferir contagem e isolamento.
 - [ ] CA-05: convite Auth, vínculo e login real; conferir zero empréstimos sem usar a conta para testes.
 - [ ] CA-06: catálogo/detalhe e testes da atribuição Pixabay e ocultação da

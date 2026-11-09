@@ -6,9 +6,10 @@
 - PR em rascunho: https://github.com/Ruan-Lourenco/Emprest_TI/pull/19
 - Produção informada pelo responsável: https://emprest-ti-coral.vercel.app/login
 - Estado: **entrega parcial**. A página de login respondeu HTTP 200 em
-  2026-11-06; fotos, dados, conta convidada e fluxo autenticado no deploy ainda
-  não foram comprovados. Não se deve usar a tag `entrega-pratica` como sinal de
-  conclusão antes dessas verificações.
+  2026-11-06; as 12 fotos no Storage foram validadas em 2026-11-09, mas dados,
+  conta convidada e fluxo autenticado no deploy ainda não foram comprovados.
+  Não se deve usar a tag `entrega-pratica` como sinal de conclusão antes dessas
+  verificações.
 
 ## 1. Conflitos: pedido versus fontes vigentes
 
@@ -59,26 +60,18 @@ IDs repetidos e verificação de 800×600. A ausência de pessoas, logos, texto 
 telas com conteúdo exige inspeção visual. O script não contém endpoint de
 upload nem chave do Supabase. Em 2026-11-09, foram preparadas 12 candidatas
 Pixabay locais. A primeira seleção teve 11 fotos visualmente rejeitadas por
-conteúdo inadequado ou equipamento incorreto. O responsável publicou as 12
-candidatas no bucket público `EmprestTi` antes da aprovação visual final. As
-12 URLs responderam HTTP 200 como JPEG 800×600 e correspondem aos arquivos
-arquivados em `.photo-prep/remote-review/`, mas 7 fotos publicadas foram
-reprovadas na triagem (pessoa, marca, tela/texto ou item incorreto); 5 foram
-confirmadas pelo responsável como corretas. Sete substitutas em
-`.photo-prep/replacements/` foram aprovadas visualmente pelo responsável;
-o upload humano ainda está pendente.
-URLs e pareceres estão em
-`docs/specs/dados-iniciais/urls-publicadas-pendentes.json`. Metadados de origem
-estão no rascunho local `.photo-prep/publicadas-pendentes.json`; nenhum deles
-é usado pelo seed. As fotos reprovadas precisam ser substituídas no
-bucket antes de criar `data/fotos-aprovadas.json`. A chave está no `.env.local`
-ignorado pelo Git. Fonte: https://pixabay.com/api/docs/.
+conteúdo inadequado ou equipamento incorreto. O responsável confirmou cinco
+fotos publicadas e aprovou sete substitutas Pixabay. Após o upload humano das
+sete, as 12 URLs públicas do bucket `EmprestTi` responderam HTTP 200 sem login
+e coincidiram por SHA-256 com os 12 JPEGs aprovados de 800×600. O manifesto
+`data/fotos-aprovadas.json` contém 12 IDs únicos e passou em
+`node scripts/validate-equipment-photos.mjs`. URLs e revisão estão em
+`docs/specs/dados-iniciais/urls-publicadas-validadas.json`. A chave está no
+`.env.local` ignorado pelo Git. Fonte: https://pixabay.com/api/docs/.
 
-Na triagem das fotos publicadas: TI-0003 tem código na tela; TI-0005 tem
-calendário legível; TI-0006 mostra pessoa e tela com conteúdo; TI-0007 mostra
-notebook no lugar de monitor; TI-0009 não representa claramente um cabo USB-C;
-TI-0011 mostra pessoa; TI-0012 tem marca legível. Esta é uma triagem do agente,
-não a aprovação visual humana exigida pela spec.
+Na triagem inicial, TI-0003, 0005, 0006, 0007, 0009, 0011 e 0012 foram
+reprovadas e substituídas. A aprovação final das substitutas foi dada pelo
+responsável.
 
 ## 5. Subagente verificador
 
@@ -186,16 +179,15 @@ Após a confirmação de que Pixabay é a fonte vigente, catálogo e detalhe
 passaram a ocultar fotos antigas de outra origem até sua substituição. A suíte
 local passou com 26 testes, além de typecheck, lint e build.
 
-- Concluir revisão das candidatas Pixabay, registrar rejeições e motivos;
-  upload **humano** para bucket público do Storage.
-- Confirmar URLs, criar `data/fotos-aprovadas.json` e executar o validador.
+- Fotos Pixabay revisadas, upload **humano** e 12 URLs públicas conferidas;
+  `data/fotos-aprovadas.json` validado localmente.
 - Aplicar migration pelo workflow protegido e rodar seed inicial duas vezes,
   verificando contagem e nenhuma alteração em empréstimos existentes.
 - Criar conta do professor por convite Auth, vincular UUID como `collaborator`
   e confirmar zero empréstimos sem usá-la nos testes.
 - Testar fluxo na Vercel com outra conta; conferir que as 12 fotos aparecem e
   links abrem sem login.
-- Concluir verificações de banco e produção, atualizar o PR em rascunho,
-  fazer merge e criar a tag somente com evidência real.
+- Revisar o PR, fazer merge após os checks e a aprovação exigida; criar a tag
+  somente após as evidências de produção e a verificação final das specs.
 
 `EmprestTI.zip` preexistente e não rastreado ficou fora desta entrega.
