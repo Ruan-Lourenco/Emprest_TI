@@ -3,7 +3,7 @@
 ## Links
 
 - Repositório: https://github.com/Ruan-Lourenco/Emprest_TI
-- PR em rascunho: https://github.com/Ruan-Lourenco/Emprest_TI/pull/19
+- PR pronto para revisão: https://github.com/Ruan-Lourenco/Emprest_TI/pull/19
 - Produção informada pelo responsável: https://emprest-ti-coral.vercel.app/login
 - Estado: **entrega parcial**. A página de login respondeu HTTP 200 em
   2026-11-06; as 12 fotos no Storage foram validadas em 2026-11-09, mas dados,
@@ -160,8 +160,8 @@ linha 6 do client para preservar geração e build. As demais atualizações de
 dependências de `main` foram mantidas. Após o merge `d4e4ab7`, `npm ci`,
 `npm run build`, `npm run lint`, `npm test` (16 testes) e `git diff --check`
 passaram. No PR #19, os checks `Documentation and secret guard` e
-`Production build` também passaram. O PR segue em rascunho pelas pendências
-de dados, banco e produção descritas acima.
+`Production build` também passaram. O PR foi marcado pronto para revisão após
+o manifesto e a validação das fotos; banco e login reais seguem pendentes.
 
 ## 8. Fora de escopo e pendências
 

@@ -95,7 +95,7 @@ Seleção entre vários vínculos está fora desta versão. Nenhum MCP de banco 
 externo está configurado neste repositório.
 
 A prática de catálogo com fotos e solicitação está na branch
-`feat/pratica-sdd-subagentes` e no PR #19 em rascunho. As specs
+`feat/pratica-sdd-subagentes` e no PR #19 pronto para revisão. As specs
 `dados-iniciais` e `solicitar-emprestimo` foram aprovadas, mas seguem NÃO
 PRONTAS: as 12 fotos Pixabay foram aprovadas, publicadas no Storage e
 validadas; ainda faltam seed e login reais em produção e os critérios

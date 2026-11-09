@@ -9,8 +9,8 @@ remotos coincidiram com os arquivos aprovados. O manifesto
 `data/fotos-aprovadas.json` passou no validador. URLs e pareceres estão em
 `docs/specs/dados-iniciais/urls-publicadas-validadas.json`.
 
-1. Concluir revisão do PR #19, tirar do rascunho e, após a aprovação exigida e
-   os checks, fazer merge em `main`. Então executar o workflow manual protegido
+1. Concluir revisão do PR #19 e, após a aprovação exigida e os checks,
+   fazer merge em `main`. Então executar o workflow manual protegido
    `migrate-production` com confirmação `APPLY`. Verificar o resultado antes de
    abrir o workflow `seed-practice-production`. Executar o seed duas vezes e
    confirmar 12 registros do tenant, 3 em manutenção, 9 disponíveis e nenhum

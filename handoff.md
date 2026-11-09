@@ -2,7 +2,7 @@
 
 ## Estado
 
-Branch `feat/pratica-sdd-subagentes`, PR #19 em rascunho. Specs de dados
+Branch `feat/pratica-sdd-subagentes`, PR #19 pronto para revisão. Specs de dados
 iniciais e empréstimo aprovadas, mas **não prontas** para conclusão: faltam
 revisão e publicação das fotos, migration/seed protegidos,
 conta convidada e login autenticado na Vercel.
